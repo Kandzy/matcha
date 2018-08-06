@@ -1,0 +1,9 @@
+{% extends 'signup/signup.twig' %}
+
+{% block errormsg %}
+    {% if data.Login %}
+        {{ data.class.loginExist(data.Login) }}
+    {%  elseif data.Email %}
+        {{ data.class.emailExist(data.Email) }}
+    {%  endif %}
+{% endblock %}

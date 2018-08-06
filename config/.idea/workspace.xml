@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="20be9f69-1a4e-4f90-b892-08c2b24e608d" name="Default" comment="" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="D03.conf" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/D03.conf">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+        <option value="SQL Script" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>../private</find>
+      <find>session</find>
+      <find>erotic</find>
+    </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/byermak" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/ex09.sql" />
+        <option value="$PROJECT_DIR$/ex08.sql" />
+        <option value="$PROJECT_DIR$/ex10.sql" />
+        <option value="$PROJECT_DIR$/ex11.sql" />
+        <option value="$PROJECT_DIR$/d06/ex00/Color.doc.txt" />
+        <option value="$PROJECT_DIR$/d06/ex00/Color.class.php" />
+        <option value="$PROJECT_DIR$/resources 2/main_00.php" />
+        <option value="$PROJECT_DIR$/resources 2/main_01.out" />
+        <option value="$PROJECT_DIR$/d06/ex01/txt" />
+        <option value="$PROJECT_DIR$/d06/ex01/Vertex.doc.txt" />
+        <option value="$PROJECT_DIR$/d06/ex02/Vector.doc.txt" />
+        <option value="$PROJECT_DIR$/d06/ex01/Vertex.class.php" />
+        <option value="$PROJECT_DIR$/resources 2/main_02.php" />
+        <option value="$PROJECT_DIR$/d06/ex02/main_02.php" />
+        <option value="$PROJECT_DIR$/d06/ex02/Vector.class.php" />
+        <option value="$PROJECT_DIR$/d06/ex02/test" />
+        <option value="$PROJECT_DIR$/resources 2/main_02.out" />
+        <option value="$PROJECT_DIR$/d07/ex00/Tyrion.class.php" />
+        <option value="$PROJECT_DIR$/d07/Greyjoy.class.php" />
+        <option value="$PROJECT_DIR$/d07/ex01/Greyjoy.class.php" />
+        <option value="$PROJECT_DIR$/d07/ex01/Euron.class.php" />
+        <option value="$PROJECT_DIR$/d07/ex05/IFighter.class.php" />
+        <option value="$PROJECT_DIR$/d07/ex06/Fighter.class.php" />
+        <option value="$PROJECT_DIR$/d07/ex06/UnholyFactory.class.php" />
+        <option value="$PROJECT_DIR$/test.php" />
+        <option value="$PROJECT_DIR$/try/ex01/Euron.class.php" />
+        <option value="$PROJECT_DIR$/try/ex00/Tyrion.php" />
+        <option value="$PROJECT_DIR$/try/ex02/test.php" />
+        <option value="$PROJECT_DIR$/try/ex02/Targaryen.class.php" />
+        <option value="$PROJECT_DIR$/d07/ex02/Targaryen.class.php" />
+        <option value="$PROJECT_DIR$/try/ex03/House.class.php" />
+        <option value="$PROJECT_DIR$/d07/ex03/House.class.php" />
+        <option value="$PROJECT_DIR$/try/ex04/Jaime.class.php" />
+        <option value="$PROJECT_DIR$/d07/ex04/Jaime.class.php" />
+        <option value="$PROJECT_DIR$/d07/ex04/Tyrion.class.php" />
+        <option value="$PROJECT_DIR$/d07/ex05/NightsWatch.class.php" />
+        <option value="$PROJECT_DIR$/WH40k/Fleet.class.php" />
+        <option value="$PROJECT_DIR$/WH40k/starships/NewFleet.Class.php" />
+        <option value="$PROJECT_DIR$/WH40k/starships/weapon/SideLaserBatteries.class.php" />
+        <option value="$PROJECT_DIR$/WH40k/starships/weapon/NauticalLance.class.php" />
+        <option value="$PROJECT_DIR$/WH40k/starships/weapon/MacroCanon.class.php" />
+        <option value="$PROJECT_DIR$/WH40k/starships/weapon/HeavyNauticalLance.class.php" />
+        <option value="$PROJECT_DIR$/WH40k/starships/weapon/CloseRangeSuperHeavyAutomaticWeapon.class.php" />
+        <option value="$PROJECT_DIR$/WH40k/starships/ImperialDestroyer.class.php" />
+        <option value="$PROJECT_DIR$/WH40k/starships/ImperialFrigate.class.php" />
+        <option value="$PROJECT_DIR$/WH40k/starships/ImperialIronclad.class.php" />
+        <option value="$PROJECT_DIR$/WH40k/starships/OnslaughtAttackShip.class.php" />
+        <option value="$PROJECT_DIR$/WH40k/starships/TerrorShip.class.php" />
+        <option value="$PROJECT_DIR$/WH40k/NewFleet.Class.php" />
+        <option value="$PROJECT_DIR$/WH40k/starships/Sheep.class.php" />
+        <option value="$PROJECT_DIR$/WH40k/starships/weapon/weapon.class.php" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="1265" />
+    <option name="y" value="23" />
+    <option name="width" value="1611" />
+    <option name="height" value="1558" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scratches" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="d03" type="b2602c69:ProjectViewProjectNode" />
+              <item name="d03" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/try" />
+      <recent name="$PROJECT_DIR$/d06/ex02" />
+      <recent name="$PROJECT_DIR$/d06/ex01" />
+      <recent name="$PROJECT_DIR$/rush00" />
+      <recent name="$PROJECT_DIR$/ex00" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/WH40k/starships" />
+      <recent name="$PROJECT_DIR$/WH40k" />
+      <recent name="$PROJECT_DIR$/starships" />
+      <recent name="$PROJECT_DIR$/d07/ex05" />
+      <recent name="$PROJECT_DIR$/d07/ex06" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="20be9f69-1a4e-4f90-b892-08c2b24e608d" name="Default" comment="" />
+      <created>1522941342724</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1522941342724</updated>
+      <workItem from="1522941347207" duration="625000" />
+      <workItem from="1523002703077" duration="4900000" />
+      <workItem from="1523011581975" duration="15285000" />
+      <workItem from="1523082852071" duration="20730000" />
+      <workItem from="1523123129188" duration="1683000" />
+      <workItem from="1523128217187" duration="393000" />
+      <workItem from="1523166422425" duration="43532000" />
+      <workItem from="1523261361339" duration="4968000" />
+      <workItem from="1523273775893" duration="2813000" />
+      <workItem from="1523280218953" duration="4006000" />
+      <workItem from="1523343253203" duration="2010000" />
+      <workItem from="1523430124666" duration="19129000" />
+      <workItem from="1523524105499" duration="10250000" />
+      <workItem from="1523608020102" duration="13528000" />
+      <workItem from="1528438795712" duration="1689000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="145541000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="1265" y="23" width="1611" height="1558" extended-state="0" />
+    <layout>
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32969603" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="DB Browser" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3297342" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="DB Execution Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32125768" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="FAQ Robot" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1912046" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project Explorer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3297342" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Job Explorer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <option name="time" value="11" />
+    </breakpoint-manager>
+    <watches-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/d07/ex05/test1.php" />
+    <entry file="file://$PROJECT_DIR$/d07/ex05/test2.php" />
+    <entry file="file://$PROJECT_DIR$/test.php" />
+    <entry file="file://$PROJECT_DIR$/d07/ex01/Greyjoy.class.php" />
+    <entry file="file://$PROJECT_DIR$/d07/ex00/Tyrion.class.php" />
+    <entry file="file://$PROJECT_DIR$/try/ex00/Tyrion.php" />
+    <entry file="file://$PROJECT_DIR$/try/ex00/test.php" />
+    <entry file="file://$PROJECT_DIR$/try/ex01/test1.php" />
+    <entry file="file://$PROJECT_DIR$/try/ex01/test2.php" />
+    <entry file="file://$PROJECT_DIR$/try/ex01/Euron.class.php" />
+    <entry file="file://$PROJECT_DIR$/d07/ex02/Targaryen.class.php" />
+    <entry file="file://$PROJECT_DIR$/try/ex02/Targaryen.class.php" />
+    <entry file="file://$PROJECT_DIR$/try/ex02/test.php" />
+    <entry file="file://$PROJECT_DIR$/d07/ex03/House.class.php" />
+    <entry file="file://$PROJECT_DIR$/try/ex03/test2.php" />
+    <entry file="file://$PROJECT_DIR$/try/ex03/test1.php" />
+    <entry file="file://$PROJECT_DIR$/try/ex03/House.class.php" />
+    <entry file="file://$PROJECT_DIR$/try/ex04/Tyrion.class.php" />
+    <entry file="file://$PROJECT_DIR$/try/ex04/Lannister.class.php" />
+    <entry file="file://$PROJECT_DIR$/try/ex04/test.php" />
+    <entry file="file://$PROJECT_DIR$/d07/ex04/test.php" />
+    <entry file="file://$PROJECT_DIR$/d07/ex04/Tyrion.class.php" />
+    <entry file="file://$PROJECT_DIR$/d07/ex04/Jaime.class.php" />
+    <entry file="file://$PROJECT_DIR$/try/ex04/Jaime.class.php" />
+    <entry file="file://$PROJECT_DIR$/d07/ex05/IFighter.class.php" />
+    <entry file="file://$PROJECT_DIR$/d07/ex05/test1.php" />
+    <entry file="file://$PROJECT_DIR$/d07/ex05/NightsWatch.class.php" />
+    <entry file="file://$PROJECT_DIR$/d07/ex06/test1.php" />
+    <entry file="file://$PROJECT_DIR$/d07/ex06/test2.php" />
+    <entry file="file://$PROJECT_DIR$/d07/ex06/Fighter.class.php" />
+    <entry file="file://$PROJECT_DIR$/d07/ex04/Lannister.class.php" />
+    <entry file="file://$PROJECT_DIR$/d07/ex05/test2.php" />
+    <entry file="file://$PROJECT_DIR$/d07/ex06/UnholyFactory.class.php" />
+    <entry file="file://$PROJECT_DIR$/try/ex06/test1.php" />
+    <entry file="file://$PROJECT_DIR$/try/ex06/test2.php" />
+    <entry file="file://$PROJECT_DIR$/WH40k/starships/weapon/SideLaserBatteries.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="17" column="4" lean-forward="false" selection-start-line="17" selection-start-column="4" selection-end-line="20" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WH40k/starships/weapon/NauticalLance.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="20" column="5" lean-forward="false" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WH40k/starships/weapon/MacroCanon.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="20" column="5" lean-forward="false" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WH40k/starships/weapon/HeavyNauticalLance.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="20" column="5" lean-forward="false" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WH40k/starships/weapon/CloseRangeSuperHeavyAutomaticWeapon.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="20" column="5" lean-forward="false" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WH40k/starships/ImperialDestroyer.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="15" column="4" lean-forward="false" selection-start-line="15" selection-start-column="4" selection-end-line="18" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WH40k/Fleet.class.php" />
+    <entry file="file://$PROJECT_DIR$/WH40k/starships/ImperialIronclad.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="17" column="5" lean-forward="false" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WH40k/starships/OnslaughtAttackShip.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="18" column="5" lean-forward="false" selection-start-line="18" selection-start-column="5" selection-end-line="18" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Desktop/EVALS/d07t/ex05/t1" />
+    <entry file="file://$PROJECT_DIR$/WH40k/starships/TerrorShip.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="17" column="5" lean-forward="false" selection-start-line="17" selection-start-column="4" selection-end-line="17" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WH40k/NewFleet.Class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="28" column="36" lean-forward="false" selection-start-line="28" selection-start-column="36" selection-end-line="28" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WH40k/starships/ImperialFrigate.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="10" column="21" lean-forward="false" selection-start-line="10" selection-start-column="6" selection-end-line="10" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WH40k/starships/Sheep.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="271">
+          <caret line="99" column="22" lean-forward="true" selection-start-line="99" selection-start-column="22" selection-end-line="99" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WH40k/starships/weapon/weapon.class.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="361">
+          <caret line="36" column="0" lean-forward="false" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/D03.conf">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
