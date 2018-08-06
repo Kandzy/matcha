@@ -23,10 +23,36 @@ $app->group('/signup', function () {
     $this->post('', SignupController::class.":registration");
 });
 
-//$app->get('/', function ($request, $response){
-//    echo "fuck!";
-//   echo $this->user->getUserLogin();
-//})->setName("main");
+$app->group('/recover', function () {
+    $this->get('/password', function ()
+    {
+       echo "Recover Password";
+    });
+});
+
+
+$app->group('/users', function (){
+    $this->get('', function ($request, $response, $args){
+       $UID = $request->getParam("id");
+       echo $UID."</br>";
+       echo "All users";
+    });
+    $this->get('/find', function ($request, $response, $args){
+        echo "Lets find user!";
+    });
+    $this->get('/{username}', function ($request, $response, $args){
+        echo $args['username'];
+    })->setName('user.profile');
+    $this->get('/{username}/update', function ()
+    {
+       echo "UPDATE";
+    });
+});
+
+$app->get('/', function (){
+    echo "Main Page";
+});
+
 
 $app->group('/topics', function ()
 {
@@ -119,3 +145,8 @@ $app->get('/redirect', UserController::class.":redirect")->setName('top.st');
 //    }
 //
 //});
+
+//$app->get('/', function ($request, $response){
+//    echo "fuck!";
+//   echo $this->user->getUserLogin();
+//})->setName("main");
