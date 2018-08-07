@@ -11,17 +11,21 @@ use \App\Controllers\TopicController;
 use \App\Controllers\UserController;
 use \App\Controllers\SigninController;
 use \App\Controllers\SignupController;
+use \App\Middleware\RedirectIfUnauthenticated;
+use \App\Middleware\RedirectIfAunthenticated;
+use \App\Controllers\DisplayUsersInformationController;
 
 $app->group('/signin', function (){
     $this->get('', SigninController::class.":index")->setName('signin');
     $this->post('', SigninController::class.":loginUser");
-});
+    $this->get('/logout', UserController::class.":setUserLogout")->setName('signin.logout');
+})->add(new RedirectIfAunthenticated);
 
 
 $app->group('/signup', function () {
     $this->get('', SignupController::class . ":index")->setName('signup');
     $this->post('', SignupController::class.":registration");
-});
+})->add(new RedirectIfAunthenticated);
 
 $app->group('/recover', function () {
     $this->get('/password', function ()
@@ -32,33 +36,27 @@ $app->group('/recover', function () {
 
 
 $app->group('/users', function (){
-    $this->get('', function ($request, $response, $args){
-       $UID = $request->getParam("id");
-       echo $UID."</br>";
-       echo "All users";
-    });
-    $this->get('/find', function ($request, $response, $args){
-        echo "Lets find user!";
-    });
-    $this->get('/{username}', function ($request, $response, $args){
-        echo $args['username'];
-    })->setName('user.profile');
+    $this->get('', DisplayUsersInformationController::class.":index")->setName('users');
+    $this->post('/find', DisplayUsersInformationController::class.":findUser")->setName('user.find.field');
+    $this->get('/find', DisplayUsersInformationController::class.":findUserPage")->setName('user.find');
+    $this->get('/{username}', DisplayUsersInformationController::class.":displayUserPage")->setName('profile');
     $this->get('/{username}/update', function ()
     {
        echo "UPDATE";
     });
-});
+})->add(new RedirectIfUnauthenticated);
 
-$app->get('/', function (){
-    echo "Main Page";
+$app->get('/', function ($req, $res, $args){
+    return $this->view->render($res, 'mainpage/mainpage.twig');
 });
 
 
 $app->group('/topics', function ()
 {
     $this->get('', TopicController::class . ':index')->setName('topics');
+    $this->post('', TopicController::class . ':addTopic')->setName('topics.add');
     $this->get('/{id}', TopicController::class . ':show')->setName('topics.show');
-});
+})->add(new RedirectIfUnauthenticated);
 
 $app->get('/redirect', UserController::class.":redirect")->setName('top.st');
 

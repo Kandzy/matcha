@@ -1,0 +1,11 @@
+{% extends 'layout/app.twig' %}
+
+{% block content %}
+    </br>
+    <div style="display: flex; align-content: center; justify-content: center">
+        <a href="{{ path_for('user.find') }} "><button>Find User</button></a>
+    </div>
+    {% for user in data %}
+        <h5 style="color: white">{{ user.getAllDataFromUser() }}</h5>
+    {% endfor %}
+{% endblock %}

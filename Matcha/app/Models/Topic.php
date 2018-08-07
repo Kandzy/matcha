@@ -11,8 +11,12 @@ namespace App\Models;
 
 class Topic
 {
-    public function getTitle()
+    public function getTopics()
     {
-        return $this->title;
+        echo "{$this->Title} | Onwer: {$this->Owner} | Date: {$this->CreationDate}</br>Description: {$this->Description}";
     }
+//    public function getTitle()
+//    {
+//        return $this->title;
+//    }
 }

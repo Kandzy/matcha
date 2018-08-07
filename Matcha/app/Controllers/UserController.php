@@ -58,17 +58,19 @@ class UserController
             $this->setLogin($Login);
             $this->UploadData($this->Login, $database);
         } else {
-            $this->setUserLogout();
+            unset($_SESSION['User']);
         }
         /**
          * HERE SHOULD BE ERROR!
          */
     }
 
-    public function setUserLogout(){
-        unset($this->Login);
-        unset($this->data);
-        unset($this->password);
+    public function setUserLogout($request, $response){
+//        unset($this->Login);
+//        unset($this->data);
+//        unset($this->password);
+        unset($_SESSION['User']);
+        return $response->withRedirect('/signin');
     }
 
     /*

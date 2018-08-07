@@ -1,0 +1,12 @@
+{% extends 'layout/app.twig' %}
+
+{% block content %}
+    <div style="display: flex; align-content: center; justify-content: center">
+        <form action="{{ path_for('user.find.field') }}" method="post">
+            <label for="Login">Login</label>
+            <input id="Login" name="Login" type="text">
+            <button type="submit">Find</button>
+        </form>
+    </div>
+    {% block result %}{% endblock %}
+{% endblock %}

@@ -2,7 +2,6 @@
 
 
 $db = new \App\Database\DatabaseRequest($container->db);
-
 if($db->createDataBase("db_matcha")) {
     $db->UseDB("db_matcha");
 
@@ -22,22 +21,13 @@ if($db->createDataBase("db_matcha")) {
     $db->addTableColumn("Users", "Admin", "varchar(100)");
     $db->addTableColumn("Users", "Notification", "varchar(1) DEFAULT '1'");
 
-//    for ($index = 0; $index < 500; $index++)
-//    {
-//        $Login = "aaaaaaaaaa";
-//        $pass = "1234";
-//        $
-//        $db->addTableData('Users', "Login, Password, Email, FirstName, LastName, City, Country, Age", "");
-//    }
-
-
     /**
      * Photo Table creation
      */
 
     $db->createTable("Pictures", "PicID");
     $db->addTableColumn("Pictures", "UserID", "INT(11)");
-    $db->addTableColumn("Pictures", "url", "varchar(500)");
+    $db->addTableColumn("Pictures", "url", "varchar(1000)");
     $db->addTableColumn("Pictures", "Likes", "INT(10)");
     $db->addTableColumn("Pictures", "data", "DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP");
 
@@ -69,4 +59,25 @@ if($db->createDataBase("db_matcha")) {
     $db->addTableColumn("Comments", "PicID", "INT(11)");
     $db->addTableColumn("Comments", "text", "varchar(1000)");
     $db->addTableColumn("Comments", "data", "DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP");
+
+    /**
+     * Topics table creation
+     */
+
+    $db->createTable("Topics", "TopicID");
+    $db->addTableColumn("Topics", "Owner", "varchar(100)");
+    $db->addTableColumn("Topics", "UserID", "INT(11)");
+    $db->addTableColumn("Topics", "Title", "varchar(100)");
+    $db->addTableColumn("Topics", "Description", "varchar(1000)");
+    $db->addTableColumn("Topics", "CreationDate", "DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP");
+
+    /**
+     * Topics Messegess
+     */
+
+    $db->createTable("TopicComments", "TCommentID");
+    $db->addTableColumn("TopicComments", "UserID", "INT(11)");
+    $db->addTableColumn("TopicComments", "TopicID", "INT(11)");
+    $db->addTableColumn("TopicComments", "Comment", "varchar(100000)");
+    $db->addTableColumn("TopicComments", "CreationDate", "DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP");
 }

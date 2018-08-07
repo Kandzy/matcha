@@ -12,23 +12,7 @@ use PDO;
 
 class User
 {
-    private $Login;
-    private $ID;
-    private $FirstName;
-    private $LastName;
-    private $data;
 
-    public function getUserLogin(){
-        return $this->Login;
-    }
-
-    private function setLogin($Login){
-        $this->Login = $Login;
-    }
-
-    private function UploadData(){
-
-    }
 //    public function fullData()
 //    {
 //        if ($this->Name == null)
