@@ -47,7 +47,29 @@ $app->group('/users', function (){
 })->add(new RedirectIfUnauthenticated);
 
 $app->get('/', function ($req, $res, $args){
-    return $this->view->render($res, 'mainpage/mainpage.twig');
+    $data = [
+        'id' => 4
+    ];
+    return $this->view->render($res, 'mainpage/mainpage.twig', compact("data"));
+});
+
+$app->get('/chat', function($request, $response, $args){
+    if($_SESSION['User']) {
+        $data = [
+            'Login' => $_SESSION['User']->getUserLogin()
+    ];
+    }
+    return $this->view->render($response, 'chat/chat.twig', compact('data'));
+})->add(new RedirectIfUnauthenticated())->setName('chat');
+
+$app->get('/server', function ()
+{
+    $socket_server = stream_socket_server("tcp://localhost:8110");
+    $socket = stream_socket_accept($socket_server, -1);
+    echo fread($socket, 1024);
+    fwrite($socket, "ok");
+    fclose($socket);
+    fclose($socket_server);
 });
 
 
@@ -56,6 +78,7 @@ $app->group('/topics', function ()
     $this->get('', TopicController::class . ':index')->setName('topics');
     $this->post('', TopicController::class . ':addTopic')->setName('topics.add');
     $this->get('/{id}', TopicController::class . ':show')->setName('topics.show');
+    $this->post('/{id}', TopicController::class . ':addComment');
 })->add(new RedirectIfUnauthenticated);
 
 $app->get('/redirect', UserController::class.":redirect")->setName('top.st');

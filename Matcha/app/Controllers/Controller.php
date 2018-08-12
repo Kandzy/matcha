@@ -17,7 +17,6 @@ abstract class Controller
     {
         $this->container = $c;
     }
-
     public function __get($name)
     {
         if ($this->container->{$name}) {

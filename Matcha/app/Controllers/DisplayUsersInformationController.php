@@ -14,11 +14,10 @@ use \App\Models\DisplayUsersInformation;
 class DisplayUsersInformationController extends Controller
 {
     public function index($request, $response, $args){
+//        return 1;
         $database = new DatabaseRequest($this->db);
         $database->UseDB('db_matcha');
         $data = $database->findData_CLASS("users", "UserID, Login, Email, FirstName, LastName, City, Country, Age", "1=1", DisplayUsersInformation::class);
-//        print_r($data);
-//        print_r($data[0]);
         return $this->view->render($response, 'users/allUsers.twig', compact('data'));
     }
 

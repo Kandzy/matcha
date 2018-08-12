@@ -13,7 +13,7 @@ class Topic
 {
     public function getTopics()
     {
-        echo "{$this->Title} | Onwer: {$this->Owner} | Date: {$this->CreationDate}</br>Description: {$this->Description}";
+        echo "{$this->Title} | Onwer: {$this->Owner} | Date: {$this->TopicCreationDate}</br>Description: {$this->Description}";
     }
 //    public function getTitle()
 //    {

@@ -69,7 +69,7 @@ if($db->createDataBase("db_matcha")) {
     $db->addTableColumn("Topics", "UserID", "INT(11)");
     $db->addTableColumn("Topics", "Title", "varchar(100)");
     $db->addTableColumn("Topics", "Description", "varchar(1000)");
-    $db->addTableColumn("Topics", "CreationDate", "DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP");
+    $db->addTableColumn("Topics", "TopicCreationDate", "DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP");
 
     /**
      * Topics Messegess
@@ -78,6 +78,6 @@ if($db->createDataBase("db_matcha")) {
     $db->createTable("TopicComments", "TCommentID");
     $db->addTableColumn("TopicComments", "UserID", "INT(11)");
     $db->addTableColumn("TopicComments", "TopicID", "INT(11)");
-    $db->addTableColumn("TopicComments", "Comment", "varchar(100000)");
+    $db->addTableColumn("TopicComments", "Comment", "varchar(10000)");
     $db->addTableColumn("TopicComments", "CreationDate", "DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP");
 }

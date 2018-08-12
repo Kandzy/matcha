@@ -1,6 +1,27 @@
 {% extends 'layout/app.twig' %}
 
 {% block content %}
-    <h3 style="text-align: center"> {{ topic.title }} </h3>
-    <p style="text-align: center"> {{ topic.body }}</p>
+    <h1 style="text-align: center">{{ topicData[0].Title }}</h1>
+    <div style="display: flex; flex-direction: row; justify-content: space-around; background-color: white; border-radius: 10px">
+        <p>Creator: {{ topicData[0].Owner }}</p>
+        <p>At: {{ topicData[0].TopicCreationDate }}</p>
+        <p>Description: {{ topicData[0].Description }}</p>
+    </div>
+    <div style="display: flex; flex-direction: column;">
+    {% for comment in data %}
+        <div style="background-color: #222222; padding: 5px">
+            <div style="background-color: #555555">
+                <h3 style="text-align: left; margin-left: 20px; color: white;"> {{ comment.Login }} at {{ comment.CreationDate }} said: </h3>
+            </div>
+            <div>
+                <p style="text-align: center; color: white"> {{ comment.Comment }}</p>
+            </div>
+            <br>
+        </div>
+    {% endfor %}
+    </div>
+    <form method="post" action="{{ path_for('topics.show', {id: topicData[0].TopicID}) }}">
+        <textarea name="comment"></textarea>
+        <button type="submit">Send Comment</button>
+    </form>
 {% endblock %}

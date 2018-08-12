@@ -23,8 +23,8 @@ $container = $app->getContainer();
 $container['db'] = function ()
 {
     $DB_DSN = "mysql:3306";
-    $DB_USER = "web";
-    $DB_PASSWORD = "1234";
+    $DB_USER = "root";
+    $DB_PASSWORD = "12341234";
     $obj = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
     return $obj;
 };
