@@ -9,8 +9,18 @@
 namespace App\Middleware;
 
 
+/**
+ * Class RedirectIfUnauthenticated
+ * @package App\Middleware
+ */
 class RedirectIfUnauthenticated
 {
+    /**
+     * @param $request
+     * @param $response
+     * @param $next
+     * @return mixed
+     */
     public function __invoke($request, $response, $next)
     {
         if (!isset($_SESSION['User']))

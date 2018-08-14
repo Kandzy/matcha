@@ -12,13 +12,29 @@ use PDO;
 use App\Controllers\UserController;
 
 
+/**
+ * Class SigninController
+ * @package App\Controllers
+ */
 class SigninController extends Controller
 {
+    /**
+     * @param $request
+     * @param $response
+     * @param $args
+     * @return mixed
+     */
     public function index($request, $response, $args)
     {
         return $this->view->render($response, 'signin/signin.twig');
     }
 
+    /**
+     * @param $request
+     * @param $response
+     * @param $args
+     * @return mixed
+     */
     public function loginUser($request, $response, $args)
     {
         $param = $request->getParams();

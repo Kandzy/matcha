@@ -1,5 +1,7 @@
 {% extends 'layout/app.twig' %}
 
+{% block title %}Matcha Forum{% endblock %}
+
 {% block content %}
    <div style="display: flex; justify-content: center; background-color: rgba(20,20,20,0.7);" >
        <form action="{{ path_for('topics.add') }}" method="post">

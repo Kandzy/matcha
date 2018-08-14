@@ -14,6 +14,7 @@ use \App\Controllers\SignupController;
 use \App\Middleware\RedirectIfUnauthenticated;
 use \App\Middleware\RedirectIfAunthenticated;
 use \App\Controllers\DisplayUsersInformationController;
+use \App\Middleware\FirstTimeConnectedUser;
 
 $app->group('/signin', function (){
     $this->get('', SigninController::class.":index")->setName('signin');
@@ -40,6 +41,8 @@ $app->group('/users', function (){
     $this->post('/find', DisplayUsersInformationController::class.":findUser")->setName('user.find.field');
     $this->get('/find', DisplayUsersInformationController::class.":findUserPage")->setName('user.find');
     $this->get('/{username}', DisplayUsersInformationController::class.":displayUserPage")->setName('profile');
+    $this->get('/{username}/register', DisplayUsersInformationController::class.":finishUserRegister");
+    $this->post('/{username}/register/sendData', DisplayUsersInformationController::class.":registerUserSendData")->setName('registerUserSendData');
     $this->get('/{username}/update', function ()
     {
        echo "UPDATE";
@@ -51,7 +54,7 @@ $app->get('/', function ($req, $res, $args){
         'id' => 4
     ];
     return $this->view->render($res, 'mainpage/mainpage.twig', compact("data"));
-});
+})->add(new FirstTimeConnectedUser($container->db));
 
 $app->get('/chat', function($request, $response, $args){
     if($_SESSION['User']) {

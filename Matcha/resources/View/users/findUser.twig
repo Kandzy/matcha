@@ -1,5 +1,7 @@
 {% extends 'layout/app.twig' %}
 
+{% block title %}Matcha Find Users{% endblock %}
+
 {% block content %}
     <div style="display: flex; align-content: center; justify-content: center">
         <form action="{{ path_for('user.find.field') }}" method="post">

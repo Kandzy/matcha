@@ -11,6 +11,10 @@ use PDO;
 use App\Models\User;
 use App\Database\DatabaseRequest;
 
+/**
+ * Class UserController
+ * @package App\Controllers
+ */
 class UserController
 {
     private $Login;
@@ -45,10 +49,16 @@ class UserController
          */
     }
 
+    /**
+     * @param $Login
+     * @param $Password
+     * @param $db
+     */
     public function setUserOnline($Login, $Password, $db){
 
         $database = new DatabaseRequest($db);
         $database->UseDB("db_matcha");
+        $Login = htmlspecialchars(addslashes($Login));
         $this->password = $database->findData_ASSOC('users', "Password", "Login='{$Login}'");
 //        var_dump($this->password);
 
@@ -65,6 +75,11 @@ class UserController
          */
     }
 
+    /**
+     * @param $request
+     * @param $response
+     * @return mixed
+     */
     public function setUserLogout($request, $response){
 //        unset($this->Login);
 //        unset($this->data);
@@ -77,12 +92,20 @@ class UserController
      * Private methods
      */
 
+    /**
+     * @param $Login
+     */
     private function setLogin($Login){
         $this->Login = $Login;
     }
 
+    /**
+     * @param $Login
+     * @param $database
+     */
     private function UploadData($Login, $database){
 //        $database->UseDB("db_matcha");
+        $Login = htmlspecialchars(addslashes($Login));
         $data = $database->findData_ASSOC('users', "*", "Login='{$Login}'");
         $this->data = $data[0];
     }

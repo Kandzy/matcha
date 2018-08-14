@@ -9,6 +9,10 @@
 namespace App\Models;
 
 
+/**
+ * Class Login
+ * @package App\Models
+ */
 class Login
 {
 

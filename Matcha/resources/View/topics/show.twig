@@ -1,5 +1,7 @@
 {% extends 'layout/app.twig' %}
 
+{% block title %}Matcha Topic:"{{ topicData[0].Title }}"{% endblock %}
+
 {% block content %}
     <h1 style="text-align: center">{{ topicData[0].Title }}</h1>
     <div style="display: flex; flex-direction: row; justify-content: space-around; background-color: white; border-radius: 10px">

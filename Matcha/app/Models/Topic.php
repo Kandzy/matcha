@@ -9,6 +9,10 @@
 namespace App\Models;
 
 
+/**
+ * Class Topic
+ * @package App\Models
+ */
 class Topic
 {
     public function getTopics()

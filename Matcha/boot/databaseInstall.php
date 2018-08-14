@@ -2,6 +2,7 @@
 
 
 $db = new \App\Database\DatabaseRequest($container->db);
+
 if($db->createDataBase("db_matcha")) {
     $db->UseDB("db_matcha");
 
@@ -11,15 +12,20 @@ if($db->createDataBase("db_matcha")) {
 
     $db->createTable("Users", "UserID");
     $db->addTableColumn("Users", "Login", "varchar(100) NOT NULL UNIQUE");
-    $db->addTableColumn("Users", "Password", "varchar(10000)");
+    $db->addTableColumn("Users", "Password", "varchar(100)");
     $db->addTableColumn("Users", "Email", "varchar(100) NOT NULL UNIQUE");
     $db->addTableColumn("Users", "FirstName", "varchar(100)");
     $db->addTableColumn("Users", "LastName", "varchar(100)");
     $db->addTableColumn("Users", "City", "varchar(100)");
     $db->addTableColumn("Users", "Country", "varchar(100)");
     $db->addTableColumn("Users", "Age", "varchar(100)");
-    $db->addTableColumn("Users", "Admin", "varchar(100)");
+    $db->addTableColumn("Users", "Gender", "varchar(100)");
+    $db->addTableColumn("Users", "map_height", "FLOAT(10)");
+    $db->addTableColumn("Users", "map_width", "FLOAT(10)");
+    $db->addTableColumn("Users", "Bio", "varchar(5000)");
+    $db->addTableColumn("Users", "Tags", "varchar(2000)");
     $db->addTableColumn("Users", "Notification", "varchar(1) DEFAULT '1'");
+    $db->addTableColumn("Users", "FullRegister", "varchar(1) DEFAULT '0'");
 
     /**
      * Photo Table creation
@@ -37,7 +43,7 @@ if($db->createDataBase("db_matcha")) {
 
     $db->createTable("confirmation", "UID");
     $db->addTableColumn("confirmation", "Login", "varchar(100) NOT NULL UNIQUE");
-    $db->addTableColumn("confirmation", "Passwd", "varchar(10000)");
+    $db->addTableColumn("confirmation", "Passwd", "varchar(100)");
     $db->addTableColumn("confirmation", "Email", "varchar(100) NOT NULL UNIQUE");
     $db->addTableColumn("confirmation", "hash", "varchar(256)");
     /**

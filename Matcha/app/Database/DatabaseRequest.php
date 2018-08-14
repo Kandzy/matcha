@@ -10,11 +10,20 @@ namespace App\Database;
 
 use PDO;
 use App\Models\User;
+use PDOException;
 
+/**
+ * Class DatabaseRequest
+ * @package App\Database
+ */
 class DatabaseRequest
 {
     private $dbConnect;
 
+    /**
+     * DatabaseRequest constructor.
+     * @param $connection
+     */
     public function __construct($connection)
     {
         if (!empty($connection)) {
@@ -22,6 +31,10 @@ class DatabaseRequest
         }
     }
 
+    /**
+     * @param $dbname
+     * @return int
+     */
     public function createDataBase($dbname)
     {
         try {
@@ -34,6 +47,10 @@ class DatabaseRequest
         return 1;
     }
 
+    /**
+     * @param $dbname
+     * @return int
+     */
     public function UseDB($dbname)
     {
         try {
@@ -47,11 +64,19 @@ class DatabaseRequest
         return 1;
     }
 
-    public function DropConnection()
+    /**
+     * This function for disconnect you from server
+     */
+    public function dropConnection()
     {
         $this->dbConnect = NULL;
     }
 
+    /**
+     * @param $name
+     * @param $ID
+     * @return int
+     */
     public function createTable($name, $ID)
     {
         try {
@@ -65,6 +90,10 @@ class DatabaseRequest
         return 1;
     }
 
+    /**
+     * @param $name
+     * @return int
+     */
     public function clearTable($name)
     {
         try {
@@ -78,6 +107,10 @@ class DatabaseRequest
         return 1;
     }
 
+    /**
+     * @param $name
+     * @return int
+     */
     public function dropTable($name)
     {
         try {
@@ -91,6 +124,10 @@ class DatabaseRequest
         return 1;
     }
 
+    /**
+     * @param $dbname
+     * @return int
+     */
     public function dropDB($dbname)
     {
         try {
@@ -104,6 +141,12 @@ class DatabaseRequest
         return 1;
     }
 
+    /**
+     * @param $tableName
+     * @param $column
+     * @param $param
+     * @return int
+     */
     public function addTableColumn($tableName, $column, $param)
     {
         try {
@@ -117,6 +160,12 @@ class DatabaseRequest
         return 1;
     }
 
+    /**
+     * @param $Table
+     * @param $columns
+     * @param $val
+     * @return int
+     */
     public function addTableData($Table, $columns, $val)
     {
         try {
@@ -131,9 +180,16 @@ class DatabaseRequest
         return 1;
     }
 
+    /**
+     * @param $Table
+     * @param $Params
+     * @param $Where
+     * @return int
+     */
     public function updateTableData($Table, $Params, $Where)
     {
         try {
+            echo "UPDATE {$Table} SET {$Params} WHERE 1=1 AND {$Where}";
             $this->dbConnect->exec("UPDATE {$Table} SET {$Params} WHERE 1=1 AND {$Where}");
         }
         catch (PDOException $ex)
@@ -144,6 +200,11 @@ class DatabaseRequest
         return 1;
     }
 
+    /**
+     * @param $Table
+     * @param $Where
+     * @return int
+     */
     public function deleteTableData($Table, $Where)
     {
         try {
@@ -157,6 +218,12 @@ class DatabaseRequest
         return 1;
     }
 
+    /**
+     * @param $Table
+     * @param $data
+     * @param $Where
+     * @return int
+     */
     public function findData_ASSOC($Table, $data, $Where)
     {
         $result = 0;
@@ -172,6 +239,12 @@ class DatabaseRequest
         return $result;
     }
 
+    /**
+     * @param $Table
+     * @param $data
+     * @param $Where
+     * @return int
+     */
     public function findData_OBJ($Table, $data, $Where)
     {
         $result = 0;
@@ -187,6 +260,13 @@ class DatabaseRequest
         return $result;
     }
 
+    /**
+     * @param $Table
+     * @param $data
+     * @param $Where
+     * @param $model
+     * @return int
+     */
     public function findData_CLASS($Table, $data, $Where, $model)
     {
         $result = 0;

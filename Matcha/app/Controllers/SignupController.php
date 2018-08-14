@@ -11,12 +11,28 @@ use \App\Database\DatabaseRequest;
 use \App\Models\Signup;
 use PDO;
 
+/**
+ * Class SignupController
+ * @package App\Controllers
+ */
 class SignupController extends Controller
 {
+    /**
+     * @param $request
+     * @param $response
+     * @param $args
+     * @return mixed
+     */
     public function index($request, $response, $args){
         return $this->view->render($response, 'signup/signup.twig');
     }
 
+    /**
+     * @param $request
+     * @param $response
+     * @param $args
+     * @return mixed
+     */
     public function registration($request, $response, $args){
         $params = $request->getParams();
         $database = new DatabaseRequest($this->db);
@@ -58,29 +74,57 @@ class SignupController extends Controller
         }
     }
 
-    private function checkLogin($request ,$response, $params, $database){
-        $data = $database->findData_CLASS("users", "Login","Login='{$params['Login']}'", Signup::class);
+    /**
+     * @param $request
+     * @param $response
+     * @param $params
+     * @param $database
+     * @return int
+     */
+    private function checkLogin($request , $response, $params, $database){
+        $Login = htmlspecialchars(addslashes($params['Login']));
+        $data = $database->findData_CLASS("users", "Login","Login='{$Login}'", Signup::class);
         if(!empty($data)) {
             return 1;
         }
         return 0;
     }
 
-    private function checkEmail($request ,$response, $params, $database){
-        $data = $database->findData_CLASS("users", "Email","Email='{$params['Email']}'", Signup::class);
+    /**
+     * @param $request
+     * @param $response
+     * @param $params
+     * @param $database
+     * @return int
+     */
+    private function checkEmail($request , $response, $params, $database){
+        $Email = htmlspecialchars(addslashes($params['Email']));
+        $data = $database->findData_CLASS("users", "Email","Email='{$Email}'", Signup::class);
         if(!empty($data)) {
             return 1;
         }
         return 0;
     }
 
-    private function addNewUser($response ,$params, $database)
+    /**
+     * @param $response
+     * @param $params
+     * @param $database
+     * @return mixed
+     */
+    private function addNewUser($response , $params, $database)
     {
         $password = hash('whirlpool',$params['Password']);
-        $database->addTableData("users", "Login, Password, Email", "'{$params['Login']}', '{$password}', '{$params['Email']}'");
+        $Login = htmlspecialchars(addslashes($params['Login']));
+        $Email = htmlspecialchars(addslashes($params['Email']));
+        $database->addTableData("users", "Login, Password, Email", "'{$Login}', '{$password}', '{$Email}'");
         return $response->withRedirect($this->router->pathFor('signin'));
     }
 
+    /**
+     * @param $Email
+     * @return int
+     */
     private function validateEmail($Email){
         if(preg_match('#(.+?)\@([a-z0-9-_]+)\.(aero|arpa|asia|biz|cat|ua|tv|ru|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|[a-z][a-z])#i', $Email)) {
             return (1);
@@ -89,6 +133,10 @@ class SignupController extends Controller
         }
     }
 
+    /**
+     * @param $Password
+     * @return int
+     */
     private function validatePassword($Password){
         if (preg_match('#^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$#', $Password)) {
             return (1);
