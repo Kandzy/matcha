@@ -41,7 +41,7 @@ class FirstTimeConnectedUser
             $login = htmlspecialchars(addslashes($_SESSION['User']->getUserLogin()));
             $data = $db->findData_ASSOC("users", "FullRegister", "Login='{$login}'");
             if ($data[0]['FullRegister'] == 0) {
-                $redirect = '/users/' . $login . '/register';
+                $redirect = '/profile/' . $login . '/register';
                 return $response->withRedirect($redirect);
             }
         }else {

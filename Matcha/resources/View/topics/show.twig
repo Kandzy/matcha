@@ -16,14 +16,14 @@
                 <h3 style="text-align: left; margin-left: 20px; color: white;"> {{ comment.Login }} at {{ comment.CreationDate }} said: </h3>
             </div>
             <div>
-                <p style="text-align: center; color: white"> {{ comment.Comment }}</p>
+                <textarea style="text-align: left; resize: vertical; width: 99.5%;  color: white; background-color: black; border-color: black" disabled rows="{{ comment.rows() }}">{{ comment.Comment }}</textarea>
             </div>
             <br>
         </div>
     {% endfor %}
     </div>
     <form method="post" action="{{ path_for('topics.show', {id: topicData[0].TopicID}) }}">
-        <textarea name="comment"></textarea>
+        <textarea name="comment" maxlength='10000' style="height: 100px; width: 99.5%;"></textarea>
         <button type="submit">Send Comment</button>
     </form>
 {% endblock %}

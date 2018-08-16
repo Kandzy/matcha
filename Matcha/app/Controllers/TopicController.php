@@ -40,8 +40,8 @@ class TopicController extends Controller
         $params = $request->getParams();
         $database = new DatabaseRequest($this->db);
         $user = $_SESSION['User']->getData();
-        $title = htmlspecialchars($params['Title']);
-        $description = htmlspecialchars($params['Description']);
+        $title = htmlspecialchars(addslashes($params['Title']));
+        $description = htmlspecialchars(addslashes($params['Description']));
         $database->addTableData('topics', "Owner, UserID, Title, Description", "'{$_SESSION['User']->getUserLogin()}', '{$user['UserID']}', '{$title}', '{$description}'");
         return $response->withRedirect($this->router->pathFor('topics'));
     }
@@ -76,7 +76,7 @@ class TopicController extends Controller
 //            'ID' => $args['id']
 //        ]);
 //        $topic = $topic->fetch(PDO::FETCH_OBJ);
-        $TopicID = htmlspecialchars(addslashes($args));
+        $TopicID = htmlspecialchars(addslashes($args['id']));
         $database = new DatabaseRequest($this->db);
         $topicData = $database->findData_ASSOC("topics","topics.TopicID, topics.Title, topics.Owner, topics.Description, topics.TopicCreationDate", "topics.TopicID='{$TopicID}'");
         $data = $database->findData_CLASS('topiccomments 
@@ -84,6 +84,15 @@ class TopicController extends Controller
         LEFT JOIN topics ON topiccomments.TopicID = topics.TopicID',
             "topiccomments.TCommentID, topiccomments.TopicID, topiccomments.CreationDate, topiccomments.Comment, users.Login, topics.Title",
             "topiccomments.TopicID='{$TopicID}'", Topic::class);
+
+        $i = 0;
+        while($data[$i])
+        {
+            $data[$i]->Comment = htmlspecialchars_decode($data[$i]->Comment);
+            $i++;
+        }
+        $topicData[0]['Title'] = htmlspecialchars_decode($topicData[0]['Title']);
+        $topicData[0]['Description'] = htmlspecialchars_decode($topicData[0]['Description']);
         return $this->view->render($response, 'topics/show.twig', compact('data', 'topicData'));
     }
 }
