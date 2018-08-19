@@ -61,7 +61,7 @@ $app->group('/profile', function ()
     })->setName('profile.update');
 })->add(new RedirectIfUnauthenticated);
 
-$app->get('/', MainPage::class.":index")->add(new FirstTimeConnectedUser($container->db));
+$app->get('/', MainPage::class.":index")->add(new FirstTimeConnectedUser($container->db))->setName('main');
 
 $app->get('/chat', function($request, $response, $args){
     if($_SESSION['User']) {
@@ -82,6 +82,18 @@ $app->group('/topics', function ()
 
 $app->get('/redirect', UserController::class.":redirect")->setName('top.st');
 
+$app->post('/test', function ($request, $response)
+{
+    $param = $request->getParams();
+    $data = [
+        'id' => '1',
+        'name' => 'login',
+        'onemore' => $param
+    ];
+    return $response->withStatus(200)
+        ->withHeader('Content-Type', 'application/json')
+        ->write(json_encode($data));
+});
 
 //$app->get('/', function (){
 //    $user = new User;

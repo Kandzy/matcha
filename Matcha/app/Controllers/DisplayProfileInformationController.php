@@ -72,12 +72,6 @@ class DisplayProfileInformationController extends Controller
         $params = $request->getParams();
         $database = new DatabaseRequest($this->db);
         $database->UseDB('db_matcha');
-//        $img = $params['imgage'];
-//        $img = str_replace('data:image/png;base64,', '', $img);
-//        $img = str_replace(' ', '+', $img);
-//        $data = base64_decode($img);
-//        $file = "photos/".md5($data).".png";
-//        file_put_contents($file, $data);
         $FirstName = htmlspecialchars(addslashes($params['FirstName']));
         $LastName = htmlspecialchars(addslashes($params['LastName']));
         $City = htmlspecialchars(addslashes($params['City']));

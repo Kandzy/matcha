@@ -67,8 +67,10 @@ class UserController
             unset($this->password);
             $this->setLogin($Login);
             $this->UploadData($this->Login, $database);
+            return true; ///new
         } else {
             unset($_SESSION['User']);
+            return false; ///new
         }
         /**
          * HERE SHOULD BE ERROR!

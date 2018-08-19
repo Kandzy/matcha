@@ -228,6 +228,7 @@ class DatabaseRequest
     {
         $result = 0;
         try {
+//            echo "SELECT {$data} FROM {$Table} WHERE 1=1 AND {$Where}";
             $prep = $this->dbConnect->prepare("SELECT {$data} FROM {$Table} WHERE 1=1 AND {$Where}");
             $prep->execute();
             $result = $prep->fetchAll(PDO::FETCH_ASSOC);

@@ -11,7 +11,7 @@ if($db->createDataBase("db_matcha")) {
 
     $db->createTable("Users", "UserID");
     $db->addTableColumn("Users", "Login", "varchar(100) NOT NULL UNIQUE");
-    $db->addTableColumn("Users", "Password", "varchar(100)");
+    $db->addTableColumn("Users", "Password", "varchar(512)");
     $db->addTableColumn("Users", "Email", "varchar(100) NOT NULL UNIQUE");
     $db->addTableColumn("Users", "FirstName", "varchar(100)");
     $db->addTableColumn("Users", "LastName", "varchar(100)");

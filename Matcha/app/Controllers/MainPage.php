@@ -22,8 +22,9 @@ class MainPage extends Controller
      * @return mixed
      */
     public function index($req, $res, $args){
-        $currentUser = $_SESSION['User']->getData();
-        
+        if (method_exists($_SESSION['User'], "getData")) {
+            $currentUser = $_SESSION['User']->getData();
+        }
         return $this->view->render($res, 'mainpage/mainpage.twig', compact('data'));
     }
 }

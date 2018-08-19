@@ -39,12 +39,19 @@ class FirstTimeConnectedUser
         $db = new DatabaseRequest($this->database);
         if (method_exists($_SESSION['User'], "getUserLogin")) {
             $login = htmlspecialchars(addslashes($_SESSION['User']->getUserLogin()));
-            $data = $db->findData_ASSOC("users", "FullRegister", "Login='{$login}'");
-            if ($data[0]['FullRegister'] == 0) {
-                $redirect = '/profile/' . $login . '/register';
-                return $response->withRedirect($redirect);
+            $data = $db->findData_ASSOC("users", "Login ,FullRegister", "Login='{$login}'");
+
+            if ($data[0]['Login'] != null) {
+                if ($data[0]['FullRegister'] == 0) {
+                    $redirect = '/profile/' . $login . '/register';
+                    return $response->withRedirect($redirect);
+
+                }
+            } else {
+                unset($_SESSION['User']);
+                return $response->withRedirect('/signin');
             }
-        }else {
+        } else {
             return $response->withRedirect('/signin');
         }
         return $next($request, $response);
