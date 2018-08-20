@@ -7,7 +7,9 @@ const Navbar = () =>
         <nav>
             <div>
                 <Link  to='/'>Home page</Link>
+                <Link  to='/signin'>Signin</Link>
                 <Link  to='/signup'>Signup</Link>
+                <Link to='/users'>Users</Link>
                 {/*<a className="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>*/}
                 {/*<a className="nav-item nav-link" href="#">Features</a>*/}
                 {/*<a className="nav-item nav-link" href="#">Pricing</a>*/}

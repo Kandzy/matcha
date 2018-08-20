@@ -40,10 +40,11 @@ $app->group('/recover', function () {
 
 $app->group('/users', function (){
     $this->get('', DisplayUsersInformationController::class.":index")->setName('users');
+//    $this->get
     $this->post('/find', DisplayUsersInformationController::class.":findUser")->setName('user.find.field');
     $this->get('/find', DisplayUsersInformationController::class.":findUserPage")->setName('user.find');
     $this->get('/{username}', DisplayUsersInformationController::class.":displayUserPage")->setName('profile');
-})->add(new RedirectIfUnauthenticated)->add(new FirstTimeConnectedUser($container->db));
+});//->add(new RedirectIfUnauthenticated)->add(new FirstTimeConnectedUser($container->db));
 
 $app->group('/profile', function ()
 {

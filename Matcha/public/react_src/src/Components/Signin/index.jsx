@@ -1,45 +1,30 @@
 import React from 'react'
 import axios from 'axios'
 
-class Signup extends React.Component{
+class Signin extends React.Component{
     constructor(props)
     {
         super(props);
+        // this.handleRegistration.bind(this);
         this.state = {
             Login: "",
-            Password: "",
-            Email: "",
-            PasswordConfirm: ""
-        };
+            Password: ""
+        }
         this.handleLoginChange = this.handleLoginChange.bind(this);
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
-        this.handleEmailChange = this.handleEmailChange.bind(this);
-        this.handlePasswordConfirmChange = this.handlePasswordConfirmChange.bind(this);
         this.handleRegistration = this.handleRegistration.bind(this);
     }
 
     handleLoginChange(event) {
-        console.log('Login changed');
+        console.log('Email changed');
         this.setState({
             Login: event.target.value
         });
     }
-    handleEmailChange(event) {
+    handlePasswordChange(event) {
         console.log('Email changed');
         this.setState({
-            Email: event.target.value
-        });
-    }
-    handlePasswordChange(event) {
-        console.log('Password changed');
-        this.setState({
             Password: event.target.value
-        });
-    }
-    handlePasswordConfirmChange(event) {
-        console.log('Password changed');
-        this.setState({
-            PasswordConfirm: event.target.value
         });
     }
 
@@ -47,10 +32,8 @@ class Signup extends React.Component{
         var data = new FormData();
         data.append('Login', this.state.Login);
         data.append('Password', this.state.Password);
-        data.append('Email', this.state.Email);
-        data.append('ConfirmedPassword', this.state.PasswordConfirm);
         axios({
-            url: 'http://localhost:8100/signup',
+            url: 'http://localhost:8100/signin',
 
             method: 'post', // default
 
@@ -63,25 +46,33 @@ class Signup extends React.Component{
             responseType: 'json', // default
 
         }).then(response => {
-            console.log(response.data);
+            console.log(response.data['isLogin']);
+            if (response.data['isLogin'])
+            {
+                window.location.assign('/');
+            }
         }).catch(errors => {
             alert(errors)
         });
+        // console.log(response.data);
+
+    }
+
+    sendData(){
 
     }
 
     render() {
+        // this.handleRegistration();
         return(
 
             <form>
                 <input type='text' placeholder='Login' value={this.state.Login} onChange={this.handleLoginChange} />
-                <input type='text' placeholder='Email' value={this.state.Email} onChange={this.handleEmailChange} />
                 <input type='password' placeholder='Password' value={this.state.Password} onChange={this.handlePasswordChange} />
-                <input type='password' placeholder='Password Confirm' value={this.state.PasswordConfirm} onChange={this.handlePasswordConfirmChange} />
                 <button type="button" onClick={this.handleRegistration}>Submit</button>
             </form>
         );
     };
 }
 
-export default Signup
+export default Signin

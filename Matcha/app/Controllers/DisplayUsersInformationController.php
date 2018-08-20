@@ -24,17 +24,37 @@ class DisplayUsersInformationController extends Controller
      * @return mixed
      */
     public function index($request, $response, $args){
-//        return 1;
         $database = new DatabaseRequest($this->db);
         $database->UseDB('db_matcha');
-        $data = $database->findData_CLASS("users", "UserID, Login, Email, FirstName, LastName, City, Country, Age, Notification, Gender, Orientation, map_height, map_width, Bio, Tags, Avatar", "1=1", DisplayUsersInformation::class);
-        $i = 0;
-        while ($data[$i])
-        {
-            $this->checkData($data[$i]);
-            $i++;
-        }
-        return $this->view->render($response, 'users/allUsers.twig', compact('data'));
+
+        $data = $database->findData_ASSOC("users", "UserID, Login, Email, FirstName, LastName, City, Country, Age, Notification, Gender, Orientation, map_height, map_width, Bio, Tags, Avatar", "1=1");
+//        $i = 0;
+//        while ($data[$i])
+//        {
+//            $this->checkData($data[$i]);
+//            $i++;
+//        }
+//        $data = [
+//            "toto" => 'yo'
+//            ];
+//        var_dump($data);
+//        $data = $request->getParams();
+        return $response->withStatus(200)
+            ->withHeader('Content-Type', 'application/json')
+            ->write(json_encode($data));
+//        return $this->view->render($response, 'users/allUsers.twig', compact('data'));
+    }
+
+    public function SendUsers($request, $response, $args){
+        $database = new DatabaseRequest($this->db);
+        $database->UseDB('db_matcha');
+
+        $data = $database->findData_ASSOC("users", "UserID, Login, Email, FirstName, LastName, City, Country, Age, Notification, Gender, Orientation, map_height, map_width, Bio, Tags, Avatar", "1=1");
+
+        $data = $request->getParams();
+        return $response->withStatus(200)
+            ->withHeader('Content-Type', 'application/json')
+            ->write(json_encode($data));
     }
 
     /**

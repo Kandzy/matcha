@@ -154,10 +154,10 @@ class DatabaseRequest
         }
         catch (PDOException $ex)
         {
-            echo "addTableColumn failed: ".$ex->getMessage()."</br>";
-            return 0;
+//            echo "addTableColumn failed: ".$ex->getMessage()."</br>";
+            return (false);
         }
-        return 1;
+        return (true);
     }
 
     /**
@@ -169,7 +169,7 @@ class DatabaseRequest
     public function addTableData($Table, $columns, $val)
     {
         try {
-            echo "INSERT INTO {$Table}({$columns}) VALUES ({$val})";
+//            echo "INSERT INTO {$Table}({$columns}) VALUES ({$val})";
             $this->dbConnect->exec("INSERT INTO {$Table}({$columns}) VALUES ({$val})");
         }
         catch (PDOException $ex)
@@ -189,7 +189,7 @@ class DatabaseRequest
     public function updateTableData($Table, $Params, $Where)
     {
         try {
-            echo "UPDATE {$Table} SET {$Params} WHERE 1=1 AND {$Where}";
+//            echo "UPDATE {$Table} SET {$Params} WHERE 1=1 AND {$Where}";
             $this->dbConnect->exec("UPDATE {$Table} SET {$Params} WHERE 1=1 AND {$Where}");
         }
         catch (PDOException $ex)
