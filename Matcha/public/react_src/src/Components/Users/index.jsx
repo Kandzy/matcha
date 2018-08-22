@@ -6,6 +6,7 @@ class Users extends React.Component {
         super(props);
         this.state = {
             Users: 0,
+            userreq: ""
         }
         this.listOfUsers = this.listOfUsers.bind(this);
     }
@@ -14,7 +15,6 @@ class Users extends React.Component {
     {
         var data = new FormData();
         data.append('Login', "lol");
-
         axios({
             url: 'http://localhost:8100/users',
 
@@ -29,17 +29,21 @@ class Users extends React.Component {
             responseType: 'json', // default
 
         }).then(response => {
+            // this.setState({userreq: response});
+            // res = response;
             console.log(response.data);
+            // return (response.data);
         }).catch(errors => {
             alert(errors)
         });
+        // console.log(res);
     }
 
     render() {
-        this.listOfUsers();
+       this.listOfUsers();
         return (
-            <div>hello users</div>
-        )
+            <div> Users </div>
+        );
     }
 }
 

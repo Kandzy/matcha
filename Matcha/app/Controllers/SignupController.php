@@ -140,7 +140,8 @@ class SignupController extends Controller
      * @return int
      */
     private function validatePassword($Password){
-        if (preg_match('#^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$#', $Password)) {
+        if (preg_match('#^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)
+        [a-zA-Z\d]{6,}$#', $Password)) {
             return (true);
         } else {
             return (false);

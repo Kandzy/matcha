@@ -1,5 +1,6 @@
 import React from 'react'
 import axios from 'axios'
+import {Input, Button, Icon} from 'react-materialize'
 
 class Signin extends React.Component{
     constructor(props)
@@ -66,13 +67,16 @@ class Signin extends React.Component{
         // this.handleRegistration();
         return(
 
-            <form>
-                <input type='text' placeholder='Login' value={this.state.Login} onChange={this.handleLoginChange} />
-                <input type='password' placeholder='Password' value={this.state.Password} onChange={this.handlePasswordChange} />
-                <button type="button" onClick={this.handleRegistration}>Submit</button>
-            </form>
+            <div className="container row col s6 offset-s3">
+                <div className="col s6 offset-s3">
+                    <h4 className="col s3 m4 offset-s2 offset-m4">Signin:</h4>
+                    <Input  type="email" label="Login" value={this.state.Login} onChange={this.handleLoginChange} s={12} />
+                    <Input  type="password" label="Password" value={this.state.Password} onChange={this.handlePasswordChange} s={12} />
+                    <Button waves='light' className="col s8 m4 offset-s2 offset-m4"  onClick={this.handleRegistration}>Submit<Icon right>send</Icon></Button>
+                </div>
+            </div>
+
         );
     };
 }
-
 export default Signin

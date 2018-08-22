@@ -1,5 +1,6 @@
 import React from 'react'
 import axios from 'axios'
+import {Input, Button, Icon} from 'react-materialize'
 
 class Signup extends React.Component{
     constructor(props)
@@ -73,13 +74,16 @@ class Signup extends React.Component{
     render() {
         return(
 
-            <form>
-                <input type='text' placeholder='Login' value={this.state.Login} onChange={this.handleLoginChange} />
-                <input type='text' placeholder='Email' value={this.state.Email} onChange={this.handleEmailChange} />
-                <input type='password' placeholder='Password' value={this.state.Password} onChange={this.handlePasswordChange} />
-                <input type='password' placeholder='Password Confirm' value={this.state.PasswordConfirm} onChange={this.handlePasswordConfirmChange} />
-                <button type="button" onClick={this.handleRegistration}>Submit</button>
-            </form>
+            <div className="container row col s6 offset-s3">
+                <div className="col s6 offset-s3">
+                    <h4 className="col s3 m4 offset-s2 offset-m4">Signup:</h4>
+                    <Input type='text' label='Login' value={this.state.Login} onChange={this.handleLoginChange} s={12}/>
+                    <Input type='text' label='Email' value={this.state.Email} onChange={this.handleEmailChange} s={12}/>
+                    <Input type='password' label='Password' value={this.state.Password} onChange={this.handlePasswordChange} s={12}/>
+                    <Input type='password' label='Password Confirm' value={this.state.PasswordConfirm} onChange={this.handlePasswordConfirmChange} s={12}/>
+                    <Button waves='light' className="col s8 m4 offset-s2 offset-m4" onClick={this.handleRegistration}>Submit<Icon right>send</Icon></Button>
+                </div>
+            </div>
         );
     };
 }

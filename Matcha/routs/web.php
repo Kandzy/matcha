@@ -73,13 +73,13 @@ $app->get('/chat', function($request, $response, $args){
     return $this->view->render($response, 'chat/chat.twig', compact('data'));
 })->add(new RedirectIfUnauthenticated())->add(new FirstTimeConnectedUser($container->db))->setName('chat');
 
-$app->group('/topics', function ()
+$app->group('/forum', function ()
 {
-    $this->get('', TopicController::class . ':index')->setName('topics');
-    $this->post('', TopicController::class . ':addTopic')->setName('topics.add');
+    $this->post('', TopicController::class . ':getTopics')->setName('topics');
+    $this->post('/add', TopicController::class . ':addTopic')->setName('topics.add');
     $this->get('/{id}', TopicController::class . ':show')->setName('topics.show');
     $this->post('/{id}', TopicController::class . ':addComment');
-})->add(new RedirectIfUnauthenticated)->add(new FirstTimeConnectedUser($container->db));
+});//->add(new RedirectIfUnauthenticated)->add(new FirstTimeConnectedUser($container->db));
 
 $app->get('/redirect', UserController::class.":redirect")->setName('top.st');
 

@@ -22,11 +22,13 @@ class TopicController extends Controller
      * @param $response
      * @return mixed
      */
-    public function index($request, $response)
+    public function getTopics($request, $response)
     {
         $database = new DatabaseRequest($this->db);
-        $data = $database->findData_CLASS('topics', "*", "1=1 ORDER BY TopicCreationDate DESC", Topic::class);
-        return $this->view->render($response, 'topics/index.twig', compact('data'));
+        $data = $database->findData_ASSOC('topics', "*", "1=1 ORDER BY TopicCreationDate DESC");
+        return $response->withStatus(200)
+            ->withHeader('Content-Type', 'application/json')
+            ->write(json_encode($data));
     }
 
     /**
