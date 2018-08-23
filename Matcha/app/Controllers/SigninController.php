@@ -39,14 +39,15 @@ class SigninController extends Controller
     {
         $param = $request->getParams();
         $_SESSION['User'] = new UserController();
-        $userLogin = $_SESSION['User']->setUserOnline($param['Login'], $param['Password'], $this->db);
-        $data = [
-          "isLogin" => $userLogin
-        ];
-//var_dump($_SESSION['User']);
-//        return $response->withRedirect($this->router->pathFor('topics'));
+        $userData = $_SESSION['User']->setUserOnline($param['Login'], $param['Password'], $this->db);
+        if ($userData)
+        {
+            return $response->withStatus(200)
+                ->withHeader('Content-Type', 'application/json')
+                ->write(json_encode($userData));
+        }
         return $response->withStatus(200)
             ->withHeader('Content-Type', 'application/json')
-            ->write(json_encode($data));
+            ->write(json_encode(null));
     }
 }

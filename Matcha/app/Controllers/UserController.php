@@ -60,21 +60,16 @@ class UserController
         $database->UseDB("db_matcha");
         $Login = htmlspecialchars(addslashes($Login));
         $this->password = $database->findData_ASSOC('users', "Password", "Login='{$Login}'");
-//        var_dump($this->password);
-
         if (hash("whirlpool", $Password) == $this->password[0]['Password'])
         {
             unset($this->password);
             $this->setLogin($Login);
             $this->UploadData($this->Login, $database);
-            return true; ///new
+            return $this->data; ///new
         } else {
             unset($_SESSION['User']);
             return false; ///new
         }
-        /**
-         * HERE SHOULD BE ERROR!
-         */
     }
 
     /**
@@ -83,9 +78,6 @@ class UserController
      * @return mixed
      */
     public function setUserLogout($request, $response){
-//        unset($this->Login);
-//        unset($this->data);
-//        unset($this->password);
         unset($_SESSION['User']);
         return $response->withRedirect('/signin');
     }
@@ -106,9 +98,8 @@ class UserController
      * @param $database
      */
     private function UploadData($Login, $database){
-//        $database->UseDB("db_matcha");
         $Login = htmlspecialchars(addslashes($Login));
-        $data = $database->findData_ASSOC('users', "*", "Login='{$Login}'");
+        $data = $database->findData_ASSOC('users', "token", "Login='{$Login}'");
         $this->data = $data[0];
     }
 

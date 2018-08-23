@@ -45,6 +45,7 @@ class TopicController extends Controller
         $title = htmlspecialchars(addslashes($params['Title']));
         $description = htmlspecialchars(addslashes($params['Description']));
         $database->addTableData('topics', "Owner, UserID, Title, Description", "'{$_SESSION['User']->getUserLogin()}', '{$user['UserID']}', '{$title}', '{$description}'");
+
         return $response->withRedirect($this->router->pathFor('topics'));
     }
 
@@ -95,6 +96,12 @@ class TopicController extends Controller
         }
         $topicData[0]['Title'] = htmlspecialchars_decode($topicData[0]['Title']);
         $topicData[0]['Description'] = htmlspecialchars_decode($topicData[0]['Description']);
-        return $this->view->render($response, 'topics/show.twig', compact('data', 'topicData'));
+        $topicResponse = [
+            'topic_about' => $topicData,
+            'topic_content' => $data
+        ];
+        return $response->withStatus(200)
+            ->withHeader('Content-Type', 'application/json')
+            ->write(json_encode($topicResponse));
     }
 }
