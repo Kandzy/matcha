@@ -19,50 +19,50 @@ use \App\Controllers\MainPage;
 use App\Controllers\DisplayProfileInformationController;
 
 $app->group('/signin', function (){
-    $this->get('', SigninController::class.":index")->setName('signin');
+//    $this->get('', SigninController::class.":index")->setName('signin');
     $this->post('', SigninController::class.":loginUser");
-    $this->get('/logout', UserController::class.":setUserLogout")->setName('signin.logout');
+//    $this->get('/logout', UserController::class.":setUserLogout")->setName('signin.logout');
 })->add(new RedirectIfAunthenticated);
 
 
 $app->group('/signup', function () {
-    $this->get('', SignupController::class . ":index")->setName('signup');
+//    $this->get('', SignupController::class . ":index")->setName('signup');
     $this->post('', SignupController::class.":registration");
 })->add(new RedirectIfAunthenticated);
 
-$app->group('/recover', function () {
-    $this->get('/password', function ()
-    {
-       echo "Recover Password";
-    });
-});
+//$app->group('/recover', function () {
+//    $this->get('/password', function ()
+//    {
+//       echo "Recover Password";
+//    });
+//});
 
 
 $app->group('/users', function (){
-    $this->get('', DisplayUsersInformationController::class.":index")->setName('users');
+    $this->post('', DisplayUsersInformationController::class.":index")->setName('users');
 //    $this->get
-    $this->post('/find', DisplayUsersInformationController::class.":findUser")->setName('user.find.field');
-    $this->get('/find', DisplayUsersInformationController::class.":findUserPage")->setName('user.find');
-    $this->get('/{username}', DisplayUsersInformationController::class.":displayUserPage")->setName('profile');
+//    $this->post('/find', DisplayUsersInformationController::class.":findUser")->setName('user.find.field');
+//    $this->get('/find', DisplayUsersInformationController::class.":findUserPage")->setName('user.find');
+    $this->post('/{username}', DisplayUsersInformationController::class.":displayUserPage")->setName('profile');
 });//->add(new RedirectIfUnauthenticated)->add(new FirstTimeConnectedUser($container->db));
 
 $app->group('/profile', function ()
 {
-    $this->get('', DisplayProfileInformationController::class.":redirProfile")->setName('take.profile');
-    $this->get('/{username}', DisplayProfileInformationController::class.":displayProfilePage")->setName('current.profile');
-    $this->get('/{username}/register', DisplayProfileInformationController::class.":finishUserRegister");
-    $this->post('/{username}/register/sendData', DisplayProfileInformationController::class.":registerUserSendData")->setName('registerUserSendData');
-    $this->post('/uploadPhoto', function ()
-    {
-        echo $_FILES['photoloader']['name'];
-    });
-    $this->get('/{username}/update', function ()
-    {
-        echo "UPDATE";
-    })->setName('profile.update');
+//    $this->get('', DisplayProfileInformationController::class.":redirProfile")->setName('take.profile');
+//    $this->get('/{username}', DisplayProfileInformationController::class.":displayProfilePage")->setName('current.profile');
+//    $this->get('/{username}/register', DisplayProfileInformationController::class.":finishUserRegister");
+//    $this->post('/{username}/register/sendData', DisplayProfileInformationController::class.":registerUserSendData")->setName('registerUserSendData');
+//    $this->post('/uploadPhoto', function ()
+//    {
+//        echo $_FILES['photoloader']['name'];
+//    });
+//    $this->get('/{username}/update', function ()
+//    {
+//        echo "UPDATE";
+//    })->setName('profile.update');
 })->add(new RedirectIfUnauthenticated);
 
-$app->get('/', MainPage::class.":index")->add(new FirstTimeConnectedUser($container->db))->setName('main');
+//$app->get('/', MainPage::class.":index")->add(new FirstTimeConnectedUser($container->db))->setName('main');
 
 $app->get('/chat', function($request, $response, $args){
     if($_SESSION['User']) {
@@ -71,30 +71,30 @@ $app->get('/chat', function($request, $response, $args){
     ];
     }
     return $this->view->render($response, 'chat/chat.twig', compact('data'));
-})->add(new RedirectIfUnauthenticated())->add(new FirstTimeConnectedUser($container->db))->setName('chat');
+});//->add(new RedirectIfUnauthenticated())->add(new FirstTimeConnectedUser($container->db))->setName('chat');
 
 $app->group('/forum', function ()
 {
     $this->post('', TopicController::class . ':getTopics')->setName('topics');
     $this->post('/add', TopicController::class . ':addTopic')->setName('topics.add');
-    $this->get('/{id}', TopicController::class . ':show')->setName('topics.show');
-    $this->post('/{id}', TopicController::class . ':addComment');
+    $this->post('/{id}', TopicController::class . ':show')->setName('topics.show');
+//    $this->post('/{id}', TopicController::class . ':addComment');
 });//->add(new RedirectIfUnauthenticated)->add(new FirstTimeConnectedUser($container->db));
 
-$app->get('/redirect', UserController::class.":redirect")->setName('top.st');
+//$app->get('/redirect', UserController::class.":redirect")->setName('top.st');
 
-$app->post('/test', function ($request, $response)
-{
-    $param = $request->getParams();
-    $data = [
-        'id' => '1',
-        'name' => 'login',
-        'onemore' => $param
-    ];
-    return $response->withStatus(200)
-        ->withHeader('Content-Type', 'application/json')
-        ->write(json_encode($data));
-});
+//$app->post('/test', function ($request, $response)
+//{
+//    $param = $request->getParams();
+//    $data = [
+//        'id' => '1',
+//        'name' => 'login',
+//        'onemore' => $param
+//    ];
+//    return $response->withStatus(200)
+//        ->withHeader('Content-Type', 'application/json')
+//        ->write(json_encode($data));
+//});
 
 //$app->get('/', function (){
 //    $user = new User;

@@ -2,6 +2,7 @@
 
 
 $db = new \App\Database\DatabaseRequest($container->db);
+
 if($db->createDataBase("db_matcha")) {
     $db->UseDB("db_matcha");
 
@@ -10,7 +11,7 @@ if($db->createDataBase("db_matcha")) {
      */
 
     $db->createTable("Users", "UserID");
-    $db->addTableColumn("Users", "token", "varchar(100) NOT NULL UNIQUE");
+    $db->addTableColumn("Users", "token", "varchar(100) UNIQUE");
     $db->addTableColumn("Users", "Login", "varchar(100) NOT NULL UNIQUE");
     $db->addTableColumn("Users", "Password", "varchar(512)");
     $db->addTableColumn("Users", "Email", "varchar(100) NOT NULL UNIQUE");

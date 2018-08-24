@@ -15,7 +15,6 @@ class Forum extends React.Component{
 
     getTopics() {
         var data = new FormData();
-        // data.append('lol', 'kek');
         axios({
             url: 'http://localhost:8100/forum',
 
@@ -45,14 +44,17 @@ class Forum extends React.Component{
         return(
             <div className="container row col s6 offset-s3">
                 <div className="col s6 offset-s3">
-                    <h4 className="col s3 m4 offset-s2 offset-m4">Forum:</h4>
+                    <h4 className="col s3 m4 offset-s2 offset-m4">Forum</h4>
                     {/*<Input type='text' label='Login' value={this.state.Login} onChange={this.handleLoginChange} s={12}/>*/}
                     {/*<Input type='text' label='Email' value={this.state.Email} onChange={this.handleEmailChange} s={12}/>*/}
                     {/*<Input type='password' label='Password' value={this.state.Password} onChange={this.handlePasswordChange} s={12}/>*/}
                     {/*<Input type='password' label='Password Confirm' value={this.state.PasswordConfirm} onChange={this.handlePasswordConfirmChange} s={12}/>*/}
-                    <Button waves='light' className="col s8 m4 offset-s2 offset-m4" onClick={this.getTopics}>Submit<Icon right>send</Icon></Button>
+                    <Button waves='light' className="col s8 m4 offset-s2 offset-m4" onClick={this.getTopics}>Go!<Icon right>send</Icon></Button>
+
                 </div>
-                hello
+                <div>
+                    <a className="btn-floating btn-large waves-effect waves-light red lighten-2"><i className="material-icons">add</i></a>
+                </div>
             </div>
         );
     };

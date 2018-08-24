@@ -150,6 +150,7 @@ class DatabaseRequest
     public function addTableColumn($tableName, $column, $param)
     {
         try {
+//            echo "ALTER TABLE {$tableName} ADD {$column} {$param}";
             $this->dbConnect->exec("ALTER TABLE {$tableName} ADD {$column} {$param}");
         }
         catch (PDOException $ex)
@@ -226,7 +227,7 @@ class DatabaseRequest
      */
     public function findData_ASSOC($Table, $data, $Where)
     {
-        $result = 0;
+        $result = [];
         try {
 //            echo "SELECT {$data} FROM {$Table} WHERE 1=1 AND {$Where}";
             $prep = $this->dbConnect->prepare("SELECT {$data} FROM {$Table} WHERE 1=1 AND {$Where}");

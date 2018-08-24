@@ -15,7 +15,7 @@ use \App\Models\DisplayUsersInformation;
  * Class DisplayUsersInformationController
  * @package App\Controllers
  */
-class DisplayUsersInformationController extends Controller
+class DisplayUsersInformationController extends DisplayUsersInformation
 {
     /**
      * @param $request
@@ -24,25 +24,10 @@ class DisplayUsersInformationController extends Controller
      * @return mixed
      */
     public function index($request, $response, $args){
-        $database = new DatabaseRequest($this->db);
-        $database->UseDB('db_matcha');
 
-        $data = $database->findData_ASSOC("users", "UserID, Login, Email, FirstName, LastName, City, Country, Age, Notification, Gender, Orientation, map_height, map_width, Bio, Tags, Avatar", "1=1");
-//        $i = 0;
-//        while ($data[$i])
-//        {
-//            $this->checkData($data[$i]);
-//            $i++;
-//        }
-//        $data = [
-//            "toto" => 'yo'
-//            ];
-//        var_dump($data);
-//        $data = $request->getParams();
         return $response->withStatus(200)
             ->withHeader('Content-Type', 'application/json')
-            ->write(json_encode($data));
-//        return $this->view->render($response, 'users/allUsers.twig', compact('data'));
+            ->write(json_encode($this->allUsers()));
     }
 
     public function SendUsers($request, $response, $args){
@@ -51,7 +36,7 @@ class DisplayUsersInformationController extends Controller
 
         $data = $database->findData_ASSOC("users", "UserID, Login, Email, FirstName, LastName, City, Country, Age, Notification, Gender, Orientation, map_height, map_width, Bio, Tags, Avatar", "1=1");
 
-        $data = $request->getParams();
+//        $data = $request->getParams();
         return $response->withStatus(200)
             ->withHeader('Content-Type', 'application/json')
             ->write(json_encode($data));
@@ -101,7 +86,6 @@ class DisplayUsersInformationController extends Controller
             $i++;
         }
         return $this->view->render($response, 'users/findUserResult.twig', compact('users'));
-//        return $response->withRedirect($this->router->pathFor('users')."/{$param}");
     }
 
 
@@ -113,12 +97,10 @@ class DisplayUsersInformationController extends Controller
      * @return mixed
      */
     public function displayUserPage($request, $response, $args){
-        $database = new DatabaseRequest($this->db);
-        $database->UseDB('db_matcha');
-        $Login = htmlspecialchars(addslashes($args['username']));
-        $data = $database->findData_CLASS("users", "UserID, Login, Email, FirstName, LastName, City, Country, Age, Notification, Gender,Orientation, map_height, map_width, Bio, Tags, Avatar", "Login='{$Login}'", DisplayUsersInformation::class);
-        $this->checkData($data[0]);
-        return $this->view->render($response, 'users/userPage.twig', compact('data'));
+
+        return $response->withStatus(200)
+            ->withHeader('Content-Type', 'application/json')
+            ->write(json_encode($this->userPage($args)));
     }
 
     /**

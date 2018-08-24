@@ -6,19 +6,19 @@ class Users extends React.Component {
         super(props);
         this.state = {
             Users: 0,
-            userreq: ""
-        }
-        this.listOfUsers = this.listOfUsers.bind(this);
+            userreq: "",
+            login : this.props.match.params.login
+        };
+        this.userPage = this.userPage.bind(this);
     }
 
-    listOfUsers()
+    userPage(login)
     {
         var data = new FormData();
-        data.append('Login', "lol");
         axios({
-            url: 'http://localhost:8100/users',
+            url: 'http://localhost:8100/users/' + login,
 
-            method: 'get', // default
+            method: 'post', // default
 
             headers: {
                 'Content-Type': 'multipart/form-data',
@@ -29,10 +29,7 @@ class Users extends React.Component {
             responseType: 'json', // default
 
         }).then(response => {
-            // this.setState({userreq: response});
-            // res = response;
             console.log(response.data);
-            // return (response.data);
         }).catch(errors => {
             alert(errors)
         });
@@ -40,7 +37,8 @@ class Users extends React.Component {
     }
 
     render() {
-       this.listOfUsers();
+        // var login = "Aika";
+       this.userPage(this.state.login);
         return (
             <div> Users </div>
         );

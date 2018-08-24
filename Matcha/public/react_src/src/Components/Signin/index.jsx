@@ -10,7 +10,7 @@ class Signin extends React.Component{
         this.state = {
             Login: "",
             Password: ""
-        }
+        };
         this.handleLoginChange = this.handleLoginChange.bind(this);
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
         this.handleRegistration = this.handleRegistration.bind(this);
@@ -47,11 +47,11 @@ class Signin extends React.Component{
             responseType: 'json', // default
 
         }).then(response => {
-            console.log(response.data['isLogin']);
-            if (response.data['isLogin'])
-            {
+            // console.log(response.data['isLogin']);
+            // if (response.data['isLogin'])
+            // {
                 window.location.assign('/');
-            }
+            // }
         }).catch(errors => {
             alert(errors)
         });

@@ -15,7 +15,7 @@ use PDO;
  * Class SignupController
  * @package App\Controllers
  */
-class SignupController extends Controller
+class SignupController extends Signup
 {
     /**
      * @param $request
@@ -70,82 +70,5 @@ class SignupController extends Controller
         return $response->withStatus(200)
             ->withHeader('Content-Type', 'application/json')
             ->write(json_encode($data));
-    }
-
-    /**
-     * @param $request
-     * @param $response
-     * @param $params
-     * @param $database
-     * @return int
-     */
-    private function checkLogin($request , $response, $params, $database){
-        $Login = htmlspecialchars(addslashes($params['Login']));
-        $data = $database->findData_CLASS("users", "Login","Login='{$Login}'", Signup::class);
-        if(!empty($data)) {
-            return (true);
-        }
-        return (false);
-    }
-
-    /**
-     * @param $request
-     * @param $response
-     * @param $params
-     * @param $database
-     * @return int
-     */
-    private function checkEmail($request , $response, $params, $database){
-        $Email = htmlspecialchars(addslashes($params['Email']));
-        $data = $database->findData_CLASS("users", "Email","Email='{$Email}'", Signup::class);
-        if(!empty($data)) {
-            return (true);
-        }
-        return (false);
-    }
-
-    /**
-     * @param $response
-     * @param $params
-     * @param $database
-     * @return mixed
-     */
-    private function addNewUser($response , $params, $database)
-    {
-        $password = hash('whirlpool',$params['Password']);
-        $Login = htmlspecialchars(addslashes($params['Login']));
-        $Email = htmlspecialchars(addslashes($params['Email']));
-        if ($database->addTableData("users", "Login, Password, Email", "'{$Login}', '{$password}', '{$Email}'")){
-            return (true);
-        }
-        else {
-            return (false);
-        }
-    }
-
-    /**
-     * @param $Email
-     * @return int
-     */
-    private function validateEmail($Email){
-        if(preg_match('#(.+?)\@([a-z0-9-_]+)\.(aero|arpa|asia|biz|cat|ua|tv|ru|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|[a-z][a-z])#i', $Email)) {
-            return (true);
-        } else {
-            return (false);
-        }
-    }
-
-    /**
-     * @param $Password
-     * @return int
-     */
-    private function validatePassword($Password){
-        if (preg_match('#^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)
-        [a-zA-Z\d]{6,}$#', $Password)) {
-            return (true);
-        } else {
-            return (false);
-        }
-
     }
 }

@@ -5,8 +5,9 @@ const NavbarMy = () =>
     return(
         <Navbar brand='Matcha' right>
             <NavItem href='/'><Icon>view_module</Icon></NavItem>
-            <NavItem href='/signin'><Icon>refresh</Icon></NavItem>
-            <NavItem href='/signup'><Icon>more_vert</Icon></NavItem>
+            <NavItem href='/forum'><Icon>forum</Icon>Forum</NavItem>
+            <NavItem href='/signin'><Icon>perm_identity</Icon>Sign In</NavItem>
+            <NavItem href='/signup'><Icon>group_add</Icon>Sign Up</NavItem>
         </Navbar>
     )
 };

@@ -8,15 +8,14 @@
 
 namespace App\Controllers;
 
-use PDO;
-use App\Controllers\UserController;
+use App\Models\Signin;
 
 
 /**
  * Class SigninController
  * @package App\Controllers
  */
-class SigninController extends Controller
+class SigninController extends Signin
 {
     /**
      * @param $request
@@ -38,8 +37,7 @@ class SigninController extends Controller
     public function loginUser($request, $response, $args)
     {
         $param = $request->getParams();
-        $_SESSION['User'] = new UserController();
-        $userData = $_SESSION['User']->setUserOnline($param['Login'], $param['Password'], $this->db);
+        $userData = $this->setUserOnline($param['Login'], $param['Password'], $this->db);
         if ($userData)
         {
             return $response->withStatus(200)

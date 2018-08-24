@@ -7,20 +7,32 @@
  */
 
 namespace App\Models;
+use \App\Controllers\Controller;
+use \App\Database\DatabaseRequest;
 
 
 /**
  * Class DisplayUsersInformation
  * @package App\Models
  */
-class DisplayUsersInformation
+class DisplayUsersInformation extends Controller
 {
     /**
      * get full date. Test function
      */
-    public function getAllDataFromUser()
+    protected function allUsers()
     {
-        echo "Login: {$this->Login} / Email: {$this->Email} / FirstName: {$this->FirstName} / LastName: {$this->LastName} / City: {$this->City} / Country: {$this->Country} / Age:{$this->Age} / Notification:{$this->Notification} / Gender:{$this->Gender} / Tags:{$this->Tags} / BIO:{$this->Bio} / Map H : {$this->map_height} W: {$this->map_width};";
-        echo "</br>";
+        $database = new DatabaseRequest($this->db);
+        $database->UseDB('db_matcha');
+        $data = $database->findData_ASSOC("users", "UserID, Login, Email, FirstName, LastName, City, Country, Age, Notification, Gender, Orientation, map_height, map_width, Bio, Tags, Avatar", "1=1");
+        return $data;
+    }
+
+    protected function userPage($args){
+        $database = new DatabaseRequest($this->db);
+        $database->UseDB('db_matcha');
+        $Login = htmlspecialchars(addslashes($args['username']));
+        $data = $database->findData_ASSOC("users", "UserID, Login, Email, FirstName, LastName, City, Country, Age, Notification, Gender,Orientation, map_height, map_width, Bio, Tags, Avatar", "Login='{$Login}'");
+        return $data;
     }
 }
