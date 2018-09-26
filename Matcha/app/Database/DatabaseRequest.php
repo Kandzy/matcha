@@ -20,11 +20,12 @@ class DatabaseRequest
 {
     private $dbConnect;
 
+
     /**
      * DatabaseRequest constructor.
-     * @param $connection
+     * @param PDO $connection
      */
-    public function __construct($connection)
+    public function __construct(PDO $connection)
     {
         if (!empty($connection)) {
             $this->dbConnect = $connection;
@@ -155,7 +156,7 @@ class DatabaseRequest
         }
         catch (PDOException $ex)
         {
-//            echo "addTableColumn failed: ".$ex->getMessage()."</br>";
+            echo "addTableColumn failed: ".$ex->getMessage()."</br>";
             return (false);
         }
         return (true);
@@ -175,7 +176,7 @@ class DatabaseRequest
         }
         catch (PDOException $ex)
         {
-            echo "addTableData failed: ".$ex->getMessage()."</br>";
+//            echo "addTableData failed: ".$ex->getMessage()."</br>";
             return 0;
         }
         return 1;
@@ -190,7 +191,6 @@ class DatabaseRequest
     public function updateTableData($Table, $Params, $Where)
     {
         try {
-//            echo "UPDATE {$Table} SET {$Params} WHERE 1=1 AND {$Where}";
             $this->dbConnect->exec("UPDATE {$Table} SET {$Params} WHERE 1=1 AND {$Where}");
         }
         catch (PDOException $ex)
@@ -219,11 +219,12 @@ class DatabaseRequest
         return 1;
     }
 
+
     /**
      * @param $Table
      * @param $data
      * @param $Where
-     * @return int
+     * @return array
      */
     public function findData_ASSOC($Table, $data, $Where)
     {
@@ -273,7 +274,6 @@ class DatabaseRequest
     {
         $result = 0;
         try {
-//            echo "SELECT {$data} FROM {$Table} WHERE 1=1 AND {$Where}";
             $prep = $this->dbConnect->prepare("SELECT {$data} FROM {$Table} WHERE 1=1 AND {$Where}");
             $prep->execute();
             $result = $prep->fetchAll(PDO::FETCH_CLASS, $model);

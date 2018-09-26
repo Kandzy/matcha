@@ -9,6 +9,8 @@
 namespace App\Controllers;
 
 use App\Models\Signin;
+use Slim\Http\Request;
+use Slim\Http\Response;
 
 
 /**
@@ -17,16 +19,16 @@ use App\Models\Signin;
  */
 class SigninController extends Signin
 {
-    /**
-     * @param $request
-     * @param $response
-     * @param $args
-     * @return mixed
-     */
-    public function index($request, $response, $args)
-    {
-        return $this->view->render($response, 'signin/signin.twig');
-    }
+//    /**
+//     * @param $request
+//     * @param $response
+//     * @param $args
+//     * @return mixed
+//     */
+//    public function index($request, $response, $args)
+//    {
+//        return $this->view->render($response, 'signin/signin.twig');
+//    }
 
     /**
      * @param $request
@@ -34,7 +36,7 @@ class SigninController extends Signin
      * @param $args
      * @return mixed
      */
-    public function loginUser($request, $response, $args)
+    public function loginUser(Request $request,Response $response, $args)
     {
         $param = $request->getParams();
         $userData = $this->setUserOnline($param['Login'], $param['Password'], $this->db);
@@ -44,7 +46,7 @@ class SigninController extends Signin
                 ->withHeader('Content-Type', 'application/json')
                 ->write(json_encode($userData));
         }
-        return $response->withStatus(200)
+        return $response->withStatus(200 )
             ->withHeader('Content-Type', 'application/json')
             ->write(json_encode(null));
     }

@@ -1,6 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import {Input, Button, Icon} from 'react-materialize'
+var tmp_url = require('../../config/conf.jsx');
 
 class ForumTopic extends React.Component{
     constructor(props)
@@ -17,7 +18,7 @@ class ForumTopic extends React.Component{
     findTopic() {
         var data = new FormData();
         axios({
-            url: 'http://localhost:8100/forum/'+this.state.id,
+            url: tmp_url.api_url+this.state.id,
 
             method: 'post', // default
 

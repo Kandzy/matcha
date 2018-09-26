@@ -9,6 +9,8 @@
 namespace App\Controllers;
 use \App\Database\DatabaseRequest;
 use \App\Models\DisplayUsersInformation;
+use Slim\Http\Request;
+use Slim\Http\Response;
 
 
 /**
@@ -23,23 +25,24 @@ class DisplayUsersInformationController extends DisplayUsersInformation
      * @param $args
      * @return mixed
      */
-    public function index($request, $response, $args){
+    public function index(Request $request,Response $response, $args){
 
         return $response->withStatus(200)
             ->withHeader('Content-Type', 'application/json')
             ->write(json_encode($this->allUsers()));
     }
 
-    public function SendUsers($request, $response, $args){
-        $database = new DatabaseRequest($this->db);
-        $database->UseDB('db_matcha');
-
-        $data = $database->findData_ASSOC("users", "UserID, Login, Email, FirstName, LastName, City, Country, Age, Notification, Gender, Orientation, map_height, map_width, Bio, Tags, Avatar", "1=1");
-
-//        $data = $request->getParams();
+    /**
+     * @param $request
+     * @param $response
+     * @param $args
+     * @return mixed
+     */
+    public function CheckUserRegistration(Request $request,Response $response, $args){
+        $token = $request->getParam('token');
         return $response->withStatus(200)
             ->withHeader('Content-Type', 'application/json')
-            ->write(json_encode($data));
+            ->write(json_encode($this->checkRegistration($token)));
     }
 
     /**
@@ -48,105 +51,10 @@ class DisplayUsersInformationController extends DisplayUsersInformation
      * @param $args
      * @return mixed
      */
-    public function findUserPage($request, $response, $args){
-        return $this->view->render($response, 'users/findUser.twig');
-    }
+//    public function displayUserPage($request, $response, $args){
+//        return $response->withStatus(200)
+//            ->withHeader('Content-Type', 'application/json')
+//            ->write(json_encode($this->userPage($args)));
+//    }
 
-    /**
-     * @param $request
-     * @param $response
-     * @param $args
-     * @return mixed
-     */
-    public function findUser($request, $response, $args){
-        $param = htmlspecialchars(addslashes($request->getParam('Login')));
-        $param2 = $request->getParam('find_by');
-        switch ($param2) {
-            case "By Login":
-                $tofind = "Login";
-                break;
-            case "By Name":
-                $tofind = "FirstName";
-                break;
-            case "By Tag":
-                $tofind = "Tags";
-                break;
-            case "By Orientation":
-                $tofind = "Orientation";
-                break;
-            default:
-                $tofind = "Login";
-        }
-        $database = new DatabaseRequest($this->db);
-        $database->UseDB('db_matcha');
-        $users = $database->findData_CLASS("users", "UserID, Login, Email, FirstName, LastName, City, Country, Age, Notification, Gender, Orientation, map_height, map_width, Bio, Tags, Avatar", "{$tofind} LIKE '%{$param}%'", DisplayUsersInformation::class);
-        $i = 0;
-        while ($users[$i]) {
-            $this->checkData($users[$i]);
-            $i++;
-        }
-        return $this->view->render($response, 'users/findUserResult.twig', compact('users'));
-    }
-
-
-
-    /**
-     * @param $request
-     * @param $response
-     * @param $args
-     * @return mixed
-     */
-    public function displayUserPage($request, $response, $args){
-
-        return $response->withStatus(200)
-            ->withHeader('Content-Type', 'application/json')
-            ->write(json_encode($this->userPage($args)));
-    }
-
-    /**
-     * @param $data->obj
-     * return updated object
-     */
-    private function checkData($data){
-        if ($data->FirstName == null) {
-            $data->FirstName = "No data";
-        }
-        if ($data->LastName == null) {
-            $data->LastName = "No data";
-        }
-        if ($data->City == null) {
-            $data->City = "No data";
-        }
-        if ($data->Country == null) {
-            $data->Country = "No data";
-        }
-        if ($data->Age == null) {
-            $data->Age = "No data";
-        }
-        if ($data->Gender == null) {
-            $data->Gender = "No data";
-        }
-        if ($data->Orientation == null) {
-            $data->Orientation = "No data";
-        }
-        if ($data->Bio == null) {
-            $data->Bio = "No data";
-        }
-        if ($data->Tags == null) {
-            $data->Tags = "No data";
-        }
-        if ($data->Avatar == null) {
-            if ($data->Gender == 'Female') {
-                $data->Avatar = "/standartAvatar/female.jpg";
-            }
-            else{
-                $data->Avatar = "/standartAvatar/male.jpg";
-            }
-        }
-    }
 }
-
-/**
- * @param $string
- * @return mixed
- */

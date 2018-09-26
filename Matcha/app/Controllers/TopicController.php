@@ -9,6 +9,8 @@ namespace App\Controllers;
 use App\Database\DatabaseRequest;
 use PDO;
 use \App\Models\Topic;
+use Slim\Http\Request;
+use Slim\Http\Response;
 
 /**
  * Class TopicController
@@ -22,7 +24,7 @@ class TopicController extends Topic
      * @param $response
      * @return mixed
      */
-    public function getTopics($request, $response)
+    public function getTopics(Request $request,Response $response)
     {
         return $response->withStatus(200)
             ->withHeader('Content-Type', 'application/json')
@@ -35,7 +37,7 @@ class TopicController extends Topic
      * @param $args
      * @return mixed
      */
-    public function addTopic($request, $response, $args)
+    public function addTopic(Request $request, Response $response, $args)
     {
         $params = $request->getParams();
         $user = "Aika";
@@ -51,7 +53,7 @@ class TopicController extends Topic
      * @param $args
      * @return mixed
      */
-    public function addComment($request, $response, $args)
+    public function addComment(Request $request, Response $response, $args)
     {
         $params = $request->getParams();
         $database = new DatabaseRequest($this->db);
@@ -68,7 +70,7 @@ class TopicController extends Topic
      * @param $args
      * @return mixed
      */
-    public function show($request, $response, $args)
+    public function show(Request $request, Response $response, $args)
     {
         $TopicID = htmlspecialchars(addslashes($args['id']));
         $topicResponse = $this->displayTopicData($TopicID);

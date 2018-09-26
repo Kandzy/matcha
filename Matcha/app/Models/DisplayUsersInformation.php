@@ -18,21 +18,141 @@ use \App\Database\DatabaseRequest;
 class DisplayUsersInformation extends Controller
 {
     /**
-     * get full date. Test function
+     * @param DatabaseRequest $database
+     * @param string $token
+     * @param $request
+     * @return array
      */
-    protected function allUsers()
-    {
-        $database = new DatabaseRequest($this->db);
-        $database->UseDB('db_matcha');
-        $data = $database->findData_ASSOC("users", "UserID, Login, Email, FirstName, LastName, City, Country, Age, Notification, Gender, Orientation, map_height, map_width, Bio, Tags, Avatar", "1=1");
-        return $data;
+    private function uploadPhoto(DatabaseRequest $database, string $token, $request){
+        $user = $database->findData_ASSOC('users', "UserID, Login", "token='{$token}'");
+        if (!file_exists("photos/{$user[0]['Login']}/")) {
+            mkdir("photos/{$user[0]['Login']}");
+        }
+        $photos = [];
+        $i = 0;
+        while ($request['Pics'.$i]) {
+            $pic = explode(",", $request['Pics' . $i]);
+            $name = $user[0]['Login'] . uniqid();
+            $src = "photos/{$user[0]['Login']}/$name.jpg";
+            $photos[$i] = $src;
+            $database->addTableData("pictures", "UserID, url", "'{$user[0]['UserID']}', '$src'");
+            file_put_contents($src, base64_decode($pic[1]));
+            $i++;
+        }
+        return $photos;
     }
 
-    protected function userPage($args){
+    /**
+     * @param $request
+     * @param $token
+     */
+    private function sendData($request, $token){
         $database = new DatabaseRequest($this->db);
-        $database->UseDB('db_matcha');
-        $Login = htmlspecialchars(addslashes($args['username']));
-        $data = $database->findData_ASSOC("users", "UserID, Login, Email, FirstName, LastName, City, Country, Age, Notification, Gender,Orientation, map_height, map_width, Bio, Tags, Avatar", "Login='{$Login}'");
-        return $data;
+        $database->UseDB("db_matcha");
+        $photos = $this->uploadPhoto($database, $token,$request);
+        $params = "Age='{$request['Age']}',
+            City='{$request['City']}', Country='{$request['Country']}', FirstName='{$request['FirstName']}',
+            Gender='{$request['Gender']}', LastName='{$request['LastName']}', Tags='{$request['Preferences']}',
+            Orientation='{$request['Sexpref']}', Bio='{$request['Bio']}', map_height='{$request['lat']}', map_width='{$request['lng']}', FullRegister='1'";
+        if (count($photos) >= 1) {
+            $params .= ", Avatar='{$photos[0]}'";
+        }
+        $database->updateTableData("users", $params, "token='{$token}'");
+    }
+
+    /**
+     * @param $request
+     * @param $response
+     * @param $param
+     */
+    private function paramExist($request, &$response, $param){
+        if (isset($request["{$param}"]) && !empty($request["{$param}"])) {
+            $response["{$param}"] = true;
+            $request["{$param}"] = htmlspecialchars(addslashes($request["{$param}"]));
+        }
+    }
+
+    /**
+     * @param $Tags
+     * @param $token
+     */
+    private function addUserTags($Tags, $token){
+        $Tags = preg_replace('/\s+/', '', $Tags);
+        $TagsArray = explode('#',"$Tags");
+        $TagsArray = array_unique($TagsArray);
+        array_shift($TagsArray);
+        $database = new DatabaseRequest($this->db);
+        $userID = $database->findData_ASSOC('users', "UserID", "token='{$token}'");
+        $userID = $userID[0]['UserID'];
+        $i = 0;
+        while($TagsArray[$i])
+        {
+            $tag = $database->findData_ASSOC('Tags', 'tid', "tag='$TagsArray[$i]'");
+
+            if ($tag[0]['tid'] == null)
+            {
+                $database->addTableData('Tags', "tag", "'{$TagsArray[$i]}'");
+                $tag = $database->findData_ASSOC('Tags', 'tid', "tag='{$TagsArray[$i]}'");
+            }
+            if ($userID && $tag[0]['tid'] && !$database->findData_ASSOC("user_tag",'*', "user='{$userID}' AND tag='{$tag[0]['tid']}'")) {
+                $database->addTableData("user_tag", "user, tag", "$userID ,{$tag[0]['tid']}");
+            }
+            $i++;
+        }
+    }
+
+    /**
+     * @param $token
+     * @return array
+     */
+    protected final function checkRegistration($token)
+    {
+        $database = new DatabaseRequest($this->db);
+        $user = $database->findData_ASSOC('users', 'FullRegister', "token='{$token}'");
+        return $json = [
+            "Extend_Registration" => $user[0]['FullRegister']
+        ];
+    }
+
+    /**
+     * @param $request
+     * @param $token
+     * @return array
+     */
+    protected final function checkExtendDate($request, $token){
+        $response = [
+            "Age" => false,
+            "City" => false,
+            "Country" => false,
+            "FirstName" => false,
+            "Gender" => false,
+            "LastName" => false,
+            "Preferences" => false,
+            "Sexpref" => false,
+            "Tags" => false,
+            "lat" => false,
+            "lng" => false,
+            "Bio" => false,
+            "Complete" => true
+        ];
+        foreach ($response as $key => $value) {
+            if ($key != "Complete") {
+                $this->paramExist($request, $response, $key);
+                if ($response[$key] == true) {
+                    if ($key == "Age") {
+                        if (intval($request[$key]) < 16 || intval($request[$key]) > 80) {
+                            $response[$key] = false;
+                        }
+                    }
+                }
+            }
+            $response['Complete'] *= $response[$key];
+        }
+        $response['Complete'] = boolval($response['Complete']);
+        if (($response['Complete'] = boolval($response['Complete']))) {
+            $this->sendData($request, $token);
+            $this->addUserTags($request['Tags'], $token);
+        }
+        return $response;
     }
 }

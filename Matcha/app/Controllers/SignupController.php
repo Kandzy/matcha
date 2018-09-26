@@ -10,6 +10,8 @@ namespace App\Controllers;
 use \App\Database\DatabaseRequest;
 use \App\Models\Signup;
 use PDO;
+use Slim\Http\Request;
+use Slim\Http\Response;
 
 /**
  * Class SignupController
@@ -33,7 +35,7 @@ class SignupController extends Signup
      * @param $args
      * @return mixed
      */
-    public function registration($request, $response, $args){
+    public function registration(Request $request,Response $response, $args){
         $params = $request->getParams();
         $database = new DatabaseRequest($this->db);
         $database->UseDB("db_matcha");
@@ -59,14 +61,12 @@ class SignupController extends Signup
             $data['ValidPassword'] = $this->validatePassword($params['Password']);
             if ($data['ValidPassword']) {
                 if (!$data['LoginExist'] && !$data['EmailExist'] && $data['ValidEmail']) {
-                    $this->addNewUser($response, $params, $database);
-                    $data['UserCreated'] = true;
+                    $data['UserCreated'] = boolval($this->addNewUser($response, $params, $database));
                 }
             }
         } else {
             $data['PasswordMatch'] = false;
         }
-//        $data['UserCreated'] = "lol";
         return $response->withStatus(200)
             ->withHeader('Content-Type', 'application/json')
             ->write(json_encode($data));

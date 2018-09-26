@@ -34,7 +34,7 @@ $container['db'] = function ()
 //  return $user;
 //};
 
-$container['view'] = function ($container) {
+$container['view'] = function (\Slim\Container $container) {
     $view = new \Slim\Views\Twig(__DIR__ . '/../resources/View/', [
         'cache' => false
     ]);

@@ -20,7 +20,7 @@ class Topic extends Controller
 //    /**
 //     * @return array
 //     */
-    protected function getAllTopics()
+    protected final function getAllTopics()
     {
         $database = new DatabaseRequest($this->db);
         $data = $database->findData_ASSOC('topics', "*", "1=1 ORDER BY TopicCreationDate DESC");
@@ -32,7 +32,7 @@ class Topic extends Controller
      * @param $title
      * @param $description
      */
-    protected function addForumTopic($user, $title, $description){
+    protected final function addForumTopic($user, $title, $description){
         $database = new DatabaseRequest($this->db);
         $database->addTableData('topics', "Owner, UserID, Title, Description", "'{$_SESSION['User']->getUserLogin()}', '{$user['UserID']}', '{$title}', '{$description}'");
     }
@@ -41,7 +41,7 @@ class Topic extends Controller
      * @param $TopicID
      * @return array topicResponse
      */
-    protected function displayTopicData($TopicID)
+    protected final function displayTopicData($TopicID)
     {
         $database = new DatabaseRequest($this->db);
         $topicData = $database->findData_ASSOC("topics","topics.TopicID, topics.Title, topics.Owner, topics.Description, topics.TopicCreationDate", "topics.TopicID='{$TopicID}'");

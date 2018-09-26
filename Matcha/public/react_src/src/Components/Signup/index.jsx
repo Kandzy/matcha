@@ -1,6 +1,8 @@
 import React from 'react'
 import axios from 'axios'
 import {Input, Button, Icon} from 'react-materialize'
+import AuthService from '../Auth/AuthService'
+var tmp_url = require('../../config/conf.jsx');
 
 class Signup extends React.Component{
     constructor(props)
@@ -12,11 +14,17 @@ class Signup extends React.Component{
             Email: "",
             PasswordConfirm: ""
         };
+        this.Auth = new AuthService();
         this.handleLoginChange = this.handleLoginChange.bind(this);
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
         this.handleEmailChange = this.handleEmailChange.bind(this);
         this.handlePasswordConfirmChange = this.handlePasswordConfirmChange.bind(this);
         this.handleRegistration = this.handleRegistration.bind(this);
+    }
+
+    componentWillMount(){
+        if(this.Auth.loggedIn())
+            this.props.history.replace('/');
     }
 
     handleLoginChange(event) {
@@ -51,7 +59,7 @@ class Signup extends React.Component{
         data.append('Email', this.state.Email);
         data.append('ConfirmedPassword', this.state.PasswordConfirm);
         axios({
-            url: 'http://localhost:8100/signup',
+            url: tmp_url.api_url + '/signup',
 
             method: 'post', // default
 
@@ -64,6 +72,7 @@ class Signup extends React.Component{
             responseType: 'json', // default
 
         }).then(response => {
+            this.props.history.replace('/');
             console.log(response.data);
         }).catch(errors => {
             alert(errors)

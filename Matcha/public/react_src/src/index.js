@@ -1,34 +1,37 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {BrowserRouter, Route} from 'react-router-dom' //Link
-import Signin from './Components/Signin/'
-import Signup from './Components/Signup/'
-import Users from './Components/Users/'
-import Profile from './Components/Profile/'
-import Forum from './Components/Forum/'
-import ForumTopic from './Components/Forum/ForumTopic'
-import NavbarMy from './Components/Navbar/'
-import Welcome from './Components/Welcome/'
+import {BrowserRouter, Route} from 'react-router-dom';
 import registerServiceWorker from './registerServiceWorker';
+import ExtendData from './Components/ExtendData'
 
-// const Signup = () => {
-//     return <h1>THIS IS SHIT</h1>;
-// };
+
+import Signin from './Components/Signin/';
+import Signup from './Components/Signup/';
+import Users from './Components/Users/';
+import Profile from './Components/Profile/';
+import Forum from './Components/Forum/';
+import ForumTopic from './Components/Forum/ForumTopic';
+import NavbarMy from './Components/Navbar/';
+import Welcome from './Components/Welcome/';
+import Logout from './Components/Logout/Logout.jsx';
+import Interlinc from './Components/Interlinc/Interlinc.jsx';
+import MyMap from './Components/MyMap'
+
+
 
 ReactDOM.render(
 <BrowserRouter>
     <div>
-        <NavbarMy/>
         <Route exact path='/' component={Welcome}/>
-        <Route path='/signin' component={Signin}/>
-        <Route path='/signup' component={Signup}/>
-        {/*<Route path='/users' component={Users}/>*/}
-        <Route path='/profile' component={Profile}/>
-        <Route exact path='/forum' component={Forum}/>
-        <Route path='/forum/topic/:id' component={ForumTopic}/>
-        <Route path='/user/:login' component={Users}/>
+        <Route exact path='/interlinc' component={Interlinc}/>
+        <Route exact path='/extendreg' component={ExtendData}/>
+        <Route exact path='/logout' component={Logout}/>
+        <Route exact path='/signin' component={Signin}/>
+        <Route exact path='/signup' component={Signup}/>
     </div>
-</BrowserRouter>, document.getElementById('root'));
+</BrowserRouter>
+, document.getElementById('root'));
 
-// ReactDOM.render(<App />, document.getElementById('root'));
+
 registerServiceWorker();
+

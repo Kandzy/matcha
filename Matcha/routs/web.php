@@ -15,73 +15,50 @@ use \App\Middleware\RedirectIfUnauthenticated;
 use \App\Middleware\RedirectIfAunthenticated;
 use \App\Controllers\DisplayUsersInformationController;
 use \App\Middleware\FirstTimeConnectedUser;
-use \App\Controllers\MainPage;
 use App\Controllers\DisplayProfileInformationController;
+use App\Controllers\RecoverController;
+use App\Controllers\UserListController;
+use \Slim\Http\Response;
+use \Slim\Http\Request;
 
 $app->group('/signin', function (){
-//    $this->get('', SigninController::class.":index")->setName('signin');
     $this->post('', SigninController::class.":loginUser");
-//    $this->get('/logout', UserController::class.":setUserLogout")->setName('signin.logout');
-})->add(new RedirectIfAunthenticated);
+    $this->post('/password/recover', RecoverController::class.":recover");
+});
 
 
 $app->group('/signup', function () {
-//    $this->get('', SignupController::class . ":index")->setName('signup');
     $this->post('', SignupController::class.":registration");
-})->add(new RedirectIfAunthenticated);
-
-//$app->group('/recover', function () {
-//    $this->get('/password', function ()
-//    {
-//       echo "Recover Password";
-//    });
-//});
-
-
-$app->group('/users', function (){
-    $this->post('', DisplayUsersInformationController::class.":index")->setName('users');
-//    $this->get
-//    $this->post('/find', DisplayUsersInformationController::class.":findUser")->setName('user.find.field');
-//    $this->get('/find', DisplayUsersInformationController::class.":findUserPage")->setName('user.find');
-    $this->post('/{username}', DisplayUsersInformationController::class.":displayUserPage")->setName('profile');
-});//->add(new RedirectIfUnauthenticated)->add(new FirstTimeConnectedUser($container->db));
+});
 
 $app->group('/profile', function ()
 {
-//    $this->get('', DisplayProfileInformationController::class.":redirProfile")->setName('take.profile');
-//    $this->get('/{username}', DisplayProfileInformationController::class.":displayProfilePage")->setName('current.profile');
-//    $this->get('/{username}/register', DisplayProfileInformationController::class.":finishUserRegister");
-//    $this->post('/{username}/register/sendData', DisplayProfileInformationController::class.":registerUserSendData")->setName('registerUserSendData');
-//    $this->post('/uploadPhoto', function ()
-//    {
-//        echo $_FILES['photoloader']['name'];
-//    });
-//    $this->get('/{username}/update', function ()
-//    {
-//        echo "UPDATE";
-//    })->setName('profile.update');
-})->add(new RedirectIfUnauthenticated);
+    $this->post("/create", DisplayProfileInformationController::class.":finishUserRegister");
+});
 
-//$app->get('/', MainPage::class.":index")->add(new FirstTimeConnectedUser($container->db))->setName('main');
-
-$app->get('/chat', function($request, $response, $args){
+$app->get('/chat', function(Request $request,Response $response, $args){
     if($_SESSION['User']) {
         $data = [
             'Login' => $_SESSION['User']->getUserLogin()
-    ];
+        ];
     }
     return $this->view->render($response, 'chat/chat.twig', compact('data'));
-});//->add(new RedirectIfUnauthenticated())->add(new FirstTimeConnectedUser($container->db))->setName('chat');
+});
+
+$app->group('/users', function (){
+    $this->post('', DisplayUsersInformationController::class.":index")->setName('users');
+    $this->post('/checkUReg', DisplayUsersInformationController::class.":CheckUserRegistration");
+    $this->post('/all', UserListController::class.":getAllUsers");
+    $this->post('/sorted', UserListController::class.":getSortedUsers");
+    $this->post('/{username}', DisplayUsersInformationController::class.":displayUserPage")->setName('profile');
+});
 
 $app->group('/forum', function ()
 {
     $this->post('', TopicController::class . ':getTopics')->setName('topics');
     $this->post('/add', TopicController::class . ':addTopic')->setName('topics.add');
     $this->post('/{id}', TopicController::class . ':show')->setName('topics.show');
-//    $this->post('/{id}', TopicController::class . ':addComment');
-});//->add(new RedirectIfUnauthenticated)->add(new FirstTimeConnectedUser($container->db));
-
-//$app->get('/redirect', UserController::class.":redirect")->setName('top.st');
+});
 
 //$app->post('/test', function ($request, $response)
 //{
@@ -148,8 +125,6 @@ $app->group('/forum', function ()
 //    return $this->view->render($response, 'user.twig', compact('user'));
 ////    print_r($args);
 //})->setName('user.name');
-
-
 
 //$app->group('/topics', function (){
 //    $this->get('', function (){

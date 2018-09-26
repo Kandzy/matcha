@@ -1,5 +1,6 @@
 import React from 'react'
 import axios from 'axios'
+var tmp_url = require('../../config/conf.jsx');
 
 class Users extends React.Component {
     constructor(props) {
@@ -16,7 +17,7 @@ class Users extends React.Component {
     {
         var data = new FormData();
         axios({
-            url: 'http://localhost:8100/users/' + login,
+            url: tmp_url.api_url + login,
 
             method: 'post', // default
 

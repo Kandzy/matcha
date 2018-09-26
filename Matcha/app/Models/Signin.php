@@ -21,39 +21,13 @@ class Signin extends Controller
     private $data;
     private $password;
 
-    /*
-     * Public methods
-     */
-
-//    /**
-//     * data from database about user
-//     * @return array
-//     */
-
-//    public function getData(){
-//        return $this->data;
-//    }
-//    /**
-//     * @return user login
-//     */
-//    public function getUserLogin(){
-//        return $this->Login;
-//    }
-
-//    public function updateUserInfo()
-//    {
-//        /**
-//         * UPDATE DATA
-//         */
-//    }
-
     /**
      * @param $Login
      * @param $Password
      * @param $db
      * @return bool
      */
-    protected function setUserOnline($Login, $Password, $db){
+    protected final function setUserOnline($Login, $Password, $db){
 
         $database = new DatabaseRequest($db);
         $database->UseDB("db_matcha");
@@ -62,11 +36,10 @@ class Signin extends Controller
         if (hash("whirlpool", $Password) == $this->password[0]['Password'])
         {
             unset($this->password);
-            $this->getToken($this->Login, $database);
-            return $this->data; ///new
+            $this->data = $this->getToken($Login, $database);
+            return $this->data;
         } else {
-            unset($_SESSION['User']);
-            return false; ///new
+            return false;
         }
     }
 
@@ -95,9 +68,9 @@ class Signin extends Controller
      * @param $Login
      * @param $database
      */
-    private function getToken($Login, $database){
+    private final function getToken($Login,DatabaseRequest $database){
         $Login = htmlspecialchars(addslashes($Login));
-        $data = $database->findData_ASSOC('users', "token", "Login='{$Login}'");
-        $this->data = $data[0];
+        $data = $database->findData_ASSOC('users', "token, FullRegister", "Login='{$Login}'");
+        return $data[0];
     }
 }
