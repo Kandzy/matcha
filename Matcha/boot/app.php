@@ -29,11 +29,6 @@ $container['db'] = function ()
     return $obj;
 };
 
-//$container['user'] = function () {
-//    $user = new UserController();
-//  return $user;
-//};
-
 $container['view'] = function (\Slim\Container $container) {
     $view = new \Slim\Views\Twig(__DIR__ . '/../resources/View/', [
         'cache' => false

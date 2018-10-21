@@ -1,6 +1,5 @@
 <?php
 
-
 $db = new \App\Database\DatabaseRequest($container->db);
 if($db->createDataBase("db_matcha")) {
     $db->UseDB("db_matcha");
@@ -19,7 +18,7 @@ if($db->createDataBase("db_matcha")) {
     $db->addTableColumn("Users", "City", "varchar(100)");
     $db->addTableColumn("Users", "Country", "varchar(100)");
     $db->addTableColumn("Users", "Age", "varchar(100)");
-    $db->addTableColumn("Users", "Pupularity", "INT(16) UNSIGNED NOT NULL DEFAULT '0'");
+    $db->addTableColumn("Users", "Popularity", "INT(16) UNSIGNED NOT NULL DEFAULT '0'");
     $db->addTableColumn("Users", "Gender", "varchar(100)");
     $db->addTableColumn("Users", "Orientation", "varchar(100)");
     $db->addTableColumn("Users", "map_height", "FLOAT(10)");
@@ -104,4 +103,27 @@ if($db->createDataBase("db_matcha")) {
     $db->addTableColumn("TopicComments", "TopicID", "INT(11)");
     $db->addTableColumn("TopicComments", "Comment", "varchar(10000)");
     $db->addTableColumn("TopicComments", "CreationDate", "DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP");
+
+    /**
+     * Black list
+     */
+
+    $db->clearTable("black_list", "BlackID");
+    $db->addTableColumn("black_list", "UID1", "INT(11)");
+    $db->addTableColumn("black_list","User", "varchar(100)");
+    $db->addTableColumn("black_list", "UID2", "INT(11)");
+    $db->addTableColumn("black_list","Target", "varchar(100)");
+
+    /**
+     *  Notification (Temporary likes and messages)
+     */
+
+    $db->clearTable("Notification", "NID");
+    $db->addTableColumn("Notification", "Type", "varchar(100)");
+    $db->addTableColumn("Notification", "sourceID", "INT(11)");
+    $db->addTableColumn("Notification", "sourceName", "varchar(100)");
+    $db->addTableColumn("Notification", "TargerID", "INT(11)");
+    $db->addTableColumn("Notification", "TargetName", "varchar(100)");
+    $db->addTableColumn("Notification","TargetToken", "varchar(255)");
+
 }

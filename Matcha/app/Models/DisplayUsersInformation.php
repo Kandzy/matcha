@@ -51,9 +51,9 @@ class DisplayUsersInformation extends Controller
         $database->UseDB("db_matcha");
         $photos = $this->uploadPhoto($database, $token,$request);
         $params = "Age='{$request['Age']}',
-            City='{$request['City']}', Country='{$request['Country']}', FirstName='{$request['FirstName']}',
-            Gender='{$request['Gender']}', LastName='{$request['LastName']}', Tags='{$request['Preferences']}',
-            Orientation='{$request['Sexpref']}', Bio='{$request['Bio']}', map_height='{$request['lat']}', map_width='{$request['lng']}', FullRegister='1'";
+            City='".htmlspecialchars(addslashes($request['City']))."', Country='".htmlspecialchars(addslashes($request['Country']))."', FirstName='".htmlspecialchars(addslashes($request['FirstName']))."',
+            Gender='{$request['Gender']}', LastName='".htmlspecialchars(addslashes($request['LastName']))."', Tags='".htmlspecialchars(addslashes($request['Preferences']))."',
+            Orientation='{$request['Sexpref']}', Bio='".htmlspecialchars(addslashes($request['Bio']))."', map_height='{$request['lat']}', map_width='{$request['lng']}', FullRegister='1'";
         if (count($photos) >= 1) {
             $params .= ", Avatar='{$photos[0]}'";
         }

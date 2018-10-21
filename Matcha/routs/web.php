@@ -50,7 +50,9 @@ $app->group('/users', function (){
     $this->post('/checkUReg', DisplayUsersInformationController::class.":CheckUserRegistration");
     $this->post('/all', UserListController::class.":getAllUsers");
     $this->post('/sorted', UserListController::class.":getSortedUsers");
+    $this->post('/generate', UserController::class.":generate");
     $this->post('/{username}', DisplayUsersInformationController::class.":displayUserPage")->setName('profile');
+
 });
 
 $app->group('/forum', function ()

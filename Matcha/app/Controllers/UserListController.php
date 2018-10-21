@@ -32,7 +32,8 @@ class UserListController extends UserList
             "maxPopular" => false,
             "message" =>false,
         ];
-        $this->listOfUsers($data);
+        $userToken = $req->getParam('token');
+        $this->listOfUsers($data, $userToken);
         return $res->withStatus(200)->withHeader('Content-type', "application/json")
             ->write(json_encode($data));
     }

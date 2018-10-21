@@ -54,9 +54,34 @@ class UserList extends Controller
      * tags -> preference!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
      */
 
-    protected final function listOfUsers(&$data){
+    function distance($lat1, $lon1, $lat2, $lon2, $unit) {
+
+        $theta = $lon1 - $lon2;
+        $dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) +  cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
+        $dist = acos($dist);
+        $dist = rad2deg($dist);
+        $miles = $dist * 60 * 1.1515;
+        $unit = strtoupper($unit);
+
+        if ($unit == "K") {
+            return ($miles * 1.609344);
+        } else if ($unit == "N") {
+            return ($miles * 0.8684);
+        } else {
+            return $miles;
+        }
+    }
+
+    protected final function listOfUsers(&$data, $userToken){
         $database = new DatabaseRequest($this->db);
-        $ulist = $database->findData_ASSOC("users", "token, Avatar, Age, FirstName, LastName, Gender, Tags, UserID, Popularity", "1=1");
+        $ulist = $database->findData_ASSOC("users", "token, Avatar, Age, FirstName, LastName, Gender, Tags, UserID, Popularity, map_height, map_width", "token<>'{$userToken}' AND FullRegister='1'");
+        $currentUser = $database->findData_ASSOC("users", "token, Avatar, Age, FirstName, LastName, Gender, Tags, UserID, Popularity, map_height, map_width", "token='{$userToken}'");
+        $ulist = array_reverse($ulist);
+        for ($i = 0; !empty($ulist[$i]); $i++)
+        {
+            $ulist[$i]['range'] = $this->distance($currentUser[0]['map_width'], $currentUser[0]['map_height'], $ulist[$i]['map_width'], $ulist[$i]['map_height'], "K");
+            $ulist[$i]['Status'] = true;
+        }
         $this->maxValues($data, $ulist);
         $this->userTags($ulist, $database);
         $data['users'] = $ulist;

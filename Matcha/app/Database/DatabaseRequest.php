@@ -184,12 +184,33 @@ class DatabaseRequest
 
     /**
      * @param $Table
+     * @param $columns
+     * @param $val
+     * @return int
+     */
+    public function addTableBigData($Table, $columns, $val)
+    {
+        try {
+//            echo "INSERT INTO {$Table}({$columns}) VALUES ({$val})";
+            $this->dbConnect->exec("INSERT INTO {$Table}({$columns}) VALUES {$val}");
+        }
+        catch (PDOException $ex)
+        {
+//            echo "addTableData failed: ".$ex->getMessage()."</br>";
+            return 0;
+        }
+        return 1;
+    }
+
+    /**
+     * @param $Table
      * @param $Params
      * @param $Where
      * @return int
      */
     public function updateTableData($Table, $Params, $Where)
     {
+//        return "UPDATE {$Table} SET {$Params} WHERE 1=1 AND {$Where}";
         try {
             $this->dbConnect->exec("UPDATE {$Table} SET {$Params} WHERE 1=1 AND {$Where}");
         }
