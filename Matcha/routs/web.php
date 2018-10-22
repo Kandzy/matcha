@@ -20,10 +20,13 @@ use App\Controllers\RecoverController;
 use App\Controllers\UserListController;
 use \Slim\Http\Response;
 use \Slim\Http\Request;
+use \App\Controllers\NotificationController;
+use  \App\Controllers\BlackListController;
 
 $app->group('/signin', function (){
     $this->post('', SigninController::class.":loginUser");
     $this->post('/password/recover', RecoverController::class.":recover");
+    $this->post('/user/logged', SigninController::class.":isLogged");
 });
 
 
@@ -60,6 +63,17 @@ $app->group('/forum', function ()
     $this->post('', TopicController::class . ':getTopics')->setName('topics');
     $this->post('/add', TopicController::class . ':addTopic')->setName('topics.add');
     $this->post('/{id}', TopicController::class . ':show')->setName('topics.show');
+});
+
+$app->group('/notification', function (){
+    $this->post('/check', NotificationController::class.":updateNotification");
+    $this->post('/add', NotificationController::class.":addNewNotification");
+});
+
+$app->group('/blacklist', function (){
+    $this->post('/add', BlackListController::class.":addUser");
+    $this->post('/remove', BlackListController::class.":removeUser");
+    $this->post('/review', BlackListController::class.":reviewList");
 });
 
 //$app->post('/test', function ($request, $response)

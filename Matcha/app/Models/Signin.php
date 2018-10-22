@@ -43,6 +43,29 @@ class Signin extends Controller
         }
     }
 
+    /**
+     * @param $token
+     * @return array
+     */
+    protected final function isUserLogged($token)
+    {
+        $user = (new DatabaseRequest($this->db))->findData_ASSOC("users", "token, FullRegister", "token='{$token}'");
+        if ($user)
+        {
+            return [
+                'token' => $user[0]['token'],
+                'is_reg' => $user[0]['FullRegister'],
+            ];
+        }
+        else
+        {
+            return [
+                'token' => false,
+                'is_reg' => false,
+            ];
+        }
+    }
+
 //    /**
 //     * @param $request
 //     * @param $response

@@ -1,6 +1,7 @@
 <?php
 
 $db = new \App\Database\DatabaseRequest($container->db);
+
 if($db->createDataBase("db_matcha")) {
     $db->UseDB("db_matcha");
 
@@ -108,7 +109,7 @@ if($db->createDataBase("db_matcha")) {
      * Black list
      */
 
-    $db->clearTable("black_list", "BlackID");
+    $db->createTable("black_list", "BlackID");
     $db->addTableColumn("black_list", "UID1", "INT(11)");
     $db->addTableColumn("black_list","User", "varchar(100)");
     $db->addTableColumn("black_list", "UID2", "INT(11)");
@@ -118,11 +119,11 @@ if($db->createDataBase("db_matcha")) {
      *  Notification (Temporary likes and messages)
      */
 
-    $db->clearTable("Notification", "NID");
+    $db->createTable("Notification", "NID");
     $db->addTableColumn("Notification", "Type", "varchar(100)");
     $db->addTableColumn("Notification", "sourceID", "INT(11)");
     $db->addTableColumn("Notification", "sourceName", "varchar(100)");
-    $db->addTableColumn("Notification", "TargerID", "INT(11)");
+    $db->addTableColumn("Notification", "TargetID", "INT(11)");
     $db->addTableColumn("Notification", "TargetName", "varchar(100)");
     $db->addTableColumn("Notification","TargetToken", "varchar(255)");
 

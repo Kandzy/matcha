@@ -50,4 +50,11 @@ class SigninController extends Signin
             ->withHeader('Content-Type', 'application/json')
             ->write(json_encode(null));
     }
+
+    public function isLogged(Request $request, Response $response, $args)
+    {
+        return $response->withStatus(200)
+            ->withHeader('Content-Type', 'application/json')
+            ->write(json_encode($this->isUserLogged($request->getParams()['token'])));
+    }
 }
