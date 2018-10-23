@@ -109,11 +109,11 @@ if($db->createDataBase("db_matcha")) {
      * Black list
      */
 
-    $db->createTable("black_list", "BlackID");
-    $db->addTableColumn("black_list", "UID1", "INT(11)");
-    $db->addTableColumn("black_list","User", "varchar(100)");
-    $db->addTableColumn("black_list", "UID2", "INT(11)");
-    $db->addTableColumn("black_list","Target", "varchar(100)");
+    $db->createTable("blacklist", "BlackID");
+    $db->addTableColumn("blacklist", "UID1", "INT(11)");
+    $db->addTableColumn("blacklist","token1", "varchar(100)");
+    $db->addTableColumn("blacklist", "UID2", "INT(11)");
+    $db->addTableColumn("blacklist","token2", "varchar(100)");
 
     /**
      *  Notification (Temporary likes and messages)

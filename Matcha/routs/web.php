@@ -74,6 +74,7 @@ $app->group('/blacklist', function (){
     $this->post('/add', BlackListController::class.":addUser");
     $this->post('/remove', BlackListController::class.":removeUser");
     $this->post('/review', BlackListController::class.":reviewList");
+    $this->post('/is_blocked', BlackListController::class.":checkUser");
 });
 
 //$app->post('/test', function ($request, $response)
