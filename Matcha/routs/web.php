@@ -22,6 +22,7 @@ use \Slim\Http\Response;
 use \Slim\Http\Request;
 use \App\Controllers\NotificationController;
 use  \App\Controllers\BlackListController;
+use App\Controllers\LikesController;
 
 $app->group('/signin', function (){
     $this->post('', SigninController::class.":loginUser");
@@ -75,6 +76,14 @@ $app->group('/blacklist', function (){
     $this->post('/remove', BlackListController::class.":removeUser");
     $this->post('/review', BlackListController::class.":reviewList");
     $this->post('/is_blocked', BlackListController::class.":checkUser");
+});
+
+$app->group('/like', function ()
+{
+    $this->post('/add', LikesController::class.":addLike");
+    $this->post('/remove', LikesController::class.":removeLike");
+    $this->post('/check', LikesController::class.":checkLikes");
+    $this->post('/is_liked', LikesController::class.":isLiked");
 });
 
 //$app->post('/test', function ($request, $response)

@@ -64,14 +64,16 @@ if($db->createDataBase("db_matcha")) {
     $db->addTableColumn("confirmation", "Passwd", "varchar(100)");
     $db->addTableColumn("confirmation", "Email", "varchar(100) NOT NULL UNIQUE");
     $db->addTableColumn("confirmation", "hash", "varchar(256)");
+
     /**
      * Likes Table creation
      */
 
     $db->createTable("Likes", "LikeID");
-    $db->addTableColumn("Likes","UserID", "varchar(10)");
-    $db->addTableColumn("Likes","Target", "varchar(256)");
-    $db->addTableColumn("Likes","Type", "varchar(256)");
+    $db->addTableColumn("Likes","sourceToken", "varchar(256)");
+    $db->addTableData("Likes", "sourceID", "INT(11)");
+    $db->addTableColumn("Likes","targetToken", "varchar(256)");
+    $db->addTableData("Likes", "targetID", "INT(11)");
 
     /**
      * Comments Table Creation
@@ -126,5 +128,4 @@ if($db->createDataBase("db_matcha")) {
     $db->addTableColumn("Notification", "TargetID", "INT(11)");
     $db->addTableColumn("Notification", "TargetName", "varchar(100)");
     $db->addTableColumn("Notification","TargetToken", "varchar(255)");
-
 }

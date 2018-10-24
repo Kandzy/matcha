@@ -1,0 +1,125 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: Дмитрий
+ * Date: 24.10.2018
+ * Time: 18:44
+ */
+
+namespace App\Models;
+
+
+use App\Controllers\Controller;
+use App\Database\DatabaseRequest;
+
+class Likes extends Controller{
+    public final function like($sourceToken, $targetToken){
+        $database = new DatabaseRequest($this->db);
+        $user1 = $database->findData_ASSOC('users', "UserID", "token='{$sourceToken}'");
+        $user2 = $database->findData_ASSOC("users", "UserID", "token='{$targetToken}'");
+        if (!$user1 || !$user2) {
+            return [
+                'status' => false,
+                'message' => "Error: cant find users with this token!",
+            ];
+        }
+        $toLike = $database->findData_ASSOC('Likes',"LikeID, sourceID, targetID, sourceToken, targetToken",
+            "sourceToken= '{$sourceToken}' AND targetToken='{$targetToken}'");
+        if (empty($toLike)) {
+            $database->addTableData('Likes', "sourceID, targetID, sourceToken, targetToken",
+                "'{$user1[0]['UserID']}', '{$user2[0]['UserID']}', '{$sourceToken}', '{$targetToken}'");
+            return [
+                "status" => true,
+                "message" => "User has been liked.",
+            ];
+        } else {
+            return [
+                "status" => false,
+                "message" => "User already Liked. Like ID: {$toLike[0]['LikeID']}, liked user ID: {$toLike[0]['targetID']}.",
+            ];
+        }
+    }
+
+    public final function unlike($sourceToken, $targetToken){
+        $database = new DatabaseRequest($this->db);
+        $user1 = $database->findData_ASSOC("users", "UserID", "token='{$sourceToken}'");
+        $user2 = $database->findData_ASSOC('users', "UserID", "token='{$targetToken}'");
+        if (!$user1 || !$user2) {
+            return [
+                'status' => false,
+                'message' => "Error: cant find users with this token!",
+            ];
+        }
+        $toLike = $database->findData_ASSOC('Likes',"LikeID, sourceID, targetID, sourceToken, targetToken",
+            "sourceToken= '{$sourceToken}' AND targetToken='{$targetToken}'");
+        if (!empty($toLike)) {
+            $database->deleteTableData('Likes',
+                "sourceToken= '{$sourceToken}' AND targetToken='{$targetToken}'");
+            return [
+                "status" => true,
+                "message" => "User has been unliked.",
+            ];
+        } else {
+            return [
+                "status" => false,
+                "message" => "User already not liked.",
+            ];
+        }
+    }
+
+    public final function reviewLikes($sourceToken){
+        $database = new DatabaseRequest($this->db);
+        $user = $database->findData_ASSOC('users', "UserID", "token='{$sourceToken}'");
+        if (!$user) {
+            return [
+                "status" => false,
+                "message" => "Error: Token does not exist or was overridden.",
+                "info" => false,
+            ];
+        }
+        $like = $database->findData_ASSOC('Likes LEFT JOIN users ON users.token=likes.sourceToken',
+            "likes.targetID, likes.targetToken AS token, users.Avatar AS Avatar, CONCAT(users.FirstName, ' ', users.LastName) AS Name, users.City AS City, users.Country AS Country, users.Age AS Age, users.Gender AS Gender",
+            "sourceID='{$user[0]['UserID']}' AND sourceToken='{$sourceToken}'");
+        if ($like) {
+            return [
+                "status" => true,
+                "message" => "All liked users.",
+                "info" => $like,
+            ];
+        } else {
+            return [
+                "status" => true,
+                "message" => "There is no users that was liked.",
+                "info" => false,
+            ];
+        }
+    }
+
+    public final function checkIfLiked($sourceToken, $targetToken){
+        $database = new DatabaseRequest($this->db);
+        $user1 = $database->findData_ASSOC('users', "UserID", "token='{$sourceToken}'");
+        $user2 = $database->findData_ASSOC('users', "UserID", "token='{$targetToken}'");
+        if (!$user1 || !$user2) {
+            return [
+                "status" => false,
+                "message" => "Error: Token does not exist or was overridden.",
+                "liked" => false,
+            ];
+        }
+        $isLike = $database->findData_ASSOC('Likes',"LikeID, sourceID, targetID, sourceToken, targetToken",
+            "targetToken='{$sourceToken}' AND targetID='{$user1[0]['UserID']}' AND sourceToken='{$targetToken}' AND sourceID='{$user2[0]['UserID']}'");
+        if ($isLike) {
+            return [
+                "status" => true,
+                "message" => "User ID: {$user1[0]['UserID']} Liked by ID: {$user2[0]['UserID']}.",
+                "liked" => true,
+            ];
+        } else {
+            return [
+                "status" => true,
+                "message" => "User ID: {$user1[0]['UserID']} not Liked by ID: {$user2[0]['UserID']}.",
+                "liked" => false,
+            ];
+        }
+    }
+}
