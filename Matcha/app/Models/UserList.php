@@ -74,11 +74,12 @@ class UserList extends Controller
 
     protected final function listOfUsers(&$data, $userToken){
         $database = new DatabaseRequest($this->db);
-        $ulist = $database->findData_ASSOC("users", "token, Avatar, Age, FirstName, LastName, Gender, Tags, UserID, Popularity, map_height, map_width", "token<>'{$userToken}' AND FullRegister='1'");
+        $ulist = $database->findData_ASSOC("users", "token, Avatar, Age, FirstName, LastName, Gender, Tags, UserID, Orientation, Popularity, map_height, map_width", "token<>'{$userToken}' AND FullRegister='1'");
         $currentUser = $database->findData_ASSOC("users", "token, Avatar, Age, FirstName, LastName, Gender, Tags, UserID, Popularity, map_height, map_width", "token='{$userToken}'");
         $ulist = array_reverse($ulist);
         for ($i = 0; !empty($ulist[$i]); $i++)
         {
+            $ulist[$i]['photos'] = $database->findData_ASSOC('Pictures', "PicID, url", "UserID='{$ulist[$i]['UserID']}'");
             $ulist[$i]['range'] = $this->distance($currentUser[0]['map_width'], $currentUser[0]['map_height'], $ulist[$i]['map_width'], $ulist[$i]['map_height'], "K");
             $ulist[$i]['Status'] = true;
         }
