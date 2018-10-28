@@ -17,9 +17,9 @@ use \App\Database\DatabaseRequest;
  */
 class Topic extends Controller
 {
-//    /**
-//     * @return array
-//     */
+    /**
+     * @return array
+     */
     protected final function getAllTopics()
     {
         $database = new DatabaseRequest($this->db);
@@ -66,24 +66,3 @@ class Topic extends Controller
         return $topicResponse;
     }
 }
-
-//    /**
-//     * @return int
-//     */
-//    public function rows()
-//    {
-//        $i = 1;
-//        $n = 0;
-//        $len = strlen($this->Comment);
-//        while ($len > $n) {
-//            if ($this->Comment[$n] == PHP_EOL) {
-//                $i++;
-//            }
-//            $n++;
-//        }
-//    return $i;
-//    }
-//    public function getTitle()
-//    {
-//        return $this->title;
-//    }

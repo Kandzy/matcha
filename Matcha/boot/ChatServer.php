@@ -12,7 +12,7 @@ use Ratchet\Http\HttpServer;
 use Ratchet\WebSocket\WsServer;
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
-use \App\Database\DatabaseRequest;
+//use \App\Database\DatabaseRequest;
 
 /**
  * Class ChatServer
@@ -28,11 +28,6 @@ class ChatServer implements MessageComponentInterface
     public function __construct()
     {
         $this->clients = new \SplObjectStorage();
-        $DB_DSN = "mysql:3306";
-        $DB_USER = "root";
-        $DB_PASSWORD = "12341234";
-        $obj = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
-        $this->database = new DatabaseRequest($obj);
     }
 
     /**

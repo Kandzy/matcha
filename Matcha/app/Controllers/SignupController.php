@@ -25,16 +25,6 @@ class SignupController extends Signup
      * @param $args
      * @return mixed
      */
-    public function index($request, $response, $args){
-        return $this->view->render($response, 'signup/signup.twig');
-    }
-
-    /**
-     * @param $request
-     * @param $response
-     * @param $args
-     * @return mixed
-     */
     public function registration(Request $request,Response $response, $args){
         $params = $request->getParams();
         $database = new DatabaseRequest($this->db);

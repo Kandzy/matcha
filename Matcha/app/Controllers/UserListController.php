@@ -19,6 +19,21 @@ use Slim\Http\Response;
 class UserListController extends UserList
 {
     /**
+     * @param Request $request
+     * @param Response $response
+     * @param $args
+     * @return !array
+     */
+    public function getCurrentUser(Request $request, Response $response, $args)
+    {
+        return $response->withStatus(200)
+            ->withHeader('Content-Type', 'application/json')
+            ->write(json_encode($this->getUser(
+                htmlspecialchars(addslashes($args['token']))
+            )));
+    }
+
+    /**
      * @param $req
      * @param $res
      * @param $args
@@ -32,26 +47,27 @@ class UserListController extends UserList
             "maxPopular" => false,
             "message" =>false,
         ];
-        $userToken = $req->getParam('token');
+        $userToken = htmlspecialchars(addslashes($req->getParam('token')));
         $this->listOfUsers($data, $userToken);
         return $res->withStatus(200)->withHeader('Content-type', "application/json")
             ->write(json_encode($data));
     }
 
-    /**
-     * @param $req
-     * @param $res
-     * @param $args
-     * @return mixed
-     */
-    public function getSortedUsers(Request $req, Response $res, $args){
-        $sortParams = $req->getParams();
-        $data = [
-            "users" =>false,
-            "message" =>false,
-        ];
-        $this->sortUsersBy($data, $sortParams);
-        return $res->withStatus(200)->withHeader('Content-type', "application/json")
-            ->write(json_encode($data));
-    }
+//    /**
+//     * @param $req
+//     * @param $res
+//     * @param $args
+//     * @return mixed
+//     */
+//    public function getSortedUsers(Request $req, Response $res, $args){
+//        $sortParams = $req->getParams();
+//        $data = [
+//            'user' => false,
+//            "users" =>false,
+//            "message" =>false,
+//        ];
+//        $this->sortUsersBy($data, $sortParams);
+//        return $res->withStatus(200)->withHeader('Content-type', "application/json")
+//            ->write(json_encode($data));
+//    }
 }

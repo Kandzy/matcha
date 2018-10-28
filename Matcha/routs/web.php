@@ -23,6 +23,10 @@ use \Slim\Http\Request;
 use \App\Controllers\NotificationController;
 use  \App\Controllers\BlackListController;
 use App\Controllers\LikesController;
+use App\Controllers\ChatController;
+use App\Controllers\PopularityController;
+use App\Controllers\ReportController;
+use App\Controllers\HistoryController;
 
 $app->group('/signin', function (){
     $this->post('', SigninController::class.":loginUser");
@@ -40,23 +44,21 @@ $app->group('/profile', function ()
     $this->post("/create", DisplayProfileInformationController::class.":finishUserRegister");
 });
 
-$app->get('/chat', function(Request $request,Response $response, $args){
-    if($_SESSION['User']) {
-        $data = [
-            'Login' => $_SESSION['User']->getUserLogin()
-        ];
-    }
-    return $this->view->render($response, 'chat/chat.twig', compact('data'));
+$app->group('/chat', function(){
+    $this->post('/rooms/create', ChatController::class.":createRoom");
+    $this->post('/rooms/get', ChatController::class.":getRoom");
+    $this->post('/message/send', ChatController::class.":sendMessage");
+    $this->post('/message/get', ChatController::class.":getMessage");
+    $this->post('/message/history', ChatController::class.":messageHistory");
 });
 
 $app->group('/users', function (){
-    $this->post('', DisplayUsersInformationController::class.":index")->setName('users');
     $this->post('/checkUReg', DisplayUsersInformationController::class.":CheckUserRegistration");
     $this->post('/all', UserListController::class.":getAllUsers");
     $this->post('/sorted', UserListController::class.":getSortedUsers");
     $this->post('/generate', UserController::class.":generate");
-    $this->post('/{username}', DisplayUsersInformationController::class.":displayUserPage")->setName('profile');
-
+    $this->post('/update/{token}', UserController::class.":updateUser");
+    $this->post('/{token}', UserListController::class.":getCurrentUser");
 });
 
 $app->group('/forum', function ()
@@ -69,6 +71,7 @@ $app->group('/forum', function ()
 $app->group('/notification', function (){
     $this->post('/check', NotificationController::class.":updateNotification");
     $this->post('/add', NotificationController::class.":addNewNotification");
+    $this->post('/online', NotificationController::class.":checkStatus");
 });
 
 $app->group('/blacklist', function (){
@@ -86,25 +89,20 @@ $app->group('/like', function ()
     $this->post('/is_liked', LikesController::class.":isLiked");
 });
 
-//$app->post('/test', function ($request, $response)
-//{
-//    $param = $request->getParams();
-//    $data = [
-//        'id' => '1',
-//        'name' => 'login',
-//        'onemore' => $param
-//    ];
-//    return $response->withStatus(200)
-//        ->withHeader('Content-Type', 'application/json')
-//        ->write(json_encode($data));
-//});
+$app->group('/popularity', function (){
+    $this->post('/add', PopularityController::class.":addPopularity");
+});
 
-//$app->get('/', function (){
-//    $user = new User;
-//});
-//
-//$app->get('/users', UserController::class.":index")->setName('users');
-//
+$app->group('/report', function (){
+    $this->post('/fake', ReportController::class.":rFake");
+});
+
+
+$app->group('/history', function (){
+    $this->post('/ofVisits', HistoryController::class.":hByUser");
+    $this->post('/addVisits', HistoryController::class.":addVisit");
+});
+
 //$app->get('/users/{username}[/{email}]', function ($request, $response, $args)
 //{
 //    $user = $this->db->prepare("SELECT * FROM users WHERE Username = :username") ;
@@ -119,69 +117,3 @@ $app->group('/like', function ()
 //    echo '</br>';
 //    var_dump($user->fetchAll(PDO::FETCH_ASSOC));
 //});
-
-//$app->get('/contact', function ($request, $response){
-//    return $this->view->render($response, 'contact.twig');
-//})->setName('contact');
-//
-//$app->get('/contact/confirm', function ($request, $response){
-//    return $this->view->render($response, 'contact_confirm.twig');
-//})->setName('contact.confirmed');
-////
-//$app->post('/contact', function($request, $response){
-//    $params = $request->getParams();
-//    return $response->withRedirect('contact/confirm');
-//})->setName('contact');
-
-//$app->get('/user[/{user}]', function ($request, $response, $args) {
-//    // getUser($args.user);
-//    if (!isset($args['user']))
-//    {
-//        echo "No args";
-//    }
-//    else {
-//        echo $args['user'];
-//    }
-//
-//    $user = [
-//        'user1' => ['username' => 'ololo'],
-//        'id' => 'fhfghfgh'
-//    ];
-//
-//    return $this->view->render($response, 'user.twig', compact('user'));
-////    print_r($args);
-//})->setName('user.name');
-
-//$app->group('/topics', function (){
-//    $this->get('', function (){
-//        echo "topic list";
-//    });
-//
-//    $this->get('/{id}', function ($request, $response, $args){
-//        echo "Topic id:".$args['id'];
-//    });
-//
-//    $this->post('', function (){
-//        echo "post topic list";
-//    });
-//});
-//
-//$app->get('/', function (){
-////    $this->db->exec("USE matcha");
-//    $prep = $this->db->prepare("SELECT * FROM users");
-//    $prep->execute();
-//    $users = $prep->fetchAll(PDO::FETCH_ASSOC);
-////    for
-//    $var = 0;
-//    foreach ($users as $user)
-//    {
-//        $var++;
-//        echo $var.") Username: ".$user['Username']." Email: ".$user['Email']. " Name: ".$user['Name']."</br>";
-//    }
-//
-//});
-
-//$app->get('/', function ($request, $response){
-//    echo "fuck!";
-//   echo $this->user->getUserLogin();
-//})->setName("main");

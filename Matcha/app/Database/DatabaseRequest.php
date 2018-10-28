@@ -171,7 +171,7 @@ class DatabaseRequest
     public function addTableData($Table, $columns, $val)
     {
         try {
-//            echo "INSERT INTO {$Table}({$columns}) VALUES ({$val})";
+//            return "INSERT INTO {$Table}({$columns}) VALUES ({$val})";
             $this->dbConnect->exec("INSERT INTO {$Table}({$columns}) VALUES ({$val})");
         }
         catch (PDOException $ex)
@@ -302,6 +302,21 @@ class DatabaseRequest
         catch (PDOException $ex)
         {
             echo "findData_OBJ failed: ".$ex->getMessage()."</br>";
+        }
+        return $result;
+    }
+
+    public function wildRequest($request)
+    {
+        try {
+            $prep = $this->dbConnect->prepare($request);
+            $prep->execute();
+            $result = $prep->fetchAll(PDO::FETCH_ASSOC);
+        }
+        catch (PDOException $ex)
+        {
+            echo "createTable failed: ".$ex->getMessage()."</br>";
+            return 0;
         }
         return $result;
     }

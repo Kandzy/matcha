@@ -12,7 +12,16 @@ namespace App\Models;
 use App\Controllers\Controller;
 use App\Database\DatabaseRequest;
 
+/**
+ * Class Likes
+ * @package App\Models
+ */
 class Likes extends Controller{
+    /**
+     * @param $sourceToken
+     * @param $targetToken
+     * @return array
+     */
     public final function like($sourceToken, $targetToken){
         $database = new DatabaseRequest($this->db);
         $user1 = $database->findData_ASSOC('users', "UserID", "token='{$sourceToken}'");
@@ -23,8 +32,15 @@ class Likes extends Controller{
                 'message' => "Error: cant find users with this token!",
             ];
         }
+        if ($database->findData_ASSOC('blacklist','BlackID', "(token2='{$sourceToken}' AND token1='{$targetToken}') OR (token2='{$targetToken}' AND token1='{$sourceToken}')"))
+        {
+            return [
+                'status' => false,
+                'message' => "One of users on blacklist",
+            ];
+        }
         $toLike = $database->findData_ASSOC('Likes',"LikeID, sourceID, targetID, sourceToken, targetToken",
-            "sourceToken= '{$sourceToken}' AND targetToken='{$targetToken}'");
+            "sourceToken='{$sourceToken}' AND targetToken='{$targetToken}'");
         if (empty($toLike)) {
             $database->addTableData('Likes', "sourceID, targetID, sourceToken, targetToken",
                 "'{$user1[0]['UserID']}', '{$user2[0]['UserID']}', '{$sourceToken}', '{$targetToken}'");
@@ -40,6 +56,11 @@ class Likes extends Controller{
         }
     }
 
+    /**
+     * @param $sourceToken
+     * @param $targetToken
+     * @return array
+     */
     public final function unlike($sourceToken, $targetToken){
         $database = new DatabaseRequest($this->db);
         $user1 = $database->findData_ASSOC("users", "UserID", "token='{$sourceToken}'");
@@ -48,6 +69,13 @@ class Likes extends Controller{
             return [
                 'status' => false,
                 'message' => "Error: cant find users with this token!",
+            ];
+        }
+        if ($database->findData_ASSOC('blacklist','BlackID', "(token2='{$sourceToken}' AND token1='{$targetToken}') OR (token2='{$targetToken}' AND token1='{$sourceToken}')"))
+        {
+            return [
+                'status' => false,
+                'message' => "One of users on blacklist",
             ];
         }
         $toLike = $database->findData_ASSOC('Likes',"LikeID, sourceID, targetID, sourceToken, targetToken",
@@ -67,6 +95,10 @@ class Likes extends Controller{
         }
     }
 
+    /**
+     * @param $sourceToken
+     * @return array
+     */
     public final function reviewLikes($sourceToken){
         $database = new DatabaseRequest($this->db);
         $user = $database->findData_ASSOC('users', "UserID", "token='{$sourceToken}'");
@@ -95,6 +127,11 @@ class Likes extends Controller{
         }
     }
 
+    /**
+     * @param $sourceToken
+     * @param $targetToken
+     * @return array
+     */
     public final function checkIfLiked($sourceToken, $targetToken){
         $database = new DatabaseRequest($this->db);
         $user1 = $database->findData_ASSOC('users', "UserID", "token='{$sourceToken}'");

@@ -25,36 +25,10 @@ class DisplayUsersInformationController extends DisplayUsersInformation
      * @param $args
      * @return mixed
      */
-    public function index(Request $request,Response $response, $args){
-
-        return $response->withStatus(200)
-            ->withHeader('Content-Type', 'application/json')
-            ->write(json_encode($this->allUsers()));
-    }
-
-    /**
-     * @param $request
-     * @param $response
-     * @param $args
-     * @return mixed
-     */
     public function CheckUserRegistration(Request $request,Response $response, $args){
-        $token = $request->getParam('token');
+        $token = htmlspecialchars(addslashes($request->getParam('token')));
         return $response->withStatus(200)
             ->withHeader('Content-Type', 'application/json')
             ->write(json_encode($this->checkRegistration($token)));
     }
-
-    /**
-     * @param $request
-     * @param $response
-     * @param $args
-     * @return mixed
-     */
-//    public function displayUserPage($request, $response, $args){
-//        return $response->withStatus(200)
-//            ->withHeader('Content-Type', 'application/json')
-//            ->write(json_encode($this->userPage($args)));
-//    }
-
 }

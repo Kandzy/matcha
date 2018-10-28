@@ -25,13 +25,15 @@ class Notification extends Controller
      */
     protected final function checkNotification($data)
     {
+        $token = htmlspecialchars(addslashes($data['token']));
         $database = new DatabaseRequest($this->db);
         $notification = $database->findData_ASSOC("notification",
             "NID, Type, sourceID, sourceName, TargetID, TargetName, TargetToken",
-            "TargetToken='{$data['token']}'");
+            "TargetToken='{$token}' AND Shown='0'");
+        $database->updateTableData('users', "data=NOW()", "token='{$token}'");
         if($notification) {
             for ($i = 0; $notification[$i]; $i++) {
-                $database->deleteTableData("notification", "NID='{$notification[$i]['NID']}'");
+                $database->updateTableData("notification", "Shown='1'","NID='{$notification[$i]['NID']}'");
             }
         }
         else{
@@ -40,8 +42,12 @@ class Notification extends Controller
                 'message' => "No new notifications",
             ];
         }
-//        $database->deleteTableData("notification", "TargetToken='{$data['token']}'");
-        return $notification;
+        return [
+            'notification' => true,
+            'message' => $notification,
+            'all_notifications' => ($database->findData_ASSOC('notification',
+                "NID, Type, sourceID, sourceName, TargetID, TargetName, TargetToken", "TargetToken='{$token}' ORDER BY NID DESC"))
+        ];
     }
 
     /**
@@ -55,6 +61,10 @@ class Notification extends Controller
         $database = new DatabaseRequest($this->db);
         $target = $database->findData_ASSOC('users', "UserID, CONCAT(FirstName, ' ', LastName) as Name", "token='{$targetToken}'");
         $source = $database->findData_ASSOC('users', "UserID, CONCAT(FirstName, ' ', LastName) as Name", "token='{$sourceToken}'");
+        if ($database->findData_ASSOC('blacklist','BlackID', "(token2='{$sourceToken}' AND token1='{$targetToken}') OR (token2='{$targetToken}' AND token1='{$sourceToken}')"))
+        {
+            return false;
+        }
         if ($target && $source) {
             $database->addTableData("notification", "Type, sourceID, sourceName, TargetID, TargetName, TargetToken",
                 "'{$Type}', '{$source[0]['UserID']}', '{$source[0]['Name']}', '{$target[0]['UserID']}', '{$target[0]['Name']}', '{$targetToken}'");

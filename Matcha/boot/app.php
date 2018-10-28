@@ -7,7 +7,6 @@
  */
 
 require __DIR__.'/../vendor/autoload.php';
-use \App\Controllers\UserController;
 
 session_start();
 
@@ -30,7 +29,7 @@ $container['db'] = function ()
 };
 
 $container['view'] = function (\Slim\Container $container) {
-    $view = new \Slim\Views\Twig(__DIR__ . '/../resources/View/', [
+    $view = new \Slim\Views\Twig(__DIR__ . '/View/', [
         'cache' => false
     ]);
 

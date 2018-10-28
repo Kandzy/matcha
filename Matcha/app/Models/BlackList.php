@@ -28,7 +28,7 @@ class BlackList extends Controller
             "token1= '{$sourceToken}' AND token2='{$targetToken}'");
         if (empty($toBlock)) {
             $database->addTableData('blacklist', "UID1, UID2, token1, token2",
-                "'{$user1[0]['UserID']}', '{$user2[0]['UserID']}', '{$sourceToken}', '{$targetToken}'");
+                "'{$user2[0]['UserID']}', '{$user1[0]['UserID']}', '{$sourceToken}', '{$targetToken}'");
             return [
                 "status" => true,
                 "message" => "User has been added to blacklist.",

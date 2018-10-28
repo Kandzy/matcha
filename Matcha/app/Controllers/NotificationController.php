@@ -9,6 +9,7 @@
 namespace App\Controllers;
 
 
+use App\Database\DatabaseRequest;
 use App\Models\Notification;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -27,8 +28,8 @@ class NotificationController extends Notification
      */
     public final function updateNotification(Request $request, Response $response, $args)
     {
-        return $response->withHeader('Content-Type', "application/json")
-            ->withStatus(200)
+        return $response->withStatus(200)
+            ->withHeader('Content-Type', "application/json")
             ->write(json_encode($this->checkNotification($request->getParams())));
     }
 
@@ -43,6 +44,35 @@ class NotificationController extends Notification
         $data = $request->getParams();
         return $response->withHeader('Content-Type', "application/json")
             ->withStatus(200)
-            ->write(json_encode($this->addNotification($data['sourceToken'], $data['targetToken'], $data['Type'])));
+            ->write(json_encode($this->addNotification(
+                htmlspecialchars(addslashes($data['sourceToken'])),
+                htmlspecialchars(addslashes($data['targetToken'])),
+                htmlspecialchars(addslashes($data['Type']))
+            )));
+    }
+
+    public final function checkStatus(Request $request, Response $response, $args){
+        $token = htmlspecialchars(addslashes($request->getParam('token')));
+        if (!($lastOnline = (new DatabaseRequest($this->db))->wildRequest("SELECT data FROM users WHERE token='{$token}'")[0]['data'])) {
+            return $response->withHeader('Content-Type', "application/json")
+                ->withStatus(200)
+                ->write(json_encode(false));
+        }
+        $diff = (new DatabaseRequest($this->db))->wildRequest("SELECT TIMESTAMPDIFF(SECOND,(SELECT data FROM users WHERE token='{$token}'), (SELECT NOW())) AS diff;")[0]['diff'];
+        if ($diff > 10) {
+            return $response->withHeader('Content-Type', "application/json")
+                ->withStatus(200)
+                ->write(json_encode([
+                    'status' => false,
+                    'date' => $lastOnline
+                ]));
+        } else {
+            return $response->withHeader('Content-Type', "application/json")
+                ->withStatus(200)
+                ->write(json_encode([
+                    'status' => true,
+                    'date' => $lastOnline
+                    ]));
+        }
     }
 }

@@ -18,24 +18,35 @@ class LikesController extends Likes
     public final function addLike(Request $request, Response $response, $argc){
         return $response->withStatus(200)
             ->withHeader("Content-Type", "application/json")
-            ->write(json_encode($this->like($request->getParam('sourceToken'), $request->getParam('targetToken'))));
+            ->write(json_encode($this->like(
+                htmlspecialchars(addslashes($request->getParam('sourceToken'))),
+                htmlspecialchars(addslashes($request->getParam('targetToken')))
+            )));
     }
 
     public final function removeLike(Request $request, Response $response, $argc){
         return $response->withStatus(200)
             ->withHeader("Content-Type", "application/json")
-            ->write(json_encode($this->unlike($request->getParam('sourceToken'), $request->getParam('targetToken'))));
+            ->write(json_encode($this->unlike(
+                htmlspecialchars(addslashes($request->getParam('sourceToken'))),
+                htmlspecialchars(addslashes($request->getParam('targetToken')))
+            )));
     }
 
     public final function checkLikes(Request $request, Response $response, $argc){
         return $response->withStatus(200)
             ->withHeader("Content-Type", "application/json")
-            ->write(json_encode($this->reviewLikes($request->getParam('sourceToken'))));
+            ->write(json_encode($this->reviewLikes(
+                htmlspecialchars(addslashes($request->getParam('sourceToken')))
+                )));
     }
 
     public final function isLiked(Request $request, Response $response, $argc){
         return $response->withStatus(200)
             ->withHeader("Content-Type", "application/json")
-            ->write(json_encode($this->checkIfLiked($request->getParam('sourceToken'), $request->getParam('targetToken'))));
+            ->write(json_encode($this->checkIfLiked(
+                htmlspecialchars(addslashes($request->getParam('sourceToken'))),
+                htmlspecialchars(addslashes($request->getParam('targetToken')))
+                )));
     }
 }

@@ -17,7 +17,6 @@ use \App\Database\DatabaseRequest;
  */
 class Signin extends Controller
 {
-//    private $Login;
     private $data;
     private $password;
 
@@ -65,27 +64,6 @@ class Signin extends Controller
             ];
         }
     }
-
-//    /**
-//     * @param $request
-//     * @param $response
-//     * @return mixed
-//     */
-//    public function setUserLogout($request, $response){
-//        unset($_SESSION['User']);
-//        return $response->withRedirect('/signin');
-//    }
-
-    /*
-     * Private methods
-     */
-
-//    /**
-//     * @param $Login
-//     */
-//    private function setLogin($Login){
-//        $this->Login = $Login;
-//    }
 
     /**
      * @param $Login

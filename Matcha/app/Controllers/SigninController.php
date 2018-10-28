@@ -19,17 +19,6 @@ use Slim\Http\Response;
  */
 class SigninController extends Signin
 {
-//    /**
-//     * @param $request
-//     * @param $response
-//     * @param $args
-//     * @return mixed
-//     */
-//    public function index($request, $response, $args)
-//    {
-//        return $this->view->render($response, 'signin/signin.twig');
-//    }
-
     /**
      * @param $request
      * @param $response
@@ -39,7 +28,11 @@ class SigninController extends Signin
     public function loginUser(Request $request,Response $response, $args)
     {
         $param = $request->getParams();
-        $userData = $this->setUserOnline($param['Login'], $param['Password'], $this->db);
+        $userData = $this->setUserOnline(
+            $param['Login'],
+            $param['Password'],
+            $this->db
+        );
         if ($userData)
         {
             return $response->withStatus(200)
@@ -51,10 +44,18 @@ class SigninController extends Signin
             ->write(json_encode(null));
     }
 
+    /**
+     * @param Request $request
+     * @param Response $response
+     * @param $args
+     * @return !array
+     */
     public function isLogged(Request $request, Response $response, $args)
     {
         return $response->withStatus(200)
             ->withHeader('Content-Type', 'application/json')
-            ->write(json_encode($this->isUserLogged($request->getParams()['token'])));
+            ->write(json_encode($this->isUserLogged(
+                htmlspecialchars(addslashes($request->getParams()['token']))
+            )));
     }
 }

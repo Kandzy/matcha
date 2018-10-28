@@ -19,7 +19,7 @@ class RecoverController extends Recover
             "userExist" => false,
             "mailSend" => false,
         ];
-        $token = $request->getParam('Token');
+        $token = htmlspecialchars(addslashes($request->getParam('Token')));
         $to_find = htmlspecialchars(addslashes($request->getParam('find')));
         $user_data = $this->getUser($token);
         if (($res['userExist'] = $this->isUserExist($to_find, $user_data)))

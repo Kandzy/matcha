@@ -31,11 +31,12 @@ class DisplayUsersInformation extends Controller
         $photos = [];
         $i = 0;
         while ($request['Pics'.$i]) {
+            $avatar = (intval($i) == 0) ? 1 : 0;
             $pic = explode(",", $request['Pics' . $i]);
             $name = $user[0]['Login'] . uniqid();
             $src = "photos/{$user[0]['Login']}/$name.jpg";
             $photos[$i] = $src;
-            $database->addTableData("pictures", "UserID, url", "'{$user[0]['UserID']}', '$src'");
+            $database->addTableData("pictures", "UserID, url, avatar", "'{$user[0]['UserID']}', '$src', '{$avatar}'");
             file_put_contents($src, base64_decode($pic[1]));
             $i++;
         }
@@ -52,7 +53,7 @@ class DisplayUsersInformation extends Controller
         $photos = $this->uploadPhoto($database, $token,$request);
         $params = "Age='{$request['Age']}',
             City='".htmlspecialchars(addslashes($request['City']))."', Country='".htmlspecialchars(addslashes($request['Country']))."', FirstName='".htmlspecialchars(addslashes($request['FirstName']))."',
-            Gender='{$request['Gender']}', LastName='".htmlspecialchars(addslashes($request['LastName']))."', Tags='".htmlspecialchars(addslashes($request['Preferences']))."',
+            Gender='{$request['Gender']}', LastName='".htmlspecialchars(addslashes($request['LastName']))."', Preference='".htmlspecialchars(addslashes($request['Preferences']))."',
             Orientation='{$request['Sexpref']}', Bio='".htmlspecialchars(addslashes($request['Bio']))."', map_height='{$request['lat']}', map_width='{$request['lng']}', FullRegister='1'";
         if (count($photos) >= 1) {
             $params .= ", Avatar='{$photos[0]}'";
@@ -87,12 +88,13 @@ class DisplayUsersInformation extends Controller
         $i = 0;
         while($TagsArray[$i])
         {
-            $tag = $database->findData_ASSOC('Tags', 'tid', "tag='$TagsArray[$i]'");
+            $current_tag = htmlspecialchars(addslashes($TagsArray[$i]));
+            $tag = $database->findData_ASSOC('Tags', 'tid', "tag='$current_tag'");
 
             if ($tag[0]['tid'] == null)
             {
-                $database->addTableData('Tags', "tag", "'{$TagsArray[$i]}'");
-                $tag = $database->findData_ASSOC('Tags', 'tid', "tag='{$TagsArray[$i]}'");
+                $database->addTableData('Tags', "tag", "'{$current_tag}'");
+                $tag = $database->findData_ASSOC('Tags', 'tid', "tag='{$current_tag}'");
             }
             if ($userID && $tag[0]['tid'] && !$database->findData_ASSOC("user_tag",'*', "user='{$userID}' AND tag='{$tag[0]['tid']}'")) {
                 $database->addTableData("user_tag", "user, tag", "$userID ,{$tag[0]['tid']}");
@@ -127,9 +129,9 @@ class DisplayUsersInformation extends Controller
             "FirstName" => false,
             "Gender" => false,
             "LastName" => false,
+            "Tags" => false,
             "Preferences" => false,
             "Sexpref" => false,
-            "Tags" => false,
             "lat" => false,
             "lng" => false,
             "Bio" => false,
