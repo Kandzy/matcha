@@ -51,6 +51,12 @@ class NotificationController extends Notification
             )));
     }
 
+    /**
+     * @param Request $request
+     * @param Response $response
+     * @param $args
+     * @return !
+     */
     public final function checkStatus(Request $request, Response $response, $args){
         $token = htmlspecialchars(addslashes($request->getParam('token')));
         if (!($lastOnline = (new DatabaseRequest($this->db))->wildRequest("SELECT data FROM users WHERE token='{$token}'")[0]['data'])) {
@@ -74,5 +80,17 @@ class NotificationController extends Notification
                     'date' => $lastOnline
                     ]));
         }
+    }
+
+    /**
+     * @param Request $request
+     * @param Response $response
+     * @return !
+     */
+    public final function getAllNotif(Request $request, Response $response)
+    {
+        return $response->withStatus(200)
+            ->withHeader('Content-Type', "application/json")
+            ->write(json_encode($this->allNotification($request->getParams())));
     }
 }

@@ -75,4 +75,28 @@ class Notification extends Controller
             return false;
         }
     }
+
+    /**
+     * @param $data
+     * @return array
+     */
+    protected final function allNotification($data)
+    {
+        $token = htmlspecialchars(addslashes($data['token']));
+        $database = new DatabaseRequest($this->db);
+        $notification = $database->findData_ASSOC('notification',
+            "NID, Type, sourceID, sourceName, TargetID, TargetName, TargetToken", "TargetToken='{$token}' ORDER BY NID DESC");
+        if($notification) {
+            return [
+                'notification' => true,
+                'all_notifications' => $notification
+            ];
+        }
+        else{
+            return [
+                'notification' => false,
+                'message' => "No new notifications",
+            ];
+        }
+    }
 }

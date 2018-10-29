@@ -19,12 +19,10 @@ class RecoverController extends Recover
             "userExist" => false,
             "mailSend" => false,
         ];
-        $token = htmlspecialchars(addslashes($request->getParam('Token')));
         $to_find = htmlspecialchars(addslashes($request->getParam('find')));
-        $user_data = $this->getUser($token);
-        if (($res['userExist'] = $this->isUserExist($to_find, $user_data)))
+        if (($res['userExist'] = $this->isUserExist($to_find)))
         {
-            $res['mailSend'] = $this->sendRecMail($user_data['Email']);
+            $res['mailSend'] = $this->sendRecMail($to_find);
         }
         return $response->withStatus(200)
             ->withHeader('Content-Type', 'application/json')

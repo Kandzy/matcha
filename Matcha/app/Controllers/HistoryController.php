@@ -54,4 +54,21 @@ class HistoryController extends History
                                     $viewed
                 )));
     }
+
+    /**
+     * @param Request $request
+     * @param Response $response
+     * @param $args
+     * @return !
+     */
+    public final function visitors(Request $request, Response $response, $args)
+    {
+        $token = htmlspecialchars(addslashes($request->getParam('token')));
+        return $response->withStatus(200)
+            ->withHeader('Content-Type', "application/json")
+            ->write(json_encode(
+                $this->visitorsHistory(
+                    $token
+                )));
+    }
 }

@@ -54,4 +54,26 @@ class History extends Controller
             return false;
         }
     }
+
+    /**
+     * @param $token
+     * @return array
+     */
+    protected final function visitorsHistory($token)
+    {
+        $database = new DatabaseRequest($this->db);
+        $history = $database->findData_ASSOC('history LEFT JOIN users ON history.userToken=users.token', "*", "history.viewedToken='{$token}'");
+        if ($history)
+        {
+            return [
+                'history' => $history,
+                'status' => true,
+            ];
+        } else {
+            return [
+                'history' => NULL,
+                'status' => false,
+            ];
+        }
+    }
 }

@@ -109,7 +109,7 @@ class Likes extends Controller{
                 "info" => false,
             ];
         }
-        $like = $database->findData_ASSOC('Likes LEFT JOIN users ON users.token=likes.sourceToken',
+        $like = $database->findData_ASSOC('Likes LEFT JOIN users ON users.token=likes.targetToken',
             "likes.targetID, likes.targetToken AS token, users.Avatar AS Avatar, CONCAT(users.FirstName, ' ', users.LastName) AS Name, users.City AS City, users.Country AS Country, users.Age AS Age, users.Gender AS Gender",
             "sourceID='{$user[0]['UserID']}' AND sourceToken='{$sourceToken}'");
         if ($like) {
@@ -156,6 +156,39 @@ class Likes extends Controller{
                 "status" => true,
                 "message" => "User ID: {$user1[0]['UserID']} not Liked by ID: {$user2[0]['UserID']}.",
                 "liked" => false,
+            ];
+        }
+    }
+
+    /**
+     * @param $token
+     * @return array
+     */
+    protected final function likedBy($token)
+    {
+        $database = new DatabaseRequest($this->db);
+        $user = $database->findData_ASSOC('users', "UserID", "token='{$token}'");
+        if (!$user) {
+            return [
+                "status" => false,
+                "message" => "Error: Token does not exist or was overridden.",
+                "info" => false,
+            ];
+        }
+        $like = $database->findData_ASSOC('Likes LEFT JOIN users ON users.token=likes.sourceToken',
+            "likes.sourceID, likes.sourceToken AS token, users.Avatar AS Avatar, CONCAT(users.FirstName, ' ', users.LastName) AS Name, users.City AS City, users.Country AS Country, users.Age AS Age, users.Gender AS Gender",
+            "targetID='{$user[0]['UserID']}' AND targetToken='{$token}'");
+        if ($like) {
+            return [
+                "status" => true,
+                "message" => "All users who like you.",
+                "info" => $like,
+            ];
+        } else {
+            return [
+                "status" => true,
+                "message" => "There is no users that was liked.",
+                "info" => false,
             ];
         }
     }

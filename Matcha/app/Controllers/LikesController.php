@@ -49,4 +49,13 @@ class LikesController extends Likes
                 htmlspecialchars(addslashes($request->getParam('targetToken')))
                 )));
     }
+
+    public final function likesHistory(Request $request, Response $response, $argc)
+    {
+        return $response->withStatus(200)
+            ->withHeader("Content-Type", "application/json")
+            ->write(json_encode($this->likedBy(
+                htmlspecialchars(addslashes($request->getParam('token')))
+            )));
+    }
 }

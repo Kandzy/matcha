@@ -6,20 +6,13 @@
  * Time: 11:46 AM
  */
 
-use \App\Models\User;
-use \App\Controllers\TopicController;
 use \App\Controllers\UserController;
 use \App\Controllers\SigninController;
 use \App\Controllers\SignupController;
-use \App\Middleware\RedirectIfUnauthenticated;
-use \App\Middleware\RedirectIfAunthenticated;
 use \App\Controllers\DisplayUsersInformationController;
-use \App\Middleware\FirstTimeConnectedUser;
 use App\Controllers\DisplayProfileInformationController;
 use App\Controllers\RecoverController;
 use App\Controllers\UserListController;
-use \Slim\Http\Response;
-use \Slim\Http\Request;
 use \App\Controllers\NotificationController;
 use  \App\Controllers\BlackListController;
 use App\Controllers\LikesController;
@@ -61,17 +54,11 @@ $app->group('/users', function (){
     $this->post('/{token}', UserListController::class.":getCurrentUser");
 });
 
-$app->group('/forum', function ()
-{
-    $this->post('', TopicController::class . ':getTopics')->setName('topics');
-    $this->post('/add', TopicController::class . ':addTopic')->setName('topics.add');
-    $this->post('/{id}', TopicController::class . ':show')->setName('topics.show');
-});
-
 $app->group('/notification', function (){
     $this->post('/check', NotificationController::class.":updateNotification");
     $this->post('/add', NotificationController::class.":addNewNotification");
     $this->post('/online', NotificationController::class.":checkStatus");
+    $this->post('/all', NotificationController::class.":getAllNotif");
 });
 
 $app->group('/blacklist', function (){
@@ -101,19 +88,5 @@ $app->group('/report', function (){
 $app->group('/history', function (){
     $this->post('/ofVisits', HistoryController::class.":hByUser");
     $this->post('/addVisits', HistoryController::class.":addVisit");
+    $this->post('/visitors', HistoryController::class.":visitors");
 });
-
-//$app->get('/users/{username}[/{email}]', function ($request, $response, $args)
-//{
-//    $user = $this->db->prepare("SELECT * FROM users WHERE Username = :username") ;
-//    $user->execute([
-//        'username' => $args['username']
-//    ]);
-//    if (isset($args['email'])) {
-//        echo $args['email']."</br>";
-//    }
-//    $param = $request->getParam('pid');
-//    echo $param;
-//    echo '</br>';
-//    var_dump($user->fetchAll(PDO::FETCH_ASSOC));
-//});

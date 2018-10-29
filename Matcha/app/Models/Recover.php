@@ -19,22 +19,14 @@ use App\Database\DatabaseRequest;
 class Recover extends Controller
 {
     /**
-     * @param $token
-     * @return mixed
-     */
-    protected final function getUser($token){
-        $database = new DatabaseRequest($this->db);
-        $user = $database->findData_ASSOC("users", "Email, Login", "token={$token}");
-        return $user[0];
-    }
-
-    /**
      * @param $to_find
      * @param $user_data
      * @return bool
      */
-    protected final function isUserExist($to_find, $user_data){
-        if($to_find == $user_data['Login'] || $to_find == $user_data['Email'])
+    protected final function isUserExist($to_find){
+        $database = new DatabaseRequest($this->db);
+        $user = $database->findData_ASSOC("users", "Email, Login", "Email='{$to_find}' OR Login='{$to_find}'");
+        if($user)
         {
             return (true);
         }
@@ -45,7 +37,36 @@ class Recover extends Controller
      * @param $email
      * @return bool
      */
-    protected final function sendRecMail($email){
-        return (true);
+    protected final function sendRecMail($to_find){
+//        $database = new DatabaseRequest($this->db);
+//        $user = $database->findData_ASSOC("users", "Email, Login, token", "Email='{$to_find}' OR Login='{$to_find}'");
+//        $token = $user[0]['token'];
+//        $encoding = "utf-8";
+//        $mail_to = $user[0]["Email"];
+//        $mail_subject = "Sign UP Camagru";
+//        $mail_message = "<div style='font-size:10pt; font-style:italic; color:#006699;'>Здравствуйте, ". $user[0]["Login"].",
+//                Для восстановления пароля нажмите:<br/>
+//
+//        <a href='http://localhost:3000/recover?token=".$token."'><button style='outline: none;
+//                        height: 1.7em;
+//                        width: 10em;
+//                        font-size: 2vw;
+//                        border-radius:  0.5vw;
+//                        color: white;
+//                        background-color: #08558b;'>восстановить</button></a></div>";
+//        $from_name = "DK";
+//        $from_mail = "dkunitcorp@gmail.com";
+//        $header = "Content-type: text/html; charset=".$encoding." \r\n";
+//        $header .= "From: ".$from_name." <".$from_mail."> \r\n";
+//        $header .= "MIME-Version: 1.0 \r\n";
+//        $header .= "Content-Transfer-Encoding: 8bit \r\n";
+//        $header .= "Date: ".date("r (T)")." \r\n";
+//        if (mail($mail_to, $mail_subject, $mail_message, $header))
+//        {
+//            return (true);
+//        }
+//        else{
+            return (false);
+//        }
     }
 }
