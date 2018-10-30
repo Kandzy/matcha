@@ -219,7 +219,8 @@ class DatabaseRequest
             echo "updateTableData failed: ".$ex->getMessage()."</br>";
             return 0;
         }
-        return 1;
+        return ['stat'=>1,
+        'req' => "UPDATE {$Table} SET {$Params} WHERE 1=1 AND {$Where}"];
     }
 
     /**

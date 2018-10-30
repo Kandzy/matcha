@@ -25,6 +25,10 @@ class DisplayUsersInformation extends Controller
      */
     private function uploadPhoto(DatabaseRequest $database, string $token, $request){
         $user = $database->findData_ASSOC('users', "UserID, Login", "token='{$token}'");
+        if (!file_exists('photos'))
+        {
+            mkdir("photos");
+        }
         if (!file_exists("photos/{$user[0]['Login']}/")) {
             mkdir("photos/{$user[0]['Login']}");
         }
@@ -52,8 +56,8 @@ class DisplayUsersInformation extends Controller
         $database->UseDB("db_matcha");
         $photos = $this->uploadPhoto($database, $token,$request);
         $params = "Age='{$request['Age']}',
-            City='".htmlspecialchars(addslashes($request['City']))."', Country='".htmlspecialchars(addslashes($request['Country']))."', FirstName='".htmlspecialchars(addslashes($request['FirstName']))."',
-            Gender='{$request['Gender']}', LastName='".htmlspecialchars(addslashes($request['LastName']))."', Preference='".htmlspecialchars(addslashes($request['Preferences']))."',
+            City='".htmlspecialchars(addslashes($request['City']))."', Country='".htmlspecialchars(addslashes($request['Country']))."',
+            Gender='{$request['Gender']}', Preference='".htmlspecialchars(addslashes($request['Preferences']))."',
             Orientation='{$request['Sexpref']}', Bio='".htmlspecialchars(addslashes($request['Bio']))."', map_height='{$request['lat']}', map_width='{$request['lng']}', FullRegister='1'";
         if (count($photos) >= 1) {
             $params .= ", Avatar='{$photos[0]}'";
@@ -111,9 +115,16 @@ class DisplayUsersInformation extends Controller
     {
         $database = new DatabaseRequest($this->db);
         $user = $database->findData_ASSOC('users', 'FullRegister', "token='{$token}'");
-        return $json = [
-            "Extend_Registration" => $user[0]['FullRegister']
-        ];
+        if ($user) {
+            return $json = [
+                "Extend_Registration" => $user[0]['FullRegister']
+            ];
+        }
+        else {
+            return $json = [
+                "Extend_Registration" => 1
+            ];
+        }
     }
 
     /**
@@ -126,9 +137,7 @@ class DisplayUsersInformation extends Controller
             "Age" => false,
             "City" => false,
             "Country" => false,
-            "FirstName" => false,
             "Gender" => false,
-            "LastName" => false,
             "Tags" => false,
             "Preferences" => false,
             "Sexpref" => false,

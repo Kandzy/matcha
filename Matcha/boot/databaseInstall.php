@@ -136,12 +136,12 @@ if($db->createDataBase("db_matcha")) {
      * History of visiting
      */
 
-    if ($db->wildRequest("SHOW TABLES LIKE 'history'")) {
+//    if ($db->wildRequest("SHOW TABLES LIKE 'history'")) {
         $db->createTable('history', 'historyID');
         $db->addTableColumn('history', "userToken", "varchar(255)");
         $db->addTableColumn('history', "viewedToken", "varchar(255)");
         $db->addTableColumn('history', "viewedDate", "DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP");
-    }
+//    }
 
     /**
      *  Notification (Temporary likes and messages)

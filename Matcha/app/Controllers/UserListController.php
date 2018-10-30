@@ -52,22 +52,4 @@ class UserListController extends UserList
         return $res->withStatus(200)->withHeader('Content-type', "application/json")
             ->write(json_encode($data));
     }
-
-//    /**
-//     * @param $req
-//     * @param $res
-//     * @param $args
-//     * @return mixed
-//     */
-//    public function getSortedUsers(Request $req, Response $res, $args){
-//        $sortParams = $req->getParams();
-//        $data = [
-//            'user' => false,
-//            "users" =>false,
-//            "message" =>false,
-//        ];
-//        $this->sortUsersBy($data, $sortParams);
-//        return $res->withStatus(200)->withHeader('Content-type', "application/json")
-//            ->write(json_encode($data));
-//    }
 }

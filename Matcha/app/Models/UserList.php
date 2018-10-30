@@ -138,21 +138,9 @@ class UserList extends Controller
     {
         $database = new DatabaseRequest($this->db);
         $currentUser = $database->findData_ASSOC("users", "*", "token='{$token}'");
+        $currentUser[0]['photos'] = $database->findData_ASSOC('Pictures', "PicID, url", "UserID='{$currentUser[0]['UserID']}'");
         $this->userTags($currentUser, $database);
         $currentUser = $currentUser[0];
         return $currentUser;
     }
-
-//    protected final function sortUsersBy(&$data, $sortBy){
-//        $database = new DatabaseRequest($this->db);
-//        $maxAge = htmlspecialchars(addslashes($sortBy['maxAge']));
-//        $minAge = htmlspecialchars(addslashes($sortBy['minAge']));
-//        $minPop = htmlspecialchars(addslashes($sortBy['minPop']));
-//        $maxPop = htmlspecialchars(addslashes($sortBy['maxPop']));
-//        $orientation = htmlspecialchars(addslashes($sortBy['sexPref']));
-//        $preferences = $sortBy['preferances'];
-//        $ulist = $database->findData_ASSOC("users", "token, Avatar, Age, FirstName, LastName, Gender, Tags, UserID, Popularity",
-//            "Age BETWEEN {$minAge} AND {$maxAge} AND Popularity BETWEEN {$minPop} AND {$maxPop} AND Orientation='{$orientation}'");
-//        $data['users'] = $ulist;
-//    }
 }

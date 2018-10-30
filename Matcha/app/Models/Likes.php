@@ -106,7 +106,7 @@ class Likes extends Controller{
             return [
                 "status" => false,
                 "message" => "Error: Token does not exist or was overridden.",
-                "info" => false,
+                "info" => [],
             ];
         }
         $like = $database->findData_ASSOC('Likes LEFT JOIN users ON users.token=likes.targetToken',
@@ -122,7 +122,7 @@ class Likes extends Controller{
             return [
                 "status" => true,
                 "message" => "There is no users that was liked.",
-                "info" => false,
+                "info" => [],
             ];
         }
     }
@@ -172,7 +172,7 @@ class Likes extends Controller{
             return [
                 "status" => false,
                 "message" => "Error: Token does not exist or was overridden.",
-                "info" => false,
+                "info" => [],
             ];
         }
         $like = $database->findData_ASSOC('Likes LEFT JOIN users ON users.token=likes.sourceToken',
@@ -188,7 +188,7 @@ class Likes extends Controller{
             return [
                 "status" => true,
                 "message" => "There is no users that was liked.",
-                "info" => false,
+                "info" => [],
             ];
         }
     }

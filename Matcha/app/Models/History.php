@@ -34,7 +34,7 @@ class History extends Controller
             ];
         } else {
             return [
-                'history' => NULL,
+                'history' => [],
                 'status' => false,
             ];
         }
@@ -71,7 +71,7 @@ class History extends Controller
             ];
         } else {
             return [
-                'history' => NULL,
+                'history' => [],
                 'status' => false,
             ];
         }

@@ -24,12 +24,14 @@ use App\Controllers\HistoryController;
 $app->group('/signin', function (){
     $this->post('', SigninController::class.":loginUser");
     $this->post('/password/recover', RecoverController::class.":recover");
+    $this->post('/password/new', RecoverController::class.":newPassword");
     $this->post('/user/logged', SigninController::class.":isLogged");
 });
 
 
 $app->group('/signup', function () {
     $this->post('', SignupController::class.":registration");
+    $this->post('/verify', SignupController::class.":verifyEmail");
 });
 
 $app->group('/profile', function ()
@@ -74,6 +76,7 @@ $app->group('/like', function ()
     $this->post('/remove', LikesController::class.":removeLike");
     $this->post('/check', LikesController::class.":checkLikes");
     $this->post('/is_liked', LikesController::class.":isLiked");
+    $this->post('/likedBy', LikesController::class.":likesHistory");
 });
 
 $app->group('/popularity', function (){

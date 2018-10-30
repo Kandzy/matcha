@@ -41,7 +41,11 @@ class SigninController extends Signin
         }
         return $response->withStatus(200 )
             ->withHeader('Content-Type', 'application/json')
-            ->write(json_encode(null));
+            ->write(json_encode([
+                'token' => null,
+                'EmailConfirm' => 0,
+                'FullRegister' => 0,
+            ]));
     }
 
     /**

@@ -36,6 +36,8 @@ class Signin extends Controller
         {
             unset($this->password);
             $this->data = $this->getToken($Login, $database);
+            $this->data['FullRegister'] = intval($this->data['FullRegister']);
+            $this->data['EmailConfirm'] = intval($this->data['EmailConfirm']);
             return $this->data;
         } else {
             return false;
@@ -71,7 +73,7 @@ class Signin extends Controller
      */
     private final function getToken($Login,DatabaseRequest $database){
         $Login = htmlspecialchars(addslashes($Login));
-        $data = $database->findData_ASSOC('users', "token, FullRegister", "Login='{$Login}'");
+        $data = $database->findData_ASSOC('users', "token, FullRegister, EmailConfirm", "Login='{$Login}'");
         return $data[0];
     }
 }

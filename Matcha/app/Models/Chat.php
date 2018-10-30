@@ -73,6 +73,7 @@ class Chat extends Controller
         return [
             "status" => true,
             'token' => true,
+            'receiver' => $receiverToken
         ];
     }
 

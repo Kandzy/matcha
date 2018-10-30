@@ -52,6 +52,9 @@ class SignupController extends Signup
             if ($data['ValidPassword']) {
                 if (!$data['LoginExist'] && !$data['EmailExist'] && $data['ValidEmail']) {
                     $data['UserCreated'] = boolval($this->addNewUser($response, $params, $database));
+                    if ($data['UserCreated']) {
+                        $data['EmailVerifyRequest'] = $this->sendMail($params['Email']);
+                    }
                 }
             }
         } else {
@@ -60,5 +63,32 @@ class SignupController extends Signup
         return $response->withStatus(200)
             ->withHeader('Content-Type', 'application/json')
             ->write(json_encode($data));
+    }
+
+    /**
+     * @param Request $request
+     * @param Response $response
+     * @param $args
+     * @return !
+     */
+    public function verifyEmail(Request $request, Response $response, $args)
+    {
+        $token = htmlspecialchars(addslashes($request->getParam('token')));
+        if ((new DatabaseRequest($this->db))->findData_ASSOC('users','*',"token='{$token}'")[0])
+        {
+            (new DatabaseRequest($this->db))->updateTableData("users", "EmailConfirm=1", "token='{$token}'");
+            return $response->withStatus(200)
+                ->withHeader('Content-Type', 'application/json')
+                ->write(json_encode(
+                    ['EmailVerified' => true]
+                ));
+        }
+        else {
+            return $response->withStatus(200)
+                ->withHeader('Content-Type', 'application/json')
+                ->write(json_encode(
+                    ['EmailVerified' => false]
+                ));
+        }
     }
 }

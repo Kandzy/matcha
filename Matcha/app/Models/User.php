@@ -105,8 +105,8 @@ class User extends Controller
         $params = "Age='".htmlspecialchars(addslashes($request['Age']))."', Email='".htmlspecialchars(addslashes($request['Email']))."', Login='".htmlspecialchars(addslashes($request['Login']))."',
             City='".htmlspecialchars(addslashes($request['City']))."', Country='".htmlspecialchars(addslashes($request['Country']))."', FirstName='".htmlspecialchars(addslashes($request['FirstName']))."',
             Gender='{$request['Gender']}', LastName='".htmlspecialchars(addslashes($request['LastName']))."', Preference='".htmlspecialchars(addslashes($request['Preferences']))."',
-            Orientation='{$request['Sexpref']}', Bio='".htmlspecialchars(addslashes($request['Bio']))."', map_height='{$request['lat']}', map_width='{$request['lng']}'";
-        $database->updateTableData("users", $params, "token='{$token}'");
+            Orientation='{$request['Sexpref']}', Bio='".htmlspecialchars(addslashes($request['Bio']))."', map_height='{$request['lng']}', map_width='{$request['lat']}'";
+        return $database->updateTableData("users", $params, "token='{$token}'");
     }
 
     /**
@@ -134,12 +134,12 @@ class User extends Controller
         if (strtolower($data['Login']) == strtolower($user['Login'])) {
             $checkStatus['Login'] = true;
         } else {
-            $checkStatus['Login'] = $this->checkLogin($data, $database);
+            $checkStatus['Login'] = true;
         }
         if (strtolower($data['Email']) == strtolower($user['Email'])){
             $checkStatus['Email'] = true;
         } else {
-            $checkStatus['Email'] = $this->checkEmail($data, $database) && $this->validateEmail($data['Email']);
+            $checkStatus['Email'] = $this->validateEmail($data['Email']);
         }
         if (!$checkStatus['Email'] || !$checkStatus['Login']) {
             return [
@@ -147,7 +147,7 @@ class User extends Controller
                 'status' => $checkStatus,
             ];
         }
-        $this->sendUpdData($data, $token, $database);
+        $checkStatus['updateRequest'] = $this->sendUpdData($data, $token, $database);
         $this->updateUserTags($data['Tags'], $token, $database);
         return [
             'update' => true,
