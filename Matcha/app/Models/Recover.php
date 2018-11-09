@@ -47,7 +47,7 @@ class Recover extends Controller
         $mail_message = "<div style='font-size:10pt; font-style:italic; color:#006699;'>Здравствуйте, ". $user[0]["Login"].",
                 Для восстановления пароля нажмите:<br/>
 
-        <a href='http://e3r6p9:3000/repair?token=".$token."'><button style='outline: none;
+        <a href='http://e3r7p9:3000/repair?token=".$token."'><button style='outline: none;
                         height: 1.7em;
                         width: 10em;
                         font-size: 2vw;

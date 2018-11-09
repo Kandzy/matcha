@@ -1,14 +1,23 @@
 import React from "react";
-import axios from "axios"
-import { GoogleApiWrapper, Map } from "google-maps-react";
+
+import { GoogleApiWrapper, Map, Marker } from "google-maps-react";
+
+const style = {
+  width: '50%',
+  height: '50%',
+  top: '10%',
+  left: '20%'
+}
+
+
 
 export class MyMap extends React.Component {
    constructor(props) {
       super(props);
       this.state = { 
           userLocation: { 
-                          lat: 32, 
-                          lng: 32 
+                          lat: this.props.lat, 
+                          lng: this.props.lng 
                         },
           ip: '',
           loading: true 
@@ -16,47 +25,18 @@ export class MyMap extends React.Component {
     }
 
 
-  componentDidMount(props) {
-  //  if (!props.lat && !props.lng) {
-      navigator.geolocation.getCurrentPosition(
-        position => {
-          const { latitude, longitude } = position.coords;
-
-          this.setState({
-           userLocation: { lat: latitude, lng: longitude },
-           loading: false
-          });
-        },
-        () => {
-             axios.get('http://api.hostip.info/get_html.php')
-                  .then( response => {
-                    let reg = /\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b/;
-                    let temp = response.data.match(reg);
-                    this.setState({ip : temp[0]});
-                    let reqest = 'http://ip-api.com/json/' + temp[0];
-                    axios.get(reqest)
-                      .then( response => {
-                          this.setState({
-                          userLocation: {
-                              lat: response.data.lat,
-                              lng: response.data.lon
-                          },
-                          loading: false
-                          });
-                      });
-            });
-       });
-   // }
-}
-
   render() {
-    const { loading, userLocation } = this.state;
-    const { google } = this.props;
-    if (loading) {
-      return null;
-    }
-
-    return <Map google={google} style={{width: '400px', height: '400px'}} initialCenter={userLocation} zoom={10} />;
+    return(<Map google={this.props.google}  
+                initialCenter={
+                  this.state.userLocation
+                }
+                style={style}
+                zoom={10}>
+            <Marker
+                      position={this.state.userLocation} />
+            <Marker />
+           </Map>
+      );
   }
 }
 

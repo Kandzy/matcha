@@ -12,28 +12,27 @@ export default function withAuth(AuthComponent) {
             this.state = {
                 user: null
             }
+            this.setUser = this.setUser.bind(this);
         }
 
-        componentWillMount() {
+        componentDidMount() {
             if (!Auth.loggedIn()) {
-                if (parseInt(Auth.isReg()) === 0) {
+                if (parseInt(Auth.isReg(), 10) === 0) {
                     this.props.history.replace('/extendreg');
                  }
-                this.props.history.replace('/interlinc');
+                this.props.history.replace('/Signin');
             } else {
-                try {
-                    if(Auth.loggedIn()) {
+                this.setUser();
+            }
+        }
+
+        setUser() {
+            if(Auth.loggedIn()) {
                         this.setState({
                             user: 1
                         });
                     }
-                }
-                catch(err){
-                  //  Auth.logout();
-                   // this.props.history.replace('/interlinc');
-                }
             }
-        }
 
         render() {
             if (this.state.user) {

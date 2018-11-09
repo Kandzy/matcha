@@ -56,7 +56,7 @@ class RecoverController extends Recover
      * @param Request $request
      * @param Response $response
      * @param $args
-     * @return array
+     * @return !
      */
     public function newPassword(Request $request, Response $response, $args){
         $token = htmlspecialchars(addslashes($request->getParam('token')));
@@ -65,17 +65,22 @@ class RecoverController extends Recover
             'user' => false,
             'updated' => false,
             'pass_match' => false,
+            'Pass1' => $password,
+            'Pass2' => $request->getParam('repeatPassword'),
+            'userr' => $token
         ];
         if ((new DatabaseRequest($this->db))->findData_ASSOC('users', 'token', "token='{$token}'")) {
             $res['user'] = true;
             if ($password == htmlspecialchars(addslashes($request->getParam('repeatPassword')))){
                 $res['pass_match'] = true;
                 if ($this->validatePassword($password)) {
-                    (new DatabaseRequest($this->db))->updateTableData("users", "Password='" . hash("whirlpool", $password) . "'", "token={$token}");
+                    (new DatabaseRequest($this->db))->updateTableData("users", "Password='" . hash("whirlpool", $password) ."'", "token='{$token}'");
                     $res['updated'] = true;
                 }
             }
         }
-        return $res;
+        return $response->withStatus(200)
+            ->withHeader('Content-Type', 'application/json')
+            ->write(json_encode($res));
     }
 }

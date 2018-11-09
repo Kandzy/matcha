@@ -5,8 +5,10 @@ import Geocode from "react-geocode";
 import AuthService from '../Auth/AuthService';
 import MyCarousel from '../MyCarousel/';
 
-var tmp_url = require('../../config/conf.jsx');
 
+
+var tmp_url = require('../../config/conf.jsx');
+var ip_api = '?access_key=6d0e94f778374b1b428d920705a90adc';
 
 class ExtendData extends React.Component{
 
@@ -14,9 +16,7 @@ class ExtendData extends React.Component{
 		super(props);
 
 		this.state = {
-            toLoad: '',
-			FirstName: '',
-			LastName: '',
+            toLoad: false,
 			City: '',
 			Country: '',
 			Adress: '',
@@ -25,9 +25,10 @@ class ExtendData extends React.Component{
 			Bio: '',
             Tags: '',
 			Gender: 'Male',
-			Sexpref: 'Heterosexual',
+			Sexpref: 'Bisexual',
 			Pics: [],
-			PicsURL: []
+			PicsURL: [],
+
 		}
 		this.Auth = new AuthService();
 		this.prepareForm = this.prepareForm.bind(this);
@@ -35,8 +36,6 @@ class ExtendData extends React.Component{
 		this.choseGender = this.choseGender.bind(this);
 		this.chosePrefer = this.chosePrefer.bind(this);
 		this.changeAge = this.changeAge.bind(this);
-		this.changeName = this.changeName.bind(this);
-		this.changeLastName = this.changeLastName.bind(this);
 		this.changeCity = this.changeCity.bind(this);
 		this.changeCountry = this.changeCountry.bind(this);
 		this.changeAdress = this.changeAdress.bind(this);
@@ -44,13 +43,13 @@ class ExtendData extends React.Component{
         this.changeTags = this.changeTags.bind(this);
 		this.changePreferences = this.changePreferences.bind(this);
 	}
+    /**/
+    componentDidMount() {
+        this.tempCheck = true;
+        if (this.Auth.getToken()) {
 
-    componentWillMount() {
-
-console.log(tmp_url.api_url + '/users/checkUReg');
-       // if (!this.Auth.getToken()) {
             const data = new FormData();
-console.log(this.Auth.getToken());
+
             data.append('token', this.Auth.getToken());
             axios({
                 url: tmp_url.api_url + '/users/checkUReg',
@@ -66,23 +65,35 @@ console.log(this.Auth.getToken());
                  responseType: 'json',
 
             }).then(response => {
-                    console.log(response.data.Extend_Registration);
-                if (parseInt(response.data.Extend_Registration) === 1){
+                if (parseInt(response.data.Extend_Registration, 10) === 1){
+                    this.Auth.setExtend('1');
                     this.props.history.replace('/');
                 } else {
-                    this.setState({
-                        toLoad: null
-                    });
+                    if(this.tempCheck) {
+                        this.setState({
+                            toLoad: true
+                        });
+                    }
                 }
-           
             }).catch(errors => {
-           // console.log(errors);
             });
-       // }
+        } else {
+            if (!this.Auth.getToken()) {
+
+                this.props.history.replace('/');
+            }
+        }
+    }
+
+
+
+
+
+    componentWillUnmount() {
+        this.tempCheck = false;
     }
 
 	submitForm(data) {
-        console.log(data);
         axios({
             url: tmp_url.api_url + '/profile/create',
 
@@ -97,74 +108,97 @@ console.log(this.Auth.getToken());
             responseType: 'json',
 
         }).then(response => {
-            console.log(response);
 
-                
-          
-            //this.props.history.replace('/');
+            if (!response.data.Bio) {
+                window.Materialize.toast('No bio try again', 5000, 'red rounded');
+            }
+            if (!response.data.Age) {
+                window.Materialize.toast('No age try again', 5000, 'red rounded');
+            }
+            if (!response.data.City) {
+                window.Materialize.toast('No age try again', 5000, 'red rounded');
+            }
+            if (!response.data.Preferences) {
+                window.Materialize.toast('No Preferences try again', 5000, 'red rounded');
+            }
+            if (!response.data.Tags) {
+                window.Materialize.toast('No Tags try again', 5000, 'red rounded');
+            }
+            if (response.data.Complete)
+                this.Auth.setExtend('1');
+            this.props.history.replace('/');
            
         }).catch(errors => {
-           // console.log(errors);
+
         });
         
 	}
 
 	prepareForm() {
-        const data = new FormData();
-        data.append('Token', this.Auth.getToken());
-        data.append('FirstName', this.state.FirstName);
-        data.append('LastName', this.state.LastName);
-        data.append('Age', this.state.Age);
-        data.append('Preferences', this.state.Preferences);
-        data.append('Bio', this.state.Bio);
-        data.append('Gender', this.state.Gender);
-        data.append('Tags', this.state.Tags);
-        data.append('Sexpref', this.state.Sexpref);
-       if (this.state.Pics.length > 0) {
-        	this.state.Pics.forEach((currentValue, index) => {
-        		data.append('Pics' + index, currentValue);
-        	});
-        }
-		
-        if (this.state.City === '' && this.state.Country === '' && this.state.Adress === '') {
-             axios.get('https://api.ipify.org?format=json')
-                  .then( response => {
-                    let reqest = 'http://ip-api.com/json/' + response.data.ip;
-                    axios.get(reqest)
-                    .then(response => {
-                    	data.append('City', response.data.city);
-        				data.append('Country', response.data.country);
-        				data.append('lat', response.data.lat);
-        				data.append('lng', response.data.lon);
+        if (this.precheckTags()) {
+            const data = new FormData();
+            let tmp = this.state.Gender;
 
-        				this.submitForm(data);
-                    })
-                    .catch( errors => {
-                    	window.Materialize.toast('Geolocation faild', 2000, 'red rounded');
-                    });
-            }).catch(errors => {
-        		window.Materialize.toast('Geolocation faild', 2000, 'red rounded');
-        	});
-        } else {
-        	const fAdd = this.state.Country + ' ' + this.state.City + ' ' + this.state.Adress;
-        	
-        	Geocode.setApiKey("AIzaSyAZui479HQ-RvwHw2DgzKj585znt0i5iL4");
-        	Geocode.fromAddress(fAdd)
-        	.then(response => {
-        	
-        		if (this.state.Country !== '') {
-        			data.append('Country', this.state.Country);
-        		}
-        		if (this.state.City !== '') {
-        			data.append('City', this.state.City);
-        		}
-        		data.append('lat', response.results[0].geometry.location.lat);
-        		data.append('lng', response.results[0].geometry.location.lng);
 
-        		this.submitForm(data);
-        	}).catch(errors => {
-        		window.Materialize.toast('Incorect Adress', 2000, 'red rounded');
-        	});
+            tmp = tmp.toLowerCase();
+            data.append('Token', this.Auth.getToken());
+            data.append('Age', this.state.Age);
+            data.append('Preferences', this.state.Preferences);
+            data.append('Bio', this.state.Bio);
+            data.append('Gender', tmp);
+            data.append('Tags', this.state.Tags);
+            data.append('Sexpref', this.state.Sexpref);
+           if (this.state.Pics.length > 0) {
+            	this.state.Pics.forEach((currentValue, index) => {
+            		data.append('Pics' + index, currentValue);
+            	});
+            }
+    		
+            if (this.state.City === '' && this.state.Country === '' && this.state.Adress === '') {
+
+                 axios.get('https://api.ipify.org?format=json')
+                      .then( response => {
+
+                        let reqest = 'http://api.ipstack.com/' + response.data.ip + ip_api;
+                        axios.get(reqest)
+                        .then(response => {
+                        	data.append('City', response.data.city);
+            				data.append('Country', response.data.country_name);
+            				data.append('lng', response.data.latitude);
+            				data.append('lat', response.data.longitude);
+            				this.submitForm(data);
+                        })
+                        .catch( errors => {
+                        	window.Materialize.toast('Geolocation faild', 2000, 'red rounded');
+                        });
+                }).catch(errors => {
+            		window.Materialize.toast('Geolocation faild', 2000, 'red rounded');
+            	});
+            } else {
+            	const fAdd = this.state.Country + ' ' + this.state.City + ' ' + this.state.Adress;
+            	
+            	Geocode.setApiKey("AIzaSyAZui479HQ-RvwHw2DgzKj585znt0i5iL4");
+            	Geocode.fromAddress(fAdd)
+            	.then(response => {
+            	
+            		if (this.state.Country !== '') {
+            			data.append('Country', this.state.Country);
+            		} else {
+                        data.append('Country', 'default');
+                    }
+            		if (this.state.City !== '') {
+            			data.append('City', this.state.City);
+            		} else {
+                        data.append('City', 'default');
+                    }
+            		data.append('lng', response.results[0].geometry.location.lat);
+            		data.append('lat', response.results[0].geometry.location.lng);
+
+            		this.submitForm(data);
+            	}).catch(errors => {
+            		window.Materialize.toast('Incorect Adress', 2000, 'red rounded');
+            	});
+            }
         }
     }
 
@@ -174,40 +208,31 @@ console.log(this.Auth.getToken());
     	this.setState ({
     		Gender: event.target.value
     	});
-    	console.log(this.state.Gender);
+
     }
 
    chosePrefer(event) {
     	this.setState ({
     		Sexpref: event.target.value
     	});
-    	console.log(this.state.Sexpref);
     }
 
     changeAge(event) {
     	let isnum = /^\d+$/.test(event.target.value);
+        let tmp = event.target.value
+        let age = parseInt(tmp, 10);
 
-    	if (isnum || event.target.value === '') {
+    	if ((isnum && age < 110) || event.target.value === '') {
     		this.setState ({
     			Age: event.target.value
     		});
 
+   	 	} else if (!isnum) {
+   	 		window.Materialize.toast('Numbers only!', 2000, 'red rounded');
    	 	} else {
-   	 		window.Materialize.toast('I am a toast!', 2000, 'blue rounded');
-
-   	 	}
-    }
-
-    changeName(event) {
-    	this.setState ({
-    		FirstName: event.target.value
-    	});
-    }
-
-    changeLastName(event) {
-    	this.setState ({
-    		LastName: event.target.value
-    	});
+             let rAge = tmp + ' really!';
+             window.Materialize.toast(rAge, 2000, 'red rounded');
+        }
     }
 
     changeCity(event) {
@@ -229,22 +254,55 @@ console.log(this.Auth.getToken());
     }
 
     changePreferences(event) {
-    	this.setState ({
-    		Preferences: event.target.value
-    	});
+        let tmp = event.target.value;
+        if (tmp.length < 100) {
+        	this.setState ({
+        		Preferences: event.target.value
+        	});
+        } else {
+            window.Materialize.toast('Preferences to long!', 2000, 'red rounded');
+        }
     }
 
     changeBio(event) {
+    let tmp = event.target.value;
+    if (tmp.length < 100) {
     	this.setState ({
     		Bio: event.target.value
     	})
+    }else {
+            window.Materialize.toast('Biography to long!', 2000, 'red rounded');
+        }
+    }
+
+    precheckTags = () => {
+        let tmpEv = this.state.Tags;
+        let tmpTest = tmpEv.split(' ');
+        let test = 0;
+        if (this.state.Tags === '') {
+            return true;
+        }
+        for (let i = 0; i < tmpTest.length; i++) {
+            if (tmpTest[i][0] === '#') {
+
+                test += 1;
+            }
+        }
+        if (test === tmpTest.length ) {
+            return true;
+        } else {
+           window.Materialize.toast('Start whith #', 2000, 'red rounded');
+       }
+       return false;
     }
 
     changeTags(event) {
-        console.log(this.state.Tags);
-        this.setState ({
-            Tags: event.target.value
-        })
+            this.setState ({
+                Tags: event.target.value
+            })
+       // } else {
+        //    window.Materialize.toast('Start whith #', 2000, 'red rounded');
+       // }
     }
 
     fileHendler = event => {
@@ -289,7 +347,7 @@ console.log(this.Auth.getToken());
     		return (
     			<Row>
     				<div className="col s12 m4 offset-m3">
-    					<MyCarousel data={this.state.PicsURL}/>
+    					<MyCarousel data={this.state.PicsURL} style={{width: '100%', height: '100%'}}/>
     				</div>
     			</Row>
     			);
@@ -297,11 +355,12 @@ console.log(this.Auth.getToken());
     }
 
     render() {
-        if (!this.state.toLoad) {
+        if (this.state.toLoad) {
     	return(
+            <div >
     		<div className="container">
     		<Row>
-                <h4 className="col s3 m4 offset-s2 offset-m4">#######:</h4>
+                <h4 className="col s3 m6 offset-s2 offset-m4">ExtendReg:</h4>
                 {this.picDisplay()}
                 <input 
                 	style={{display: 'none'}} 
@@ -316,8 +375,6 @@ console.log(this.Auth.getToken());
                 	onClick={ () => this.fileInput.click()}
                 	>Pick File<Icon right>send</Icon>
                 </Button>
-                <Input  type="tel" className="validate" label="First name" value={this.state.FirstName} onChange={this.changeName}  s={12} />
-                <Input  type="tel" label="Last name" value={this.state.LastName} onChange={this.changeLastName} s={12} />
                 <Input  type="tel" label="Preferences" value={this.state.Preferences} onChange={this.changePreferences} s={12} />
                 <Input  type="tel" label="Tags" value={this.state.Tags} onChange={this.changeTags} s={12} />
                 <Input  type="tel" label="Age" value={this.state.Age} onChange={this.changeAge} s={12} />
@@ -333,7 +390,7 @@ console.log(this.Auth.getToken());
     					</Input>
   					</Row>
   					<Row>
-    					<Input s={12} type='select' label='Select your gnder:' onChange={this.chosePrefer} defaultValue='Heterosexual'>
+    					<Input s={12} type='select' label='Select your gnder:' onChange={this.chosePrefer} defaultValue='Bisexual'>
       						<option value='Heterosexual'>Heterosexual</option>
       						<option value='Homosexual'>Homosexual</option>
       						<option value='Bisexual'>Bisexual</option>
@@ -342,8 +399,10 @@ console.log(this.Auth.getToken());
   				</div>
 
                 <Button waves='light' className="col s8 m4 offset-s2 offset-m3"  onClick={this.prepareForm}>Submit<Icon right>send</Icon></Button>
+                                <a href='/logout' className="col s8 m4 offset-s2 offset-m3">Or Logout</a>
             </Row>
     		</div>
+            </div>
     	);
         } else {
             return null;

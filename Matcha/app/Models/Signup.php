@@ -30,7 +30,7 @@ class Signup extends Controller
         $mail_message = "<div style='font-size:10pt; font-style:italic; color:#006699;'>Здравствуйте, ". $user["Login"].",
                 Для подтверждения почты нажмите:<br/>
 
-        <a href='http://e3r6p9:3000/valid?token=".$token."'><button style='outline: none;
+        <a href='http://e3r7p9:3000/valid?token=".$token."'><button style='outline: none;
                         height: 1.7em;
                         width: 10em;
                         font-size: 2vw;
